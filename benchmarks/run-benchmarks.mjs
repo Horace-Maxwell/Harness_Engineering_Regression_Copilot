@@ -235,12 +235,14 @@ async function measureHundredCaseRun(iterations = 5, caseCount = 100) {
 }
 
 function npmJson(args) {
-  const result = spawnSync("npm", args, {
+  const command = process.platform === "win32" ? "npm.cmd" : "npm";
+  const result = spawnSync(command, args, {
     cwd: root,
     encoding: "utf8",
+    shell: process.platform === "win32",
   });
-  if (result.status !== 0) {
-    throw new Error(result.stderr || result.stdout);
+  if (result.error || result.status !== 0) {
+    throw new Error([result.error?.message, result.stderr, result.stdout].filter(Boolean).join("\n\n"));
   }
   return result.stdout.trim();
 }
