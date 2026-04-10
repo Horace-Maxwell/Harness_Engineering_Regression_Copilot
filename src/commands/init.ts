@@ -4,6 +4,7 @@ import { Command } from "commander";
 
 import {
   createDefaultConfig,
+  ensureGitignoreEntries,
   exists,
   findWorkspaceRoot,
   getHercRoot,
@@ -25,7 +26,8 @@ export function createInitCommand(): Command {
     .option("--project-name <name>", "Override the default project name")
     .option("--force", "Rewrite config and sample assets even if the workspace already exists")
     .option("--dry-run", "Show what would be created without writing files")
-    .action(async (options: { projectName?: string; force?: boolean; dryRun?: boolean; json?: boolean; quiet?: boolean; noColor?: boolean }) => {
+    .option("--no-sync-gitignore", "Do not add recommended .herc ignore rules to .gitignore")
+    .action(async (options: { projectName?: string; force?: boolean; dryRun?: boolean; syncGitignore?: boolean; json?: boolean; quiet?: boolean; noColor?: boolean }) => {
       applyGlobalOptions(options);
       const existingWorkspaceRoot = await findWorkspaceRoot();
       const projectRoot = existingWorkspaceRoot ?? process.cwd();
@@ -69,6 +71,7 @@ notes:
   reviewNote: Sample case created during initialization.
 `;
       const sampleResponsePath = path.join(getResponsesDir(projectRoot, config), "sample_case.txt");
+      const recommendedGitignoreEntries = [".herc/incidents", ".herc/reports", ".herc/responses"];
 
       const payload = {
         projectRoot,
@@ -76,6 +79,7 @@ notes:
         configPath,
         sampleCasePath,
         sampleResponsePath,
+        recommendedGitignoreEntries,
         alreadyInitialized,
         dryRun: options.dryRun === true,
       };
@@ -90,6 +94,9 @@ notes:
         bullet(`Config: ${configPath}`);
         bullet(`Sample case: ${sampleCasePath}`);
         bullet(`Sample response: ${sampleResponsePath}`);
+        if (options.syncGitignore !== false) {
+          bullet(`Recommended .gitignore entries: ${recommendedGitignoreEntries.join(", ")}`);
+        }
         blank();
         nextStep(options.force ? "herc init --force" : "herc init");
         return;
@@ -105,6 +112,9 @@ notes:
       if (options.force || !(await exists(sampleResponsePath))) {
         await writeTextFile(sampleResponsePath, "example");
       }
+      const gitignoreUpdate = options.syncGitignore === false
+        ? { updated: false, added: [] as string[], path: path.join(projectRoot, ".gitignore") }
+        : await ensureGitignoreEntries(projectRoot, recommendedGitignoreEntries);
 
       section(
         alreadyInitialized
@@ -116,6 +126,13 @@ notes:
       bullet(`Config: ${configPath}`);
       bullet(`Sample case: ${sampleCasePath}`);
       bullet(`Sample response: ${sampleResponsePath}`);
+      if (options.syncGitignore === false) {
+        bullet("Gitignore sync: skipped");
+      } else if (gitignoreUpdate.updated) {
+        bullet(`Gitignore updated: ${gitignoreUpdate.added.join(", ")}`);
+      } else {
+        bullet("Gitignore updated: already configured");
+      }
       blank();
       nextStep("herc run");
     });

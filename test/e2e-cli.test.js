@@ -21,6 +21,10 @@ test("CLI init creates a runnable sample workflow", async () => {
   await execFileAsync("node", [cliPath, "init"], { cwd: root });
   const reportResult = await execFileAsync("node", [cliPath, "run"], { cwd: root });
   assert.match(reportResult.stdout, /Passed: 1/);
+  const gitignore = await readFile(path.join(root, ".gitignore"), "utf8");
+  assert.match(gitignore, /\.herc\/incidents/);
+  assert.match(gitignore, /\.herc\/reports/);
+  assert.match(gitignore, /\.herc\/responses/);
 });
 
 test("CLI import deduplicates repeated incidents", async () => {
@@ -62,6 +66,20 @@ test("CLI doctor reports a healthy initialized workspace", async () => {
   const result = await execFileAsync("node", [cliPath, "doctor"], { cwd: root });
   assert.match(result.stdout, /\[pass\] workspace/);
   assert.match(result.stdout, /\[pass\] config/);
+  assert.match(result.stdout, /\[pass\] git/);
+  assert.match(result.stdout, /\[warn\] git-repo/);
+});
+
+test("CLI init can skip gitignore sync when requested", async () => {
+  const root = await makeWorkspace();
+  await execFileAsync("node", [cliPath, "init", "--no-sync-gitignore"], { cwd: root });
+  let missing = false;
+  try {
+    await readFile(path.join(root, ".gitignore"), "utf8");
+  } catch {
+    missing = true;
+  }
+  assert.equal(missing, true);
 });
 
 test("CLI create-case, accept, and set-status work together", async () => {

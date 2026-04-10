@@ -131,6 +131,28 @@ export async function writeTextFile(targetPath: string, contents: string): Promi
   await writeFile(targetPath, contents, "utf8");
 }
 
+export async function ensureGitignoreEntries(projectRoot: string, entries: string[]): Promise<{ updated: boolean; added: string[]; path: string }> {
+  const gitignorePath = path.join(projectRoot, ".gitignore");
+  const existing = (await exists(gitignorePath)) ? await readFile(gitignorePath, "utf8") : "";
+  const normalizedExisting = existing.replace(/\r\n/g, "\n");
+  const lines = normalizedExisting.split("\n");
+  const existingSet = new Set(lines.map((line) => line.trim()).filter(Boolean));
+  const added = entries.filter((entry) => !existingSet.has(entry));
+
+  if (added.length === 0) {
+    return { updated: false, added: [], path: gitignorePath };
+  }
+
+  const nextLines = [...lines];
+  if (nextLines.length > 0 && nextLines[nextLines.length - 1] !== "") {
+    nextLines.push("");
+  }
+  nextLines.push(...added);
+  nextLines.push("");
+  await writeTextFile(gitignorePath, nextLines.join("\n"));
+  return { updated: true, added, path: gitignorePath };
+}
+
 export async function readYamlFile<T>(targetPath: string): Promise<T> {
   const raw = await readFile(targetPath, "utf8");
   return YAML.parse(raw) as T;

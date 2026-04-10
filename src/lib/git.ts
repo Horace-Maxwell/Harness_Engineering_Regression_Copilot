@@ -13,6 +13,15 @@ async function gitOutput(args: string[], cwd: string): Promise<string | null> {
   }
 }
 
+export async function isGitAvailable(cwd: string): Promise<boolean> {
+  return (await gitOutput(["--version"], cwd)) !== null;
+}
+
+export async function isGitRepository(cwd: string): Promise<boolean> {
+  const output = await gitOutput(["rev-parse", "--is-inside-work-tree"], cwd);
+  return output?.trim() === "true";
+}
+
 export async function getChangedCaseIds(projectRoot: string, casesDir: string): Promise<string[] | null> {
   const relativeCasesDir = path.relative(projectRoot, casesDir) || ".";
 

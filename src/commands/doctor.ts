@@ -1,10 +1,11 @@
-import { access, constants } from "node:fs/promises";
+import { access, constants, readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { Command } from "commander";
 
 import { applyGlobalOptions, printJsonIfNeeded, withGlobalOptions } from "../lib/command.js";
 import { findWorkspaceRoot, getCasesDir, getConfigPath, getIncidentsDir, getReportsDir, getResponsesDir, loadCaseRecords, loadIncidentRecords, readConfig } from "../lib/fs.js";
+import { isGitAvailable, isGitRepository } from "../lib/git.js";
 import { blank, bullet, section } from "../lib/output.js";
 import { validateCaseRecord, validateConfig, validateIncidentRecord } from "../lib/validate.js";
 
@@ -48,6 +49,36 @@ async function directoryCheck(targetPath: string): Promise<DoctorCheck> {
   };
 }
 
+async function gitignoreCheck(projectRoot: string): Promise<DoctorCheck> {
+  const gitignorePath = path.join(projectRoot, ".gitignore");
+  const recommended = [".herc/incidents", ".herc/reports", ".herc/responses"];
+
+  try {
+    const raw = await readFile(gitignorePath, "utf8");
+    const lines = new Set(raw.split(/\r?\n/).map((line) => line.trim()).filter(Boolean));
+    const missing = recommended.filter((entry) => !lines.has(entry));
+    if (missing.length === 0) {
+      return {
+        name: "gitignore",
+        status: "pass",
+        message: "Recommended .herc ignore rules are present.",
+      };
+    }
+
+    return {
+      name: "gitignore",
+      status: "warn",
+      message: `Missing recommended ignore rules: ${missing.join(", ")}.`,
+    };
+  } catch {
+    return {
+      name: "gitignore",
+      status: "warn",
+      message: "No .gitignore file was found. Local incidents, reports, and responses may be committed accidentally.",
+    };
+  }
+}
+
 export function createDoctorCommand(): Command {
   return withGlobalOptions(new Command("doctor"))
     .description("Check workspace health, schema validity, and local execution readiness.")
@@ -60,6 +91,14 @@ export function createDoctorCommand(): Command {
         name: "node",
         status: majorVersion >= 18 ? "pass" : "fail",
         message: majorVersion >= 18 ? `Node ${process.version} is supported.` : `Node ${process.version} is too old. Node 18+ is required.`,
+      });
+      const gitAvailable = await isGitAvailable(process.cwd());
+      checks.push({
+        name: "git",
+        status: gitAvailable ? "pass" : "warn",
+        message: gitAvailable
+          ? "Git is available. Changed-only runs and repo-aware workflows can be used."
+          : "Git was not found. `herc run --changed` and repo-aware workflows will fall back or be unavailable.",
       });
 
       const projectRoot = await findWorkspaceRoot();
@@ -75,6 +114,17 @@ export function createDoctorCommand(): Command {
           status: "pass",
           message: `Workspace found at ${projectRoot}.`,
         });
+        if (gitAvailable) {
+          const gitRepo = await isGitRepository(projectRoot);
+          checks.push({
+            name: "git-repo",
+            status: gitRepo ? "pass" : "warn",
+            message: gitRepo
+              ? "Git repository detected. Changed-only runs can use repository diffs."
+              : "This workspace is not inside a git repository. `herc run --changed` will not provide repository-scoped filtering.",
+          });
+        }
+        checks.push(await gitignoreCheck(projectRoot));
 
         const configPath = getConfigPath(projectRoot);
         try {

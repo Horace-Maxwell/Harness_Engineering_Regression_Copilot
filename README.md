@@ -77,7 +77,17 @@ herc version
 
 | 中文 | English |
 | --- | --- |
-| 如果你不想做全局 link，也可以直接用 `node dist/cli.js <command>`。 | If you do not want a global link, you can run commands directly with `node dist/cli.js <command>`. |
+| 如果你不想做全局 link，也可以直接用 `node dist/cli.js <command>`。仓库也提供了跨平台安装脚本：[scripts/install-herc.sh](scripts/install-herc.sh) 和 [scripts/install-herc.ps1](scripts/install-herc.ps1)。 | If you do not want a global link, you can run commands directly with `node dist/cli.js <command>`. The repository also includes cross-platform installers: [scripts/install-herc.sh](scripts/install-herc.sh) and [scripts/install-herc.ps1](scripts/install-herc.ps1). |
+
+### Quick Install Scripts / 一键安装脚本
+
+```bash
+sh ./scripts/install-herc.sh
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install-herc.ps1
+```
 
 <a id="quick-start"></a>
 ## Quick Start / 快速开始
