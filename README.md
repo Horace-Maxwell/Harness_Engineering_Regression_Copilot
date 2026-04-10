@@ -9,6 +9,7 @@
     <a href="#quick-start">Quick Start / 快速开始</a> ·
     <a href="#benchmarks">Benchmarks / 基准</a> ·
     <a href="EVALUATION_WHITEPAPER.md">Whitepaper / 白皮书</a> ·
+    <a href="BENCHMARK_STABILITY_REPORT.md">Stability / 稳定性</a> ·
     <a href="#launch-kit">Launch Kit / 启动模板</a> ·
     <a href="#contributing">Contributing / 贡献</a>
   </p>
@@ -185,7 +186,7 @@ herc report --format summary
 
 | 中文 | English |
 | --- | --- |
-| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) 和 [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json)。如果你想在另一台机器上完整复现这组公开结果，现在只需要运行 `npm run benchmark:reproduce`。如果你想看更接近论文/白皮书的完整分析，也可以直接看 [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), and [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json). If you want to fully reproduce this public benchmark pack on another machine, you now only need to run `npm run benchmark:reproduce`. For a more paper-like analysis, you can also read [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md). |
+| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json)、[workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) 和 [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json)。如果你想在另一台机器上完整复现这组公开结果，现在只需要运行 `npm run benchmark:reproduce`；如果你想按更严格的标准验证稳定性，可以运行 `npm run benchmark:stability`，并查看 [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) 和 [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md)。如果你想看更接近论文/白皮书的完整分析，也可以直接看 [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json), and [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json). If you want to fully reproduce this public benchmark pack on another machine, you now only need to run `npm run benchmark:reproduce`; if you want a stricter stability validation pass, run `npm run benchmark:stability` and read [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) plus [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md). For a more paper-like analysis, you can also read [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md). |
 
 ### Benchmark Scorecard / 基准总览
 
@@ -196,6 +197,7 @@ herc report --format summary
 | Shipped quality lift / 发布质量提升 | 在 `5` 个发布场景、`920` 条历史受保护指令上，采用 HERC 后的加权发布正确率从 `92.8%` 提升到 `100%`。 | Across `5` release scenarios and `920` protected historical instructions, adopting HERC raises weighted shipped correctness from `92.8%` to `100%`. |
 | Workflow upgrade gains / 工作流升级收益 | 报告对比命令数下降 `66.7%`，非 Git 误跑预检时间下降 `65.1%`，并避免了 `1000` 个无意义执行 case。 | Workflow upgrades reduce report comparison commands by `66.7%`, cut non-Git preflight time by `65.1%`, and avoid `1000` wasted case executions. |
 | Cross-platform deployability / 跨平台部署性 | 当前包体积 `55.4 KB`，运行时依赖 `2` 个，并已在 `3` 个操作系统和 `2` 个 Node 版本矩阵里验证。 | The current package is `55.4 KB`, uses `2` runtime dependencies, and is validated across a `3`-OS by `2`-Node-version matrix. |
+| Multi-round stability / 多轮稳定性 | 在 `1` 轮 warm-up 加 `5` 轮正式复测里，核心 latency 指标 `CV` 基本都低于 `1%`，报告对比时间缩减 `CV` 仅 `0.5%`。 | In `1` warm-up plus `5` measured rerun rounds, the core latency metrics stay mostly below `1%` coefficient of variation, and the report-comparison time reduction has a `CV` of only `0.5%`. |
 
 ### Baseline Performance / 基础性能
 
@@ -206,6 +208,16 @@ herc report --format summary
 | 100 deterministic cases / 100 个确定性 case | `145.1 ms` median | 单次执行足够轻，适合高频本地运行 / Light enough for frequent local runs |
 | Approximate throughput / 近似吞吐 | `~689.2 cases/sec` | 说明 deterministic runner 的执行面很轻 / Shows the deterministic runner stays lightweight |
 | Packed package size / 打包体积 | `55.4 KB` | 适合小仓库、脚本化接入和本地工具链 / Friendly to small repos, scripts, and local toolchains |
+
+### Stability Check / 稳定性复测
+
+| Metric / 指标 | Result / 结果 | Why it matters / 意义 |
+| --- | --- | --- |
+| Raw failure to first fail / 原始失败到首次红灯 | `464.6 ms` median across `5` rounds, `CV 0.6%` | 说明本地 failure reproduction 足够稳，不是偶然跑快 / Shows local failure reproduction is genuinely steady, not a lucky run |
+| 100 deterministic cases / `100` 个确定性 case | `144.7 ms` median, `CV 0.8%` | 说明 deterministic runner 的轻量级执行面在多轮下仍然稳定 / Shows the lightweight deterministic runner remains stable across reruns |
+| Report comparison uplift / 报告对比收益 | `60.8%` median time reduction, `CV 0.5%` | 这类 workflow 提升可以更放心地公开引用 / This workflow improvement is stable enough to cite with confidence |
+| Changed-only large-suite reduction / 大套件 changed-only 收益 | `27.2%` median time reduction, `CV 11.7%` | 方向很稳，但更容易受机器噪音影响，适合按“方向性收益”表达 / The direction is stable, but it is more machine-sensitive and should be framed as directional uplift |
+| Correctness uplift / 正确率 uplift | `+7.2 pp` across all `5` rounds, `CV 0.0%` | 质量收益是完全稳定的 deterministic 结果 / The quality uplift is fully stable in the deterministic setup |
 
 ### Adoption Lift / 接入后的质量提升
 

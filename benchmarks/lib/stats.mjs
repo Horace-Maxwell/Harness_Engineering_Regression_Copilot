@@ -9,6 +9,27 @@ export function mean(values) {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
+export function standardDeviation(values) {
+  if (!values.length) {
+    throw new Error("Cannot compute the standard deviation of an empty array.");
+  }
+  if (values.length === 1) {
+    return 0;
+  }
+
+  const average = mean(values);
+  const variance = values.reduce((sum, value) => sum + (value - average) ** 2, 0) / values.length;
+  return Math.sqrt(variance);
+}
+
+export function coefficientOfVariationPct(values) {
+  const average = mean(values);
+  if (average === 0) {
+    return 0;
+  }
+  return (standardDeviation(values) / average) * 100;
+}
+
 export function median(values) {
   if (!values.length) {
     throw new Error("Cannot compute the median of an empty array.");

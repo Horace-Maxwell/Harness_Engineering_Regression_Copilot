@@ -4,6 +4,7 @@
 | --- | --- |
 | 这份白皮书整理了 HERC 当前公开 benchmark 的核心结果，并把原来偏“README 摘要”的数字补成更接近研究报告的结构：包含任务分层、95% 置信区间、工作流前后对照，以及部署体量与跨平台信息。 | This whitepaper consolidates HERC's public benchmarks into a more research-style package, extending the README summary with task stratification, 95% confidence intervals, before/after workflow comparisons, and deployment footprint data. |
 | 当前文档基于仓库内公开结果文件生成，测量日期为 2026-04-10T04:17:40.096Z。 | This document is generated from the public result files in the repository, with measurements captured at 2026-04-10T04:17:40.096Z. |
+| 如果你想看这组结果在多轮重复执行后是否稳定，请继续查看 [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) 和 [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md)。 | If you want to see whether these results remain stable after repeated reruns, continue with [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) and [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md). |
 
 ## Abstract / 摘要
 

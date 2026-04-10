@@ -4,7 +4,9 @@ import assert from "node:assert/strict";
 import {
   bootstrapConfidenceInterval,
   buildBinarySeries,
+  coefficientOfVariationPct,
   pairedBootstrapDifference,
+  standardDeviation,
 } from "../benchmarks/lib/stats.mjs";
 
 test("buildBinarySeries creates the expected protected-instruction vector", () => {
@@ -38,4 +40,11 @@ test("pairedBootstrapDifference reports uplift on a repaired failure set", () =>
   assert.ok(interval.lower <= 50);
   assert.ok(interval.upper >= 50);
   assert.equal(interval.confidenceLevelPct, 95);
+});
+
+test("standardDeviation and coefficientOfVariationPct summarize timing spread", () => {
+  assert.equal(Number(standardDeviation([10, 10, 10]).toFixed(1)), 0);
+  assert.equal(Number(coefficientOfVariationPct([10, 10, 10]).toFixed(1)), 0);
+  assert.equal(Number(standardDeviation([10, 12, 14]).toFixed(1)), 1.6);
+  assert.equal(Number(coefficientOfVariationPct([10, 12, 14]).toFixed(1)), 13.6);
 });

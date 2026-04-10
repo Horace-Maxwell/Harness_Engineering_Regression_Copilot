@@ -1,0 +1,349 @@
+{
+  "measuredAt": "2026-04-10T04:52:45.904Z",
+  "environment": {
+    "node": "v25.6.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "protocol": {
+    "warmupRounds": 1,
+    "measuredRounds": 5,
+    "standardDoc": "BENCHMARK_STANDARD.md",
+    "note": "Each measured round reruns the four public benchmark families on the same machine after a warm-up phase. Report medians are aggregated across rounds to estimate stability."
+  },
+  "rounds": [
+    {
+      "label": "round_1",
+      "benchmarkMeasuredAt": "2026-04-10T04:42:24.547Z",
+      "workflowMeasuredAt": "2026-04-10T04:42:36.175Z",
+      "adoptionMeasuredAt": "2026-04-10T04:43:29.508Z",
+      "workflowUpgradeMeasuredAt": "2026-04-10T04:43:30.557Z",
+      "metrics": {
+        "rawFailureToFirstFailMs": 464.6,
+        "manualCaseToPassMs": 460.2,
+        "hundredDeterministicCasesMs": 144.7,
+        "supportBatchImportMs": 542.2,
+        "aiEngineerReproToGateMs": 458.5,
+        "qaAcceptAndPassMs": 458.7,
+        "ciChangedOnlyTimeReductionPct": 29,
+        "ciChangedOnlyExecutedCaseReductionPct": 99.9,
+        "shippedCorrectnessLiftPctPoints": 7.2,
+        "failureLeakageReductionPct": 100,
+        "changedOnlyExecutionReductionPct": 89.7,
+        "reportComparisonTimeReductionPct": 61.3,
+        "preflightTimeReductionPct": 66.8
+      }
+    },
+    {
+      "label": "round_2",
+      "benchmarkMeasuredAt": "2026-04-10T04:44:26.121Z",
+      "workflowMeasuredAt": "2026-04-10T04:44:37.638Z",
+      "adoptionMeasuredAt": "2026-04-10T04:45:31.788Z",
+      "workflowUpgradeMeasuredAt": "2026-04-10T04:45:32.987Z",
+      "metrics": {
+        "rawFailureToFirstFailMs": 459.1,
+        "manualCaseToPassMs": 460.7,
+        "hundredDeterministicCasesMs": 147.3,
+        "supportBatchImportMs": 549.6,
+        "aiEngineerReproToGateMs": 462.3,
+        "qaAcceptAndPassMs": 464.6,
+        "ciChangedOnlyTimeReductionPct": 22.1,
+        "ciChangedOnlyExecutedCaseReductionPct": 99.9,
+        "shippedCorrectnessLiftPctPoints": 7.2,
+        "failureLeakageReductionPct": 100,
+        "changedOnlyExecutionReductionPct": 89.7,
+        "reportComparisonTimeReductionPct": 60.5,
+        "preflightTimeReductionPct": 66.1
+      }
+    },
+    {
+      "label": "round_3",
+      "benchmarkMeasuredAt": "2026-04-10T04:46:28.558Z",
+      "workflowMeasuredAt": "2026-04-10T04:46:40.306Z",
+      "adoptionMeasuredAt": "2026-04-10T04:47:34.347Z",
+      "workflowUpgradeMeasuredAt": "2026-04-10T04:47:35.545Z",
+      "metrics": {
+        "rawFailureToFirstFailMs": 462.3,
+        "manualCaseToPassMs": 460,
+        "hundredDeterministicCasesMs": 144.7,
+        "supportBatchImportMs": 541.1,
+        "aiEngineerReproToGateMs": 461,
+        "qaAcceptAndPassMs": 463.7,
+        "ciChangedOnlyTimeReductionPct": 31.7,
+        "ciChangedOnlyExecutedCaseReductionPct": 99.9,
+        "shippedCorrectnessLiftPctPoints": 7.2,
+        "failureLeakageReductionPct": 100,
+        "changedOnlyExecutionReductionPct": 89.7,
+        "reportComparisonTimeReductionPct": 60.7,
+        "preflightTimeReductionPct": 67.1
+      }
+    },
+    {
+      "label": "round_4",
+      "benchmarkMeasuredAt": "2026-04-10T04:48:31.466Z",
+      "workflowMeasuredAt": "2026-04-10T04:48:43.319Z",
+      "adoptionMeasuredAt": "2026-04-10T04:49:37.026Z",
+      "workflowUpgradeMeasuredAt": "2026-04-10T04:49:38.231Z",
+      "metrics": {
+        "rawFailureToFirstFailMs": 466.1,
+        "manualCaseToPassMs": 461.7,
+        "hundredDeterministicCasesMs": 144.6,
+        "supportBatchImportMs": 546.2,
+        "aiEngineerReproToGateMs": 461.8,
+        "qaAcceptAndPassMs": 463.4,
+        "ciChangedOnlyTimeReductionPct": 26.1,
+        "ciChangedOnlyExecutedCaseReductionPct": 99.9,
+        "shippedCorrectnessLiftPctPoints": 7.2,
+        "failureLeakageReductionPct": 100,
+        "changedOnlyExecutionReductionPct": 89.7,
+        "reportComparisonTimeReductionPct": 61.1,
+        "preflightTimeReductionPct": 66.3
+      }
+    },
+    {
+      "label": "round_5",
+      "benchmarkMeasuredAt": "2026-04-10T04:50:34.242Z",
+      "workflowMeasuredAt": "2026-04-10T04:50:55.328Z",
+      "adoptionMeasuredAt": "2026-04-10T04:51:49.002Z",
+      "workflowUpgradeMeasuredAt": "2026-04-10T04:51:50.204Z",
+      "metrics": {
+        "rawFailureToFirstFailMs": 465.7,
+        "manualCaseToPassMs": 462.5,
+        "hundredDeterministicCasesMs": 143.8,
+        "supportBatchImportMs": 540.1,
+        "aiEngineerReproToGateMs": 463.7,
+        "qaAcceptAndPassMs": 460.6,
+        "ciChangedOnlyTimeReductionPct": 27.2,
+        "ciChangedOnlyExecutedCaseReductionPct": 99.9,
+        "shippedCorrectnessLiftPctPoints": 7.2,
+        "failureLeakageReductionPct": 100,
+        "changedOnlyExecutionReductionPct": 89.7,
+        "reportComparisonTimeReductionPct": 60.8,
+        "preflightTimeReductionPct": 65
+      }
+    }
+  ],
+  "summaries": {
+    "rawFailureToFirstFailMs": {
+      "median": 464.6,
+      "mean": 463.6,
+      "min": 459.1,
+      "max": 466.1,
+      "p90": 466.1,
+      "standardDeviation": 2.6,
+      "coefficientOfVariationPct": 0.6,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        464.6,
+        459.1,
+        462.3,
+        466.1,
+        465.7
+      ]
+    },
+    "manualCaseToPassMs": {
+      "median": 460.7,
+      "mean": 461,
+      "min": 460,
+      "max": 462.5,
+      "p90": 462.5,
+      "standardDeviation": 0.9,
+      "coefficientOfVariationPct": 0.2,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        460.2,
+        460.7,
+        460,
+        461.7,
+        462.5
+      ]
+    },
+    "hundredDeterministicCasesMs": {
+      "median": 144.7,
+      "mean": 145,
+      "min": 143.8,
+      "max": 147.3,
+      "p90": 147.3,
+      "standardDeviation": 1.2,
+      "coefficientOfVariationPct": 0.8,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        144.7,
+        147.3,
+        144.7,
+        144.6,
+        143.8
+      ]
+    },
+    "supportBatchImportMs": {
+      "median": 542.2,
+      "mean": 543.8,
+      "min": 540.1,
+      "max": 549.6,
+      "p90": 549.6,
+      "standardDeviation": 3.5,
+      "coefficientOfVariationPct": 0.7,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        542.2,
+        549.6,
+        541.1,
+        546.2,
+        540.1
+      ]
+    },
+    "aiEngineerReproToGateMs": {
+      "median": 461.8,
+      "mean": 461.5,
+      "min": 458.5,
+      "max": 463.7,
+      "p90": 463.7,
+      "standardDeviation": 1.7,
+      "coefficientOfVariationPct": 0.4,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        458.5,
+        462.3,
+        461,
+        461.8,
+        463.7
+      ]
+    },
+    "qaAcceptAndPassMs": {
+      "median": 463.4,
+      "mean": 462.2,
+      "min": 458.7,
+      "max": 464.6,
+      "p90": 464.6,
+      "standardDeviation": 2.2,
+      "coefficientOfVariationPct": 0.5,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        458.7,
+        464.6,
+        463.7,
+        463.4,
+        460.6
+      ]
+    },
+    "ciChangedOnlyTimeReductionPct": {
+      "median": 27.2,
+      "mean": 27.2,
+      "min": 22.1,
+      "max": 31.7,
+      "p90": 31.7,
+      "standardDeviation": 3.2,
+      "coefficientOfVariationPct": 11.7,
+      "stabilityBand": "directional",
+      "rawRounds": [
+        29,
+        22.1,
+        31.7,
+        26.1,
+        27.2
+      ]
+    },
+    "ciChangedOnlyExecutedCaseReductionPct": {
+      "median": 99.9,
+      "mean": 99.9,
+      "min": 99.9,
+      "max": 99.9,
+      "p90": 99.9,
+      "standardDeviation": 0,
+      "coefficientOfVariationPct": 0,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        99.9,
+        99.9,
+        99.9,
+        99.9,
+        99.9
+      ]
+    },
+    "shippedCorrectnessLiftPctPoints": {
+      "median": 7.2,
+      "mean": 7.2,
+      "min": 7.2,
+      "max": 7.2,
+      "p90": 7.2,
+      "standardDeviation": 0,
+      "coefficientOfVariationPct": 0,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        7.2,
+        7.2,
+        7.2,
+        7.2,
+        7.2
+      ]
+    },
+    "failureLeakageReductionPct": {
+      "median": 100,
+      "mean": 100,
+      "min": 100,
+      "max": 100,
+      "p90": 100,
+      "standardDeviation": 0,
+      "coefficientOfVariationPct": 0,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    "changedOnlyExecutionReductionPct": {
+      "median": 89.7,
+      "mean": 89.7,
+      "min": 89.7,
+      "max": 89.7,
+      "p90": 89.7,
+      "standardDeviation": 0,
+      "coefficientOfVariationPct": 0,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        89.7,
+        89.7,
+        89.7,
+        89.7,
+        89.7
+      ]
+    },
+    "reportComparisonTimeReductionPct": {
+      "median": 60.8,
+      "mean": 60.9,
+      "min": 60.5,
+      "max": 61.3,
+      "p90": 61.3,
+      "standardDeviation": 0.3,
+      "coefficientOfVariationPct": 0.5,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        61.3,
+        60.5,
+        60.7,
+        61.1,
+        60.8
+      ]
+    },
+    "preflightTimeReductionPct": {
+      "median": 66.3,
+      "mean": 66.3,
+      "min": 65,
+      "max": 67.1,
+      "p90": 67.1,
+      "standardDeviation": 0.7,
+      "coefficientOfVariationPct": 1.1,
+      "stabilityBand": "stable",
+      "rawRounds": [
+        66.8,
+        66.1,
+        67.1,
+        66.3,
+        65
+      ]
+    }
+  }
+}
