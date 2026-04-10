@@ -90,3 +90,42 @@ test("CLI create-case, accept, and set-status work together", async () => {
   const statusResult = await execFileAsync("node", [cliPath, "set-status", "case_001", "muted"], { cwd: root });
   assert.match(statusResult.stdout, /Status: muted/);
 });
+
+test("CLI report can compare the latest run with the previous run", async () => {
+  const root = await makeWorkspace();
+  await execFileAsync("node", [cliPath, "init"], { cwd: root });
+  await execFileAsync("node", [
+    cliPath,
+    "create-case",
+    "Must include tracking number",
+    "--check-type",
+    "contains",
+    "--value",
+    "tracking number",
+  ], { cwd: root });
+  await execFileAsync("node", [
+    cliPath,
+    "accept",
+    "case_001",
+    "--reviewer",
+    "qa",
+    "--response",
+    "Please include the tracking number in the reply.",
+  ], { cwd: root });
+
+  await execFileAsync("node", [cliPath, "run"], { cwd: root });
+  await writeFile(path.join(root, ".herc", "responses", "case_001.txt"), "Missing key detail.", "utf8");
+
+  let failed = false;
+  try {
+    await execFileAsync("node", [cliPath, "run"], { cwd: root });
+  } catch {
+    failed = true;
+  }
+  assert.equal(failed, true);
+
+  const comparison = await execFileAsync("node", [cliPath, "report", "--compare-previous"], { cwd: root });
+  assert.match(comparison.stdout, /Compared to:/);
+  assert.match(comparison.stdout, /Regressions:/);
+  assert.match(comparison.stdout, /case_001: passed -> failed/);
+});

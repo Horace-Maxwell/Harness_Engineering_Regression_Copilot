@@ -112,14 +112,19 @@ herc report --format summary
 
 ## Typical Flow / 典型工作流
 
-```mermaid
-flowchart LR
-  A["Failure / 失败"] --> B["Import / 导入"]
-  B --> C["Distill / 提炼"]
-  C --> D["Review / 审核"]
-  D --> E["Run / 执行"]
-  E --> F["Report & Gate / 报告与门禁"]
-```
+<p align="center">
+  <strong>Failure / 失败</strong>
+  &nbsp;→&nbsp;
+  <strong>Import / 导入</strong>
+  &nbsp;→&nbsp;
+  <strong>Distill / 提炼</strong>
+  &nbsp;→&nbsp;
+  <strong>Review / 审核</strong>
+  &nbsp;→&nbsp;
+  <strong>Run / 执行</strong>
+  &nbsp;→&nbsp;
+  <strong>Report & Gate / 报告与门禁</strong>
+</p>
 
 | Step / 步骤 | Command / 命令 | 中文 | English |
 | --- | --- | --- | --- |
@@ -136,7 +141,7 @@ flowchart LR
 
 | 中文 | English |
 | --- | --- |
-| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json) 和 [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json) and [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json). |
+| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json) 和 [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), and [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json). |
 
 ### Performance Snapshot / 性能快照
 
@@ -174,7 +179,7 @@ flowchart LR
 | `accept` | 标记 reviewed，并可写 baseline | Mark a case as reviewed and optionally write a baseline |
 | `set-status` | 切换 `active`、`draft`、`muted`、`archived` | Change a case to `active`, `draft`, `muted`, or `archived` |
 | `run` | 运行 gate，支持 `--changed`、`--fail-on` 等选项 | Run gates with options such as `--changed` and `--fail-on` |
-| `report` | 读取最新 summary、markdown 或 JSON 结果 | Read the latest summary, markdown, or JSON output |
+| `report` | 读取最新结果，并可和上一次 run 做对比 | Read the latest result and optionally compare it with the previous run |
 | `list` | 浏览和过滤现有 cases | Browse and filter existing cases |
 | `inspect` | 结构化查看单个 case 或原始内容 | Inspect one case in structured or raw form |
 | `version` | 输出 CLI 和环境版本信息 | Print CLI and environment version details |
@@ -189,6 +194,7 @@ flowchart LR
 npm ci
 npm run build
 node dist/cli.js run --profile standard --fail-on failed,invalid,skipped
+node dist/cli.js report --compare-previous
 ```
 
 <a id="launch-kit"></a>

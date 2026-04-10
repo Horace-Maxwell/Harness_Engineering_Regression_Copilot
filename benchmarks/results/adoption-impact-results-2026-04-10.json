@@ -1,0 +1,307 @@
+{
+  "measuredAt": "2026-04-10T03:31:38.911Z",
+  "environment": {
+    "node": "v25.6.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "methodology": {
+    "experimentType": "before_after_controlled_release_gate",
+    "note": "The control ships the same candidate without a regression gate. The treatment runs HERC before merge, fixes only the failed protected cases, and re-runs the changed gate.",
+    "protectedInstructionType": "deterministic contains checks derived from historical instruction requirements"
+  },
+  "summary": {
+    "totalScenarioCount": 5,
+    "weightedTotalProtectedInstructions": 920,
+    "weightedRawCorrectInstructionPctWithoutHerc": 92.8,
+    "weightedIncorrectInstructionPctWithoutHerc": 7.2,
+    "weightedCorrectInstructionPctWithHercAfterFix": 100,
+    "weightedCorrectnessLiftPctPoints": 7.2,
+    "weightedFailureLeakageReductionPct": 100,
+    "weightedChangedCaseSharePct": 10.3,
+    "weightedExecutionReductionPctWithChangedOnly": 89.7,
+    "medianChangedGateMsAcrossScenarios": 158.8,
+    "medianFullGateMsAcrossScenarios": 143.5
+  },
+  "scenarios": [
+    {
+      "id": "customer-policy-hotfix",
+      "label": "Customer policy hotfix",
+      "totalCases": 20,
+      "changedCases": 4,
+      "brokenCases": 4,
+      "iterations": 5,
+      "control": {
+        "shippedCorrectInstructionPct": 80,
+        "shippedIncorrectInstructionPct": 20,
+        "brokenHistoricalInstructions": 4
+      },
+      "treatment": {
+        "gateDetectedFailures": 4,
+        "gateDetectedInvalid": 0,
+        "detectionRecallPct": 100,
+        "falsePositiveCount": 0,
+        "changedCasesExecuted": 4,
+        "changedExecutionReductionPct": 80,
+        "fullGateMedianMs": 126.5,
+        "changedGateMedianMs": 135.8,
+        "changedGateP90Ms": 144.1,
+        "postFixChangedGateMedianMs": 136.4,
+        "shippedCorrectInstructionPctAfterFix": 100,
+        "shippedIncorrectInstructionPctAfterFix": 0,
+        "correctnessLiftPctPoints": 20,
+        "failureLeakageReductionPct": 100
+      },
+      "rawSamples": {
+        "rawCorrectPct": [
+          80,
+          80,
+          80,
+          80,
+          80
+        ],
+        "fullRunMs": [
+          127,
+          128.5,
+          126.5,
+          125.6,
+          125.7
+        ],
+        "changedRunMs": [
+          142.3,
+          135,
+          135.8,
+          134.2,
+          144.1
+        ],
+        "postFixChangedRunMs": [
+          137.8,
+          136.4,
+          135.7,
+          136.2,
+          143.5
+        ]
+      }
+    },
+    {
+      "id": "support-routing-refresh",
+      "label": "Support routing refresh",
+      "totalCases": 50,
+      "changedCases": 10,
+      "brokenCases": 8,
+      "iterations": 5,
+      "control": {
+        "shippedCorrectInstructionPct": 84,
+        "shippedIncorrectInstructionPct": 16,
+        "brokenHistoricalInstructions": 8
+      },
+      "treatment": {
+        "gateDetectedFailures": 8,
+        "gateDetectedInvalid": 0,
+        "detectionRecallPct": 100,
+        "falsePositiveCount": 0,
+        "changedCasesExecuted": 10,
+        "changedExecutionReductionPct": 80,
+        "fullGateMedianMs": 134.6,
+        "changedGateMedianMs": 145,
+        "changedGateP90Ms": 150.4,
+        "postFixChangedGateMedianMs": 144.9,
+        "shippedCorrectInstructionPctAfterFix": 100,
+        "shippedIncorrectInstructionPctAfterFix": 0,
+        "correctnessLiftPctPoints": 16,
+        "failureLeakageReductionPct": 100
+      },
+      "rawSamples": {
+        "rawCorrectPct": [
+          84,
+          84,
+          84,
+          84,
+          84
+        ],
+        "fullRunMs": [
+          132.1,
+          134.6,
+          137.8,
+          131.2,
+          163.2
+        ],
+        "changedRunMs": [
+          144.1,
+          141.4,
+          145,
+          147.3,
+          150.4
+        ],
+        "postFixChangedRunMs": [
+          146.9,
+          143.8,
+          145.4,
+          144.4,
+          144.9
+        ]
+      }
+    },
+    {
+      "id": "agent-tool-contract-update",
+      "label": "Agent tool contract update",
+      "totalCases": 100,
+      "changedCases": 16,
+      "brokenCases": 12,
+      "iterations": 5,
+      "control": {
+        "shippedCorrectInstructionPct": 88,
+        "shippedIncorrectInstructionPct": 12,
+        "brokenHistoricalInstructions": 12
+      },
+      "treatment": {
+        "gateDetectedFailures": 12,
+        "gateDetectedInvalid": 0,
+        "detectionRecallPct": 100,
+        "falsePositiveCount": 0,
+        "changedCasesExecuted": 16,
+        "changedExecutionReductionPct": 84,
+        "fullGateMedianMs": 143.5,
+        "changedGateMedianMs": 158.8,
+        "changedGateP90Ms": 160.9,
+        "postFixChangedGateMedianMs": 154.1,
+        "shippedCorrectInstructionPctAfterFix": 100,
+        "shippedIncorrectInstructionPctAfterFix": 0,
+        "correctnessLiftPctPoints": 12,
+        "failureLeakageReductionPct": 100
+      },
+      "rawSamples": {
+        "rawCorrectPct": [
+          88,
+          88,
+          88,
+          88,
+          88
+        ],
+        "fullRunMs": [
+          142.7,
+          146.3,
+          148.7,
+          142.2,
+          143.5
+        ],
+        "changedRunMs": [
+          159.6,
+          160.9,
+          158.8,
+          157.3,
+          152.2
+        ],
+        "postFixChangedRunMs": [
+          164.8,
+          153.9,
+          169.3,
+          154.1,
+          154
+        ]
+      }
+    },
+    {
+      "id": "rag-policy-release",
+      "label": "RAG policy release",
+      "totalCases": 250,
+      "changedCases": 25,
+      "brokenCases": 18,
+      "iterations": 3,
+      "control": {
+        "shippedCorrectInstructionPct": 92.8,
+        "shippedIncorrectInstructionPct": 7.2,
+        "brokenHistoricalInstructions": 18
+      },
+      "treatment": {
+        "gateDetectedFailures": 18,
+        "gateDetectedInvalid": 0,
+        "detectionRecallPct": 100,
+        "falsePositiveCount": 0,
+        "changedCasesExecuted": 25,
+        "changedExecutionReductionPct": 90,
+        "fullGateMedianMs": 192.2,
+        "changedGateMedianMs": 194.8,
+        "changedGateP90Ms": 256.4,
+        "postFixChangedGateMedianMs": 182.3,
+        "shippedCorrectInstructionPctAfterFix": 100,
+        "shippedIncorrectInstructionPctAfterFix": 0,
+        "correctnessLiftPctPoints": 7.2,
+        "failureLeakageReductionPct": 100
+      },
+      "rawSamples": {
+        "rawCorrectPct": [
+          92.8,
+          92.8,
+          92.8
+        ],
+        "fullRunMs": [
+          192.2,
+          182.7,
+          199.5
+        ],
+        "changedRunMs": [
+          188.6,
+          256.4,
+          194.8
+        ],
+        "postFixChangedRunMs": [
+          179,
+          190.9,
+          182.3
+        ]
+      }
+    },
+    {
+      "id": "weekly-release-train",
+      "label": "Weekly release train",
+      "totalCases": 500,
+      "changedCases": 40,
+      "brokenCases": 24,
+      "iterations": 3,
+      "control": {
+        "shippedCorrectInstructionPct": 95.2,
+        "shippedIncorrectInstructionPct": 4.8,
+        "brokenHistoricalInstructions": 24
+      },
+      "treatment": {
+        "gateDetectedFailures": 24,
+        "gateDetectedInvalid": 0,
+        "detectionRecallPct": 100,
+        "falsePositiveCount": 0,
+        "changedCasesExecuted": 40,
+        "changedExecutionReductionPct": 92,
+        "fullGateMedianMs": 246.2,
+        "changedGateMedianMs": 228.2,
+        "changedGateP90Ms": 236,
+        "postFixChangedGateMedianMs": 234.2,
+        "shippedCorrectInstructionPctAfterFix": 100,
+        "shippedIncorrectInstructionPctAfterFix": 0,
+        "correctnessLiftPctPoints": 4.8,
+        "failureLeakageReductionPct": 100
+      },
+      "rawSamples": {
+        "rawCorrectPct": [
+          95.2,
+          95.2,
+          95.2
+        ],
+        "fullRunMs": [
+          246.2,
+          235.4,
+          265.4
+        ],
+        "changedRunMs": [
+          228.2,
+          236,
+          219.5
+        ],
+        "postFixChangedRunMs": [
+          226.7,
+          234.2,
+          248.2
+        ]
+      }
+    }
+  ]
+}

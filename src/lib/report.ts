@@ -1,4 +1,86 @@
-import type { RunReport } from "../core/types.js";
+import type { CaseRunStatus, RunReport } from "../core/types.js";
+
+export interface ReportComparison {
+  currentId: string;
+  previousId: string;
+  changedCases: number;
+  regressions: Array<{ caseId: string; from: CaseRunStatus; to: CaseRunStatus }>;
+  improvements: Array<{ caseId: string; from: CaseRunStatus; to: CaseRunStatus }>;
+  newlyFailing: string[];
+  resolved: string[];
+  totalsDelta: {
+    total: number;
+    passed: number;
+    failed: number;
+    skipped: number;
+    invalid: number;
+  };
+}
+
+const blockingStatuses: CaseRunStatus[] = ["failed", "invalid", "skipped"];
+const severityOrder: Record<CaseRunStatus, number> = {
+  passed: 0,
+  skipped: 1,
+  invalid: 2,
+  failed: 3,
+};
+
+function compareStatus(a: CaseRunStatus, b: CaseRunStatus): number {
+  return severityOrder[a] - severityOrder[b];
+}
+
+export function compareReports(current: RunReport, previous: RunReport): ReportComparison {
+  const previousByCaseId = new Map(previous.results.map((result) => [result.caseId, result]));
+  const regressions: Array<{ caseId: string; from: CaseRunStatus; to: CaseRunStatus }> = [];
+  const improvements: Array<{ caseId: string; from: CaseRunStatus; to: CaseRunStatus }> = [];
+  const newlyFailing: string[] = [];
+  const resolved: string[] = [];
+  let changedCases = 0;
+
+  for (const result of current.results) {
+    const previousResult = previousByCaseId.get(result.caseId);
+    if (!previousResult || previousResult.status === result.status) {
+      continue;
+    }
+
+    changedCases += 1;
+    const from = previousResult.status;
+    const to = result.status;
+    const severityDelta = compareStatus(to, from);
+    const wasBlocking = blockingStatuses.includes(from);
+    const isBlocking = blockingStatuses.includes(to);
+
+    if (severityDelta > 0) {
+      regressions.push({ caseId: result.caseId, from, to });
+    } else if (severityDelta < 0) {
+      improvements.push({ caseId: result.caseId, from, to });
+    }
+
+    if (!wasBlocking && isBlocking) {
+      newlyFailing.push(result.caseId);
+    }
+    if (wasBlocking && !isBlocking) {
+      resolved.push(result.caseId);
+    }
+  }
+
+  return {
+    currentId: current.id,
+    previousId: previous.id,
+    changedCases,
+    regressions,
+    improvements,
+    newlyFailing: newlyFailing.sort(),
+    resolved: resolved.sort(),
+    totalsDelta: {
+      total: current.totals.total - previous.totals.total,
+      passed: current.totals.passed - previous.totals.passed,
+      failed: current.totals.failed - previous.totals.failed,
+      skipped: current.totals.skipped - previous.totals.skipped,
+      invalid: current.totals.invalid - previous.totals.invalid,
+    },
+  };
+}
 
 export function renderMarkdownReport(report: RunReport): string {
   const failures = report.results.filter((result) => result.status === "failed");
