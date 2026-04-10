@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support / 支持
+    url: {{SUPPORT_URL}}
+    about: Ask questions or request help here. / 在这里提问或请求帮助。

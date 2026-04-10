@@ -1,0 +1,25 @@
+name: Bug report / Bug 报告
+description: Report a reproducible issue in AI Regression Copilot / 报告可复现问题
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary / 概要
+      description: What happened / 发生了什么
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction / 复现方式
+      description: Include commands, fixtures, and expected behavior. / 请包含命令、样例和预期行为。
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform / 平台
+      placeholder: macOS, Linux, Windows

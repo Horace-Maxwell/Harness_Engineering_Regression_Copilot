@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - {{DEFAULT_BRANCH}}
+  pull_request:
+
+jobs:
+  validate:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        shell: bash
+        run: |
+{{SETUP_COMMAND_BLOCK}}
+
+      - name: Build
+        shell: bash
+        run: |
+{{BUILD_COMMAND_BLOCK}}
+
+      - name: Test
+        shell: bash
+        run: |
+{{TEST_COMMAND_BLOCK}}

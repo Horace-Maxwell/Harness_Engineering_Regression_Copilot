@@ -1,0 +1,20 @@
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Logs and temporary output
+*.log
+tmp/
+temp/
+
+# Common generated artifacts
+coverage/
+dist/
+build/
+
+# Extend this file with your language or framework specific rules.

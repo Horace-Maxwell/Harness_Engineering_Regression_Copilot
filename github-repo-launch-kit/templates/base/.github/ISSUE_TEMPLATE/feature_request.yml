@@ -1,0 +1,25 @@
+name: Feature request / 功能建议
+description: Suggest an improvement / 提出改进建议
+title: "[feature] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / 问题
+      description: What problem are you trying to solve / 你想解决什么问题
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal / 方案
+      description: What change would help / 什么改动会有帮助
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context / 背景
+      description: Add examples, constraints, or alternatives. / 可以补充示例、限制条件或备选方案。

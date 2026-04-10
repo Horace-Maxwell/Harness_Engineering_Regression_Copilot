@@ -1,0 +1,101 @@
+{
+  "measuredAt": "2026-04-10T02:15:14.789Z",
+  "environment": {
+    "node": "v25.6.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "methodology": {
+    "aircRawFailure": {
+      "commands": 4,
+      "manualFiles": 0,
+      "manualLoc": 0,
+      "description": "init -> import --paste -> distill -> run case_001"
+    },
+    "promptfooLoggedOutput": {
+      "commandsAfterConfig": 1,
+      "manualFiles": 1,
+      "manualLoc": 10,
+      "description": "promptfooconfig.yaml using the official Echo Provider pattern for logged outputs"
+    },
+    "deepevalQuickstart": {
+      "shellStepsShownInQuickstart": 5,
+      "manualFiles": 1,
+      "manualLoc": 18,
+      "requiresApiKeyInQuickstart": true,
+      "description": "official GitHub QuickStart using GEval and OPENAI_API_KEY"
+    }
+  },
+  "benchmarks": {
+    "rawFailureToFirstFail": {
+      "iterations": 10,
+      "medianMs": 459.1,
+      "p90Ms": 472.8,
+      "minMs": 436.3,
+      "maxMs": 515.7,
+      "rawSamplesMs": [
+        462,
+        452.1,
+        459.5,
+        458.8,
+        466.1,
+        472.8,
+        456.6,
+        458.2,
+        436.3,
+        515.7
+      ]
+    },
+    "manualCaseToPass": {
+      "iterations": 10,
+      "medianMs": 455.2,
+      "p90Ms": 471.6,
+      "minMs": 446,
+      "maxMs": 495.2,
+      "rawSamplesMs": [
+        451.8,
+        454.6,
+        446,
+        465.8,
+        471.6,
+        451.7,
+        456.9,
+        455.8,
+        495.2,
+        451.7
+      ]
+    },
+    "runHundredDeterministicCases": {
+      "caseCount": 100,
+      "iterations": 5,
+      "medianMs": 142.9,
+      "p90Ms": 145.2,
+      "minMs": 140.8,
+      "maxMs": 145.2,
+      "rawSamplesMs": [
+        142.9,
+        143.3,
+        140.8,
+        145.2,
+        142.7
+      ]
+    }
+  },
+  "packageFootprints": {
+    "airc": {
+      "version": "0.1.0",
+      "packageSizeBytes": 43386,
+      "unpackedSizeBytes": 215595,
+      "fileCount": 84
+    },
+    "promptfoo": {
+      "version": "0.121.3",
+      "unpackedSizeBytes": 22029945
+    },
+    "deepeval": {
+      "version": "3.9.6",
+      "releaseArtifactSizeBytes": 1457898,
+      "releaseFileCount": 2
+    }
+  }
+}

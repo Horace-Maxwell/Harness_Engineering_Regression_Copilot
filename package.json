@@ -1,0 +1,55 @@
+{
+  "name": "ai-regression-copilot",
+  "version": "0.1.0",
+  "description": "Failure-first AI regression testing CLI.",
+  "author": "Horace Dong",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Horace-Maxwell/ai-regression-copilot.git"
+  },
+  "homepage": "https://github.com/Horace-Maxwell/ai-regression-copilot#readme",
+  "bugs": {
+    "url": "https://github.com/Horace-Maxwell/ai-regression-copilot/issues"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bin": {
+    "airc": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "node dist/cli.js",
+    "repo-kit:scaffold": "node github-repo-launch-kit/scaffold-repo.mjs",
+    "benchmark:run": "node benchmarks/run-benchmarks.mjs",
+    "benchmark:workflows": "node benchmarks/run-workflow-impact.mjs",
+    "pack:check": "npm pack --dry-run --loglevel=error",
+    "test": "npm run build && node --test",
+    "check": "npm run typecheck && npm run test && npm run pack:check"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "evals",
+    "regression-testing",
+    "llm",
+    "agents"
+  ],
+  "dependencies": {
+    "commander": "^13.1.0",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2"
+  }
+}

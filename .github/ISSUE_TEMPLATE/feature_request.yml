@@ -1,0 +1,20 @@
+name: Feature request / 功能建议
+description: Propose a product or CLI improvement / 提出产品或 CLI 改进
+title: "[feature] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / 问题
+      description: What gap are you seeing / 你看到的缺口是什么
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal / 方案
+      description: What should change / 希望怎么改
+    validations:
+      required: true

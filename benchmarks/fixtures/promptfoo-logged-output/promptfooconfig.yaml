@@ -1,0 +1,13 @@
+# Based on Promptfoo's Echo Provider docs for evaluating logged production outputs.
+providers:
+  - echo
+
+prompts:
+  - '{{logged_output}}'
+
+tests:
+  - vars:
+      logged_output: 'We can help.'
+    assert:
+      - type: icontains
+        value: 'refund policy'

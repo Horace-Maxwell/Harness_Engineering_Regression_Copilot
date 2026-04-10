@@ -1,0 +1,31 @@
+name: Bug report / Bug 报告
+description: Report a reproducible bug / 报告一个可复现的问题
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary / 概要
+      description: What happened / 发生了什么
+      placeholder: Describe the issue clearly. / 请清楚描述问题。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction / 复现方式
+      description: Provide steps, commands, input, and expected behavior. / 请提供步骤、命令、输入和预期行为。
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / 版本
+      placeholder: e.g. main, v0.1.0
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 环境
+      description: OS, runtime, browser, package manager, or anything relevant. / 操作系统、运行时、浏览器、包管理器等相关信息。
