@@ -1,7 +1,9 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const scriptPath = fileURLToPath(import.meta.url);
+const root = path.resolve(path.dirname(scriptPath), "..");
 
 function loadJson(relativePath) {
   return readFile(path.join(root, relativePath), "utf8").then((content) => JSON.parse(content));
@@ -236,7 +238,7 @@ ${table(
 ## Reproduction / 复现方式
 
 \`\`\`bash
-npm install
+npm ci
 npm run benchmark:reproduce
 \`\`\`
 

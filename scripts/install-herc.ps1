@@ -14,8 +14,13 @@ if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
   throw "npm is required but was not found in PATH."
 }
 
+$installCommand = "install"
+if (Test-Path "package-lock.json") {
+  $installCommand = "ci"
+}
+
 Write-Host "Installing dependencies..."
-npm install
+npm $installCommand
 
 Write-Host "Building HERC..."
 npm run build

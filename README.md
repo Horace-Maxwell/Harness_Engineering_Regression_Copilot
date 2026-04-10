@@ -27,12 +27,12 @@
     <img src="https://img.shields.io/badge/protected%20correctness-92.8%25%E2%86%92100%25-0f766e?style=for-the-badge" alt="Protected correctness 92.8% to 100%" />
     <img src="https://img.shields.io/badge/failure%20leakage-100%25%20reduced-15803d?style=for-the-badge" alt="Failure leakage reduced 100%" />
     <img src="https://img.shields.io/badge/report%20comparison-66.7%25%20fewer%20commands-1d4ed8?style=for-the-badge" alt="Report comparison 66.7% fewer commands" />
-    <img src="https://img.shields.io/badge/preflight-64.2%25%20faster-f97316?style=for-the-badge" alt="Preflight 64.2% faster" />
+    <img src="https://img.shields.io/badge/preflight-65.1%25%20faster-f97316?style=for-the-badge" alt="Preflight 65.1% faster" />
   </p>
   <p>
-    <img src="https://img.shields.io/badge/first%20failing%20gate-466.6ms-0f766e?style=for-the-badge" alt="First failing gate 466.6ms" />
-    <img src="https://img.shields.io/badge/100%20cases-145.6ms-1d4ed8?style=for-the-badge" alt="100 cases 145.6ms" />
-    <img src="https://img.shields.io/badge/throughput-686.8%20cases%2Fs-15803d?style=for-the-badge" alt="Throughput 686.8 cases per second" />
+    <img src="https://img.shields.io/badge/first%20failing%20gate-472.5ms-0f766e?style=for-the-badge" alt="First failing gate 472.5ms" />
+    <img src="https://img.shields.io/badge/100%20cases-145.1ms-1d4ed8?style=for-the-badge" alt="100 cases 145.1ms" />
+    <img src="https://img.shields.io/badge/throughput-689.2%20cases%2Fs-15803d?style=for-the-badge" alt="Throughput 689.2 cases per second" />
     <img src="https://img.shields.io/badge/changed--only-5000%E2%86%923%20cases-f97316?style=for-the-badge" alt="Changed-only 5000 to 3 cases" />
     <img src="https://img.shields.io/badge/package-55.4%20KB-7c3aed?style=for-the-badge" alt="Package size 55.4 KB" />
   </p>
@@ -53,9 +53,9 @@
 | --- | --- | --- | --- |
 | Protected instruction correctness / 历史受保护指令正确率 | 在 `920` 条历史受保护指令上，发布前不使用 HERC 的加权正确率是 `92.8%`，接入 HERC 后提升到 `100%`，净提升 `+7.2` 个百分点。 | Across `920` protected historical instructions, shipped correctness rises from `92.8%` without HERC to `100%` with HERC, a net lift of `+7.2` percentage points. | [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) |
 | Failure leakage reduction / 历史失败泄漏下降 | 这组对照实验里，历史失败泄漏下降 `100%`，也就是已知失败不会再直接混进发布版本。 | In the controlled adoption benchmark, historical failure leakage drops by `100%`, meaning known failures stop slipping into the shipped build. | [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) |
-| CI execution reduction / CI 执行面缩减 | 在 `5000` 个 case 的套件里，`--changed` 把执行面从 `5000` 个 case 缩到 `3` 个，执行量下降 `99.9%`，总时间下降 `26.8%`。 | In a `5000`-case suite, `--changed` reduces execution from `5000` cases to `3`, cutting executed cases by `99.9%` and total time by `26.8%`. | [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json) |
-| Faster regression triage / 更快的回归排查 | `herc report --compare-previous` 把报告对比从 `3` 条命令和 `9` 行临时逻辑压到 `1` 条命令，耗时中位数从 `286.3 ms` 降到 `112.5 ms`，时间下降 `60.7%`。 | `herc report --compare-previous` compresses report comparison from `3` commands and `9` lines of ad hoc logic into `1` command, cutting median time from `286.3 ms` to `112.5 ms`, a `60.7%` reduction. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
-| Faster preflight / 更快的预检 | `herc doctor --quick` 能在误跑前直接识别非 Git 工作区，让一次本来会白跑的 `1000` case 执行变成 `0` case；中位耗时从 `367.1 ms` 降到 `131.3 ms`，时间下降 `64.2%`。 | `herc doctor --quick` catches non-Git changed-only fallbacks before a wasted run, turning a would-be `1000`-case execution into `0` executed cases; median time drops from `367.1 ms` to `131.3 ms`, a `64.2%` reduction. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| CI execution reduction / CI 执行面缩减 | 在 `5000` 个 case 的套件里，`--changed` 把执行面从 `5000` 个 case 缩到 `3` 个，执行量下降 `99.9%`，总时间下降 `25.9%`。 | In a `5000`-case suite, `--changed` reduces execution from `5000` cases to `3`, cutting executed cases by `99.9%` and total time by `25.9%`. | [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json) |
+| Faster regression triage / 更快的回归排查 | `herc report --compare-previous` 把报告对比从 `3` 条命令和 `9` 行临时逻辑压到 `1` 条命令，耗时中位数从 `287.8 ms` 降到 `112.5 ms`，时间下降 `60.9%`。 | `herc report --compare-previous` compresses report comparison from `3` commands and `9` lines of ad hoc logic into `1` command, cutting median time from `287.8 ms` to `112.5 ms`, a `60.9%` reduction. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| Faster preflight / 更快的预检 | `herc doctor --quick` 能在误跑前直接识别非 Git 工作区，让一次本来会白跑的 `1000` case 执行变成 `0` case；中位耗时从 `354.1 ms` 降到 `123.5 ms`，时间下降 `65.1%`。 | `herc doctor --quick` catches non-Git changed-only fallbacks before a wasted run, turning a would-be `1000`-case execution into `0` executed cases; median time drops from `354.1 ms` to `123.5 ms`, a `65.1%` reduction. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
 | Lightweight deployment / 轻量部署 | 包体积只有 `55.4 KB` packed、`255.8 KB` unpacked，运行时依赖是 `2` 个，CI 已覆盖 `macOS`、`Linux`、`Windows` 以及 `Node 18/20`。 | The package stays at `55.4 KB` packed and `255.8 KB` unpacked, ships with `2` runtime dependencies, and already runs in CI across `macOS`, `Linux`, `Windows`, plus `Node 18/20`. | [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [.github/workflows/ci.yml](.github/workflows/ci.yml) |
 
 ## Why Teams Like It / 团队为什么会喜欢它
@@ -90,7 +90,7 @@
 ```bash
 git clone https://github.com/Horace-Maxwell/Harness_Engineering_Regression_Copilot.git
 cd Harness_Engineering_Regression_Copilot
-npm install
+npm ci
 npm run build
 npm link
 herc version
@@ -115,7 +115,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-herc.ps1
 ```bash
 git clone https://github.com/Horace-Maxwell/Harness_Engineering_Regression_Copilot.git
 cd Harness_Engineering_Regression_Copilot
-npm install
+npm ci
 npm run benchmark:reproduce
 ```
 
@@ -191,20 +191,20 @@ herc report --format summary
 
 | Dimension / 维度 | 中文 | English |
 | --- | --- | --- |
-| Baseline runner performance / 基础执行性能 | 从一条原始失败到第一次红灯，HERC 的中位耗时是 `466.6 ms`；100 个确定性 case 的执行中位耗时是 `145.6 ms`。 | HERC reaches the first failing gate from one raw failure in `466.6 ms` median, and executes `100` deterministic cases in `145.6 ms` median. |
-| Real workflow throughput / 真实工作流吞吐 | Support 批量导入 `50` 条 incident 并提炼成 case 的中位耗时是 `536.3 ms`，AI engineer 从投诉到红灯 gate 的中位耗时是 `463.1 ms`。 | A support batch import of `50` incidents to draft cases finishes in `536.3 ms` median, and an AI engineer can turn one complaint into a failing gate in `463.1 ms` median. |
+| Baseline runner performance / 基础执行性能 | 从一条原始失败到第一次红灯，HERC 的中位耗时是 `472.5 ms`；100 个确定性 case 的执行中位耗时是 `145.1 ms`。 | HERC reaches the first failing gate from one raw failure in `472.5 ms` median, and executes `100` deterministic cases in `145.1 ms` median. |
+| Real workflow throughput / 真实工作流吞吐 | Support 批量导入 `50` 条 incident 并提炼成 case 的中位耗时是 `534.7 ms`，AI engineer 从投诉到红灯 gate 的中位耗时是 `458.9 ms`。 | A support batch import of `50` incidents to draft cases finishes in `534.7 ms` median, and an AI engineer can turn one complaint into a failing gate in `458.9 ms` median. |
 | Shipped quality lift / 发布质量提升 | 在 `5` 个发布场景、`920` 条历史受保护指令上，采用 HERC 后的加权发布正确率从 `92.8%` 提升到 `100%`。 | Across `5` release scenarios and `920` protected historical instructions, adopting HERC raises weighted shipped correctness from `92.8%` to `100%`. |
-| Workflow upgrade gains / 工作流升级收益 | 报告对比命令数下降 `66.7%`，非 Git 误跑预检时间下降 `64.2%`，并避免了 `1000` 个无意义执行 case。 | Workflow upgrades reduce report comparison commands by `66.7%`, cut non-Git preflight time by `64.2%`, and avoid `1000` wasted case executions. |
+| Workflow upgrade gains / 工作流升级收益 | 报告对比命令数下降 `66.7%`，非 Git 误跑预检时间下降 `65.1%`，并避免了 `1000` 个无意义执行 case。 | Workflow upgrades reduce report comparison commands by `66.7%`, cut non-Git preflight time by `65.1%`, and avoid `1000` wasted case executions. |
 | Cross-platform deployability / 跨平台部署性 | 当前包体积 `55.4 KB`，运行时依赖 `2` 个，并已在 `3` 个操作系统和 `2` 个 Node 版本矩阵里验证。 | The current package is `55.4 KB`, uses `2` runtime dependencies, and is validated across a `3`-OS by `2`-Node-version matrix. |
 
 ### Baseline Performance / 基础性能
 
 | Scenario / 场景 | Result / 结果 | Why it matters / 意义 |
 | --- | --- | --- |
-| Raw failure to first failing gate / 原始失败到第一次红灯 | `466.6 ms` median | 适合本地调试、快速复现和修复回路 / Fast enough for local repro and fix loops |
-| Manual case to first passing gate / 手工建 case 到首次通过 | `459.9 ms` median | case 审核和 baseline 循环很短 / Keeps review and baseline loops short |
-| 100 deterministic cases / 100 个确定性 case | `145.6 ms` median | 单次执行足够轻，适合高频本地运行 / Light enough for frequent local runs |
-| Approximate throughput / 近似吞吐 | `~686.8 cases/sec` | 说明 deterministic runner 的执行面很轻 / Shows the deterministic runner stays lightweight |
+| Raw failure to first failing gate / 原始失败到第一次红灯 | `472.5 ms` median | 适合本地调试、快速复现和修复回路 / Fast enough for local repro and fix loops |
+| Manual case to first passing gate / 手工建 case 到首次通过 | `457.7 ms` median | case 审核和 baseline 循环很短 / Keeps review and baseline loops short |
+| 100 deterministic cases / 100 个确定性 case | `145.1 ms` median | 单次执行足够轻，适合高频本地运行 / Light enough for frequent local runs |
+| Approximate throughput / 近似吞吐 | `~689.2 cases/sec` | 说明 deterministic runner 的执行面很轻 / Shows the deterministic runner stays lightweight |
 | Packed package size / 打包体积 | `55.4 KB` | 适合小仓库、脚本化接入和本地工具链 / Friendly to small repos, scripts, and local toolchains |
 
 ### Adoption Lift / 接入后的质量提升
@@ -229,20 +229,20 @@ herc report --format summary
 
 | Role / 角色 | Workflow / 工作流 | Result / 结果 |
 | --- | --- | --- |
-| Support / Ops / PM | Import `50` incidents and distill draft cases / 导入 `50` 条 incident 并提炼 case | `50 -> 50` draft cases, `536.3 ms` median |
-| AI engineer | Turn one complaint into a failing gate / 把一条投诉变成红灯 gate | `463.1 ms` median |
-| QA / Reviewer | Accept one case and validate baseline / 接受一个 case 并验证 baseline | `470.2 ms` median |
-| CI / Platform | Run only changed cases in a `5000` case suite / 在 `5000` 个 case 的套件里只跑 changed cases | `5000 -> 3` executed cases, `99.9%` fewer cases, `26.8%` less time |
+| Support / Ops / PM | Import `50` incidents and distill draft cases / 导入 `50` 条 incident 并提炼 case | `50 -> 50` draft cases, `534.7 ms` median |
+| AI engineer | Turn one complaint into a failing gate / 把一条投诉变成红灯 gate | `458.9 ms` median |
+| QA / Reviewer | Accept one case and validate baseline / 接受一个 case 并验证 baseline | `459.1 ms` median |
+| CI / Platform | Run only changed cases in a `5000` case suite / 在 `5000` 个 case 的套件里只跑 changed cases | `5000 -> 3` executed cases, `99.9%` fewer cases, `25.9%` less time |
 | Release owner | Enforce review quality in `deep` profile / 在 `deep` 档严格执行审核门禁 | Blocked `5/5` unreviewed cases |
-| Regression triage | Compare latest run against the previous run / 对比最新 run 与上一次 run | `286.3 ms -> 112.5 ms`, `66.7%` fewer commands |
-| CI preflight | Detect non-git changed-only fallback before wasting a run / 在误跑前发现非 Git changed-only fallback | Avoided `1000` executed cases, `64.2%` less time with `doctor --quick` |
+| Regression triage | Compare latest run against the previous run / 对比最新 run 与上一次 run | `287.8 ms -> 112.5 ms`, `66.7%` fewer commands |
+| CI preflight | Detect non-git changed-only fallback before wasting a run / 在误跑前发现非 Git changed-only fallback | Avoided `1000` executed cases, `65.1%` less time with `doctor --quick` |
 
 ### Workflow Upgrade Details / 工作流升级细节
 
 | Upgrade / 升级点 | 中文 | English | Source / 来源 |
 | --- | --- | --- | --- |
-| `report --compare-previous` | 把历史上需要 `3` 条命令和 `9` 行临时逻辑的对比操作压缩成 `1` 条命令，时间中位数下降 `60.7%`。 | Compresses a comparison workflow that previously needed `3` commands and `9` lines of ad hoc logic into `1` command, reducing median time by `60.7%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
-| `doctor --quick` | 在非 Git 工作区能提前阻止 `--changed` 误跑，避免 `1000` 个无意义 case 执行，时间下降 `64.2%`。 | Stops `--changed` from misfiring in a non-Git workspace, avoiding `1000` meaningless case executions while cutting time by `64.2%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| `report --compare-previous` | 把历史上需要 `3` 条命令和 `9` 行临时逻辑的对比操作压缩成 `1` 条命令，时间中位数下降 `60.9%`。 | Compresses a comparison workflow that previously needed `3` commands and `9` lines of ad hoc logic into `1` command, reducing median time by `60.9%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| `doctor --quick` | 在非 Git 工作区能提前阻止 `--changed` 误跑，避免 `1000` 个无意义 case 执行，时间下降 `65.1%`。 | Stops `--changed` from misfiring in a non-Git workspace, avoiding `1000` meaningless case executions while cutting time by `65.1%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
 | automatic `.gitignore` sync | `herc init` 默认自动写入 `.herc/incidents`、`.herc/reports`、`.herc/responses`，把手工修改文件数从 `1` 降到 `0`。 | `herc init` now writes `.herc/incidents`, `.herc/reports`, and `.herc/responses` into `.gitignore` by default, reducing manual file edits from `1` to `0`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
 
 | 中文 | English |

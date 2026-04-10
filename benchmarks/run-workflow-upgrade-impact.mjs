@@ -4,8 +4,10 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const scriptPath = fileURLToPath(import.meta.url);
+const root = path.resolve(path.dirname(scriptPath), "..");
 const cliPath = path.join(root, "dist", "cli.js");
 
 function runNode(args, options = {}) {

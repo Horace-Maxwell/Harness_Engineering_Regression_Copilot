@@ -1,8 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const scriptPath = fileURLToPath(import.meta.url);
+const root = path.resolve(path.dirname(scriptPath), "..");
 const resultsDir = path.join(root, "benchmarks", "results");
 
 function run(command, args, options = {}) {

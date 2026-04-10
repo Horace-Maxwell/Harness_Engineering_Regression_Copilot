@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T04:06:31.076Z",
+  "measuredAt": "2026-04-10T04:16:35.793Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -29,63 +29,63 @@
   "benchmarks": {
     "rawFailureToFirstFail": {
       "iterations": 10,
-      "medianMs": 466.6,
-      "p90Ms": 472.1,
-      "minMs": 455.4,
-      "maxMs": 491.9,
+      "medianMs": 472.5,
+      "p90Ms": 513.4,
+      "minMs": 458,
+      "maxMs": 514.9,
       "rawSamplesMs": [
-        467.8,
-        471.1,
-        472.1,
-        491.9,
-        458.6,
-        463.8,
-        470,
-        460.7,
-        455.4,
-        465.3
+        491.6,
+        514.9,
+        513.4,
+        476.3,
+        462.4,
+        461.1,
+        469.4,
+        475.6,
+        458,
+        463
       ]
     },
     "manualCaseToPass": {
       "iterations": 10,
-      "medianMs": 459.9,
-      "p90Ms": 466.6,
-      "minMs": 457.8,
-      "maxMs": 501.1,
+      "medianMs": 457.7,
+      "p90Ms": 459.7,
+      "minMs": 454.6,
+      "maxMs": 460,
       "rawSamplesMs": [
+        455.2,
         459.7,
-        459.9,
+        454.6,
+        459.2,
+        455.5,
         458.1,
-        458,
-        457.8,
-        463.4,
-        464.3,
-        466.6,
-        459.9,
-        501.1
+        458.2,
+        460,
+        457.3,
+        456.3
       ]
     },
     "runHundredDeterministicCases": {
       "caseCount": 100,
       "iterations": 5,
-      "medianMs": 145.6,
-      "p90Ms": 151.7,
-      "minMs": 143.4,
-      "maxMs": 151.7,
+      "medianMs": 145.1,
+      "p90Ms": 146.9,
+      "minMs": 140.1,
+      "maxMs": 146.9,
       "rawSamplesMs": [
-        148.1,
-        151.7,
-        143.4,
-        145.5,
-        145.6
+        145.3,
+        140.1,
+        146.9,
+        145.1,
+        143.2
       ]
     }
   },
   "packageFootprints": {
     "herc": {
       "version": "0.1.0",
-      "packageSizeBytes": 55384,
-      "unpackedSizeBytes": 255772,
+      "packageSizeBytes": 55390,
+      "unpackedSizeBytes": 255762,
       "fileCount": 84
     },
     "promptfoo": {

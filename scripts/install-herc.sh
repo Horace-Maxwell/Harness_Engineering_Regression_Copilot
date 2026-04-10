@@ -17,8 +17,13 @@ if ! command -v npm >/dev/null 2>&1; then
   exit 1
 fi
 
+install_cmd="npm install"
+if [ -f package-lock.json ]; then
+  install_cmd="npm ci"
+fi
+
 echo "Installing dependencies..."
-npm install
+$install_cmd
 
 echo "Building HERC..."
 npm run build

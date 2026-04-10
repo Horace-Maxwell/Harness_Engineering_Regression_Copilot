@@ -3,7 +3,7 @@
 | 中文 | English |
 | --- | --- |
 | 这份白皮书整理了 HERC 当前公开 benchmark 的核心结果，并把原来偏“README 摘要”的数字补成更接近研究报告的结构：包含任务分层、95% 置信区间、工作流前后对照，以及部署体量与跨平台信息。 | This whitepaper consolidates HERC's public benchmarks into a more research-style package, extending the README summary with task stratification, 95% confidence intervals, before/after workflow comparisons, and deployment footprint data. |
-| 当前文档基于仓库内公开结果文件生成，测量日期为 2026-04-10T04:07:37.000Z。 | This document is generated from the public result files in the repository, with measurements captured at 2026-04-10T04:07:37.000Z. |
+| 当前文档基于仓库内公开结果文件生成，测量日期为 2026-04-10T04:17:40.096Z。 | This document is generated from the public result files in the repository, with measurements captured at 2026-04-10T04:17:40.096Z. |
 
 ## Abstract / 摘要
 
@@ -12,7 +12,7 @@
 | Protected instruction correctness / 历史受保护指令正确率 | 92.8% -> 100.0%; 7.2 pp (95% CI 5.5 to 8.8 pp) | HERC closes the last-mile gap between known historical failures and shipped behavior. |
 | Failure leakage / 历史失败泄漏 | 100.0% | Known historical failures stop leaking into the shipped candidate in this controlled release-gate setup. |
 | Changed-only execution reduction / changed-only 执行面缩减 | 89.7% | Most protected instructions stay out of the critical-path run when only a narrow slice changed. |
-| Regression triage improvement / 回归排查提升 | 286.3 ms -> 112.5 ms | Comparing the latest run against the previous run becomes a single-command workflow. |
+| Regression triage improvement / 回归排查提升 | 287.8 ms -> 112.5 ms | Comparing the latest run against the previous run becomes a single-command workflow. |
 | Deployment footprint / 部署体量 | 55.4 KB packed; 84 files | The package remains lightweight enough for repo-local rollout and fast onboarding. |
 
 ## Primary Findings / 核心发现
@@ -21,7 +21,7 @@
 | --- | --- | --- |
 | Overall quality uplift / 总体质量提升 | 在 920 条历史受保护指令上，不使用 HERC 时加权正确率是 92.8%，95% 置信区间为 91.2% 到 94.5%；使用 HERC 后达到 100.0%。 | Across 920 protected historical instructions, weighted correctness is 92.8% without HERC, with a 95% confidence interval from 91.2% to 94.5%; with HERC it reaches 100.0%. |
 | Lift estimate / uplift 估计 | 总体 uplift 是 7.2 个百分点，95% 置信区间为 5.5 到 8.8 个百分点。 | The overall uplift is 7.2 percentage points, with a 95% confidence interval from 5.5 to 8.8 percentage points. |
-| Workflow efficiency / 工作流效率 | changed-only 平均把执行面缩小 89.7%；在 5000 case 套件里，执行量从 5000 降到 3，总时间下降 26.8%。 | Changed-only execution reduces the average execution surface by 89.7%; in the 5000-case suite benchmark, execution drops from 5000 to 3 cases and total time falls by 26.8%. |
+| Workflow efficiency / 工作流效率 | changed-only 平均把执行面缩小 89.7%；在 5000 case 套件里，执行量从 5000 降到 3，总时间下降 25.9%。 | Changed-only execution reduces the average execution surface by 89.7%; in the 5000-case suite benchmark, execution drops from 5000 to 3 cases and total time falls by 25.9%. |
 
 ## Stratified Uplift By Task Group / 按任务组分层的 Uplift
 
@@ -53,18 +53,18 @@
 
 | Workflow / 工作流 | Before / 之前 | After / 之后 | Improvement / 提升 |
 | --- | --- | --- | --- |
-| Report comparison / 报告对比 | 3 commands; 286.3 ms | 1 command; 112.5 ms | 66.7% fewer commands; 60.7% less time |
-| Changed-only preflight / changed-only 预检 | 1000 executed cases; 367.1 ms | 0 executed cases; 131.3 ms | 1000 cases avoided; 64.2% less time |
+| Report comparison / 报告对比 | 3 commands; 287.8 ms | 1 command; 112.5 ms | 66.7% fewer commands; 60.9% less time |
+| Changed-only preflight / changed-only 预检 | 1000 executed cases; 354.1 ms | 0 executed cases; 123.5 ms | 1000 cases avoided; 65.1% less time |
 | Automatic .gitignore sync / 自动 .gitignore 同步 | 1 manual file; 3 manual LOC | 0 manual files; 0 manual LOC | 100.0% fewer manual files |
 
 ## Operational Benchmarks / 运行工作流基准
 
 | Workflow / 工作流 | Result / 结果 | Interpretation / 解读 |
 | --- | --- | --- |
-| Support batch import / 支持团队批量导入 | 50 cases in 536.3 ms | A support or ops team can convert historical incidents into draft regression cases in a sub-second local loop. |
-| AI engineer repro-to-gate / AI 工程师从投诉到红灯 | 463.1 ms | A single complaint can become a failing gate quickly enough to fit into an ordinary debug session. |
-| QA accept-and-pass / QA 审核并通过 | 470.2 ms | Review plus baseline confirmation remains short enough for high-frequency maintenance. |
-| Large-suite changed-only / 大套件 changed-only | 5000 -> 3 cases; 26.8% less time | The biggest savings show up when the suite grows and only a small portion changes. |
+| Support batch import / 支持团队批量导入 | 50 cases in 534.7 ms | A support or ops team can convert historical incidents into draft regression cases in a sub-second local loop. |
+| AI engineer repro-to-gate / AI 工程师从投诉到红灯 | 458.9 ms | A single complaint can become a failing gate quickly enough to fit into an ordinary debug session. |
+| QA accept-and-pass / QA 审核并通过 | 459.1 ms | Review plus baseline confirmation remains short enough for high-frequency maintenance. |
+| Large-suite changed-only / 大套件 changed-only | 5000 -> 3 cases; 25.9% less time | The biggest savings show up when the suite grows and only a small portion changes. |
 
 ## Deployment and Portability / 部署与可移植性
 
@@ -85,7 +85,7 @@
 ## Reproduction / 复现方式
 
 ```bash
-npm install
+npm ci
 npm run benchmark:reproduce
 ```
 

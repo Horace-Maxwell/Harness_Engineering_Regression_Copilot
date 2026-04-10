@@ -5,8 +5,10 @@ import { performance } from "node:perf_hooks";
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import https from "node:https";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const scriptPath = fileURLToPath(import.meta.url);
+const root = path.resolve(path.dirname(scriptPath), "..");
 const cliPath = path.join(root, "dist", "cli.js");
 
 function runNode(args, options = {}) {
