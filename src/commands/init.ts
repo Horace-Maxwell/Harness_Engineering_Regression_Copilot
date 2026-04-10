@@ -3,19 +3,12 @@ import path from "node:path";
 import { Command } from "commander";
 
 import {
-  createDefaultConfig,
-  ensureGitignoreEntries,
   exists,
   findWorkspaceRoot,
-  getHercRoot,
-  getCasesDir,
-  getConfigPath,
-  getResponsesDir,
-  initializeWorkspace,
   readConfig,
-  writeConfig,
-  writeTextFile,
 } from "../lib/fs.js";
+import { bootstrapWorkspace, getRecommendedGitignoreEntries } from "../lib/bootstrap.js";
+import { getConfigPath, getHercRoot } from "../lib/fs.js";
 import { applyGlobalOptions, printJsonIfNeeded, withGlobalOptions } from "../lib/command.js";
 import { CliError } from "../lib/errors.js";
 import { blank, bullet, nextStep, section } from "../lib/output.js";
@@ -44,44 +37,18 @@ export function createInitCommand(): Command {
 
       const existingConfig = alreadyInitialized ? await readConfig(projectRoot) : null;
       const projectName = options.projectName ?? existingConfig?.projectName ?? path.basename(projectRoot);
-      const config = alreadyInitialized && !options.force ? existingConfig! : createDefaultConfig(projectName);
-      config.projectName = projectName;
-
-      const sampleCasePath = path.join(getCasesDir(projectRoot, config), "sample_case.yaml");
-      const sampleCase = `id: sample_case
-title: Sample case
-status: active
-taskType: chat
-createdFrom: manual
-updatedAt: ${new Date().toISOString()}
-priority: low
-tags:
-  - sample
-expectedBehavior:
-  summary: Replace this sample with a real failure-derived case.
-check:
-  type: contains
-  config:
-    value: example
-notes:
-  generatedBy: herc_init
-  reviewStatus: reviewed
-  confidence: high
-  reviewedBy: herc
-  reviewNote: Sample case created during initialization.
-`;
-      const sampleResponsePath = path.join(getResponsesDir(projectRoot, config), "sample_case.txt");
-      const recommendedGitignoreEntries = [".herc/incidents", ".herc/reports", ".herc/responses"];
+      const recommendedGitignoreEntries = getRecommendedGitignoreEntries();
 
       const payload = {
         projectRoot,
         workspace: hercRoot,
         configPath,
-        sampleCasePath,
-        sampleResponsePath,
+        sampleCasePath: path.join(hercRoot, "cases", "sample_case.yaml"),
+        sampleResponsePath: path.join(hercRoot, "responses", "sample_case.txt"),
         recommendedGitignoreEntries,
         alreadyInitialized,
         dryRun: options.dryRun === true,
+        next: "herc doctor --quick",
       };
       if (printJsonIfNeeded(payload, options)) {
         return;
@@ -92,8 +59,8 @@ notes:
         blank();
         bullet(`Workspace: ${hercRoot}`);
         bullet(`Config: ${configPath}`);
-        bullet(`Sample case: ${sampleCasePath}`);
-        bullet(`Sample response: ${sampleResponsePath}`);
+        bullet(`Sample case: ${payload.sampleCasePath}`);
+        bullet(`Sample response: ${payload.sampleResponsePath}`);
         if (options.syncGitignore !== false) {
           bullet(`Recommended .gitignore entries: ${recommendedGitignoreEntries.join(", ")}`);
         }
@@ -102,19 +69,12 @@ notes:
         return;
       }
 
-      await initializeWorkspace(projectRoot, config);
-      if (!alreadyInitialized || options.force || options.projectName) {
-        await writeConfig(config, projectRoot);
-      }
-      if (options.force || !(await exists(sampleCasePath))) {
-        await writeTextFile(sampleCasePath, sampleCase);
-      }
-      if (options.force || !(await exists(sampleResponsePath))) {
-        await writeTextFile(sampleResponsePath, "example");
-      }
-      const gitignoreUpdate = options.syncGitignore === false
-        ? { updated: false, added: [] as string[], path: path.join(projectRoot, ".gitignore") }
-        : await ensureGitignoreEntries(projectRoot, recommendedGitignoreEntries);
+      const bootstrap = await bootstrapWorkspace(projectRoot, {
+        projectName,
+        force: options.force,
+        syncGitignore: options.syncGitignore,
+        ensureSampleAssets: true,
+      });
 
       section(
         alreadyInitialized
@@ -122,18 +82,18 @@ notes:
           : "Initialized Harness_Engineering_Regression_Copilot.",
       );
       blank();
-      bullet(`Workspace: ${hercRoot}`);
-      bullet(`Config: ${configPath}`);
-      bullet(`Sample case: ${sampleCasePath}`);
-      bullet(`Sample response: ${sampleResponsePath}`);
+      bullet(`Workspace: ${bootstrap.workspaceRoot}`);
+      bullet(`Config: ${bootstrap.configPath}`);
+      bullet(`Sample case: ${bootstrap.sampleCasePath}`);
+      bullet(`Sample response: ${bootstrap.sampleResponsePath}`);
       if (options.syncGitignore === false) {
         bullet("Gitignore sync: skipped");
-      } else if (gitignoreUpdate.updated) {
-        bullet(`Gitignore updated: ${gitignoreUpdate.added.join(", ")}`);
+      } else if (bootstrap.gitignore?.updated) {
+        bullet(`Gitignore updated: ${bootstrap.gitignore.added.join(", ")}`);
       } else {
         bullet("Gitignore updated: already configured");
       }
       blank();
-      nextStep("herc run");
+      nextStep("herc doctor --quick");
     });
 }

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T06:07:40.734Z",
+  "measuredAt": "2026-04-10T06:35:27.634Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -20,8 +20,8 @@
     "supportOpsBatchImport": {
       "iterations": 5,
       "incidentCount": 50,
-      "medianMs": 545,
-      "p90Ms": 550.6,
+      "medianMs": 546.8,
+      "p90Ms": 589.3,
       "createdCasesPerRun": [
         50,
         50,
@@ -33,24 +33,24 @@
     },
     "aiEngineerReproToGate": {
       "iterations": 10,
-      "medianMs": 477,
-      "p90Ms": 504.1,
+      "medianMs": 495.4,
+      "p90Ms": 619.8,
       "medianFailedCases": 1
     },
     "qaReviewerAcceptAndPass": {
       "iterations": 10,
-      "medianMs": 476,
-      "p90Ms": 501.2,
+      "medianMs": 480.3,
+      "p90Ms": 535.7,
       "medianPassedCases": 1
     },
     "ciOwnerChangedOnlyGate": {
       "iterations": 3,
       "fullSuiteCaseCount": 5000,
       "changedCaseCount": 3,
-      "fullMedianMs": 1208.4,
-      "changedMedianMs": 858,
+      "fullMedianMs": 1314.7,
+      "changedMedianMs": 919.5,
       "speedupX": 1.4,
-      "timeReductionPct": 29,
+      "timeReductionPct": 30.1,
       "executedCaseReductionPct": 99.9,
       "changedTotals": [
         3,

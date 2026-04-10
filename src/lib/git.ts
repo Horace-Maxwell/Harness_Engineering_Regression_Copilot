@@ -6,7 +6,11 @@ const execFileAsync = promisify(execFile);
 
 async function gitOutput(args: string[], cwd: string): Promise<string | null> {
   try {
-    const { stdout } = await execFileAsync("git", args, { cwd });
+    const { stdout } = await execFileAsync("git", args, {
+      cwd,
+      maxBuffer: 16 * 1024 * 1024,
+      windowsHide: true,
+    });
     return stdout;
   } catch {
     return null;

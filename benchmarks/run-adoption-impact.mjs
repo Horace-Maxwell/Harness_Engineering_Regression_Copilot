@@ -17,13 +17,15 @@ import {
 const scriptPath = fileURLToPath(import.meta.url);
 const root = path.resolve(path.dirname(scriptPath), "..");
 const cliPath = path.join(root, "dist", "cli.js");
+const nodeCommand = process.execPath;
 
 function runNode(args, options = {}) {
   const startedAt = performance.now();
-  const result = spawnSync("node", [cliPath, ...args], {
+  const result = spawnSync(nodeCommand, [cliPath, ...args], {
     cwd: options.cwd,
     encoding: "utf8",
     maxBuffer: 64 * 1024 * 1024,
+    windowsHide: true,
   });
   const elapsedMs = performance.now() - startedAt;
   return { ...result, elapsedMs };
@@ -34,6 +36,7 @@ function runCommand(command, args, options = {}) {
     cwd: options.cwd,
     encoding: "utf8",
     maxBuffer: 16 * 1024 * 1024,
+    windowsHide: true,
   });
 }
 

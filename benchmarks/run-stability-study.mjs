@@ -17,6 +17,7 @@ const root = path.resolve(path.dirname(scriptPath), "..");
 const resultsDir = path.join(root, "benchmarks", "results");
 const measuredRounds = Number(process.env.HERC_STABILITY_ROUNDS ?? 5);
 const warmupRounds = Number(process.env.HERC_STABILITY_WARMUPS ?? 1);
+const nodeCommand = process.execPath;
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
@@ -24,6 +25,7 @@ function run(command, args, options = {}) {
     encoding: "utf8",
     maxBuffer: 64 * 1024 * 1024,
     shell: process.platform === "win32" && command.toLowerCase().endsWith(".cmd"),
+    windowsHide: true,
   });
 
   if (result.error || result.status !== 0) {
@@ -109,10 +111,10 @@ function formatPct(value) {
 }
 
 async function measureOneRound(label) {
-  const benchmark = JSON.parse(run("node", [path.join("benchmarks", "run-benchmarks.mjs")]));
-  const workflow = JSON.parse(run("node", [path.join("benchmarks", "run-workflow-impact.mjs")]));
-  const adoption = JSON.parse(run("node", [path.join("benchmarks", "run-adoption-impact.mjs")]));
-  const workflowUpgrade = JSON.parse(run("node", [path.join("benchmarks", "run-workflow-upgrade-impact.mjs")]));
+  const benchmark = JSON.parse(run(nodeCommand, [path.join("benchmarks", "run-benchmarks.mjs")]));
+  const workflow = JSON.parse(run(nodeCommand, [path.join("benchmarks", "run-workflow-impact.mjs")]));
+  const adoption = JSON.parse(run(nodeCommand, [path.join("benchmarks", "run-adoption-impact.mjs")]));
+  const workflowUpgrade = JSON.parse(run(nodeCommand, [path.join("benchmarks", "run-workflow-upgrade-impact.mjs")]));
 
   return {
     label,

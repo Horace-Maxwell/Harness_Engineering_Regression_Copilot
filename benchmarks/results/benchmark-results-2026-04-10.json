@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T06:07:28.337Z",
+  "measuredAt": "2026-04-10T06:35:15.776Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -29,64 +29,64 @@
   "benchmarks": {
     "rawFailureToFirstFail": {
       "iterations": 10,
-      "medianMs": 501.1,
-      "p90Ms": 581.6,
-      "minMs": 475.7,
-      "maxMs": 601.6,
+      "medianMs": 471.4,
+      "p90Ms": 526.7,
+      "minMs": 453.5,
+      "maxMs": 543.9,
       "rawSamplesMs": [
-        508.3,
-        601.6,
-        581.6,
-        502.4,
-        488.4,
-        476.5,
-        495.7,
-        506.1,
-        475.7,
-        499.8
+        543.9,
+        526.7,
+        506.5,
+        481.6,
+        514.8,
+        458.8,
+        453.5,
+        461.1,
+        456.1,
+        459.1
       ]
     },
     "manualCaseToPass": {
       "iterations": 10,
-      "medianMs": 465.1,
-      "p90Ms": 467.6,
-      "minMs": 458.9,
-      "maxMs": 478.4,
+      "medianMs": 455.7,
+      "p90Ms": 462.9,
+      "minMs": 447.5,
+      "maxMs": 472.1,
       "rawSamplesMs": [
-        478.4,
-        458.9,
-        463.8,
-        465.6,
-        465.3,
-        462.4,
-        465.3,
-        467.6,
-        465,
-        464.6
+        472.1,
+        457.2,
+        455.3,
+        456.1,
+        462.9,
+        455.3,
+        453.6,
+        457.8,
+        447.5,
+        451
       ]
     },
     "runHundredDeterministicCases": {
       "caseCount": 100,
       "iterations": 5,
-      "medianMs": 146.3,
-      "p90Ms": 150.5,
-      "minMs": 142.5,
-      "maxMs": 150.5,
+      "medianMs": 143.1,
+      "p90Ms": 146.3,
+      "minMs": 140.3,
+      "maxMs": 146.3,
       "rawSamplesMs": [
+        140.8,
+        145.6,
         146.3,
-        144.9,
-        148.3,
-        150.5,
-        142.5
+        143.1,
+        140.3
       ]
     }
   },
   "packageFootprints": {
     "herc": {
       "version": "0.1.0",
-      "packageSizeBytes": 57987,
-      "unpackedSizeBytes": 263967,
-      "fileCount": 84
+      "packageSizeBytes": 59903,
+      "unpackedSizeBytes": 272537,
+      "fileCount": 87
     },
     "promptfoo": {
       "version": "0.121.3",

@@ -5,6 +5,7 @@ import { Command } from "commander";
 
 import type { RunReport } from "../core/types.js";
 import { applyGlobalOptions, printJsonIfNeeded, withGlobalOptions } from "../lib/command.js";
+import { CliError } from "../lib/errors.js";
 import { findWorkspaceRoot, listReportFiles, readConfig } from "../lib/fs.js";
 import { blank, bullet, section } from "../lib/output.js";
 import { compareReports, type ReportComparison } from "../lib/report.js";
@@ -91,8 +92,10 @@ export function createReportCommand(): Command {
       applyGlobalOptions(options);
       const projectRoot = await findWorkspaceRoot();
       if (!projectRoot) {
-        section("Workspace is not initialized yet. Run `herc init` first.");
-        return;
+        throw new CliError("Workspace is not initialized yet.", {
+          fix: "Run `herc doctor --fix` or `herc init` first.",
+          next: "herc doctor --fix",
+        });
       }
 
       const config = await readConfig(projectRoot);
@@ -107,8 +110,10 @@ export function createReportCommand(): Command {
         : filteredFiles.sort().reverse();
 
       if (targetFiles.length === 0) {
-        section("No report found. Run `herc run` first.");
-        return;
+        throw new CliError("No report was found.", {
+          fix: "Run `herc run` first to generate a report, or pass `--id` for an existing report.",
+          next: "herc run",
+        });
       }
 
       const targetReport = targetFiles[0];

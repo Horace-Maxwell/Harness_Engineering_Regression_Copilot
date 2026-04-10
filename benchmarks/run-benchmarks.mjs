@@ -10,13 +10,15 @@ import { fileURLToPath } from "node:url";
 const scriptPath = fileURLToPath(import.meta.url);
 const root = path.resolve(path.dirname(scriptPath), "..");
 const cliPath = path.join(root, "dist", "cli.js");
+const nodeCommand = process.execPath;
 
 function runNode(args, options = {}) {
   const startedAt = performance.now();
-  const result = spawnSync("node", [cliPath, ...args], {
+  const result = spawnSync(nodeCommand, [cliPath, ...args], {
     cwd: options.cwd,
     input: options.input,
     encoding: "utf8",
+    windowsHide: true,
   });
   const elapsedMs = performance.now() - startedAt;
   return { ...result, elapsedMs };
@@ -240,6 +242,7 @@ function npmJson(args) {
     cwd: root,
     encoding: "utf8",
     shell: process.platform === "win32",
+    windowsHide: true,
   });
   if (result.error || result.status !== 0) {
     throw new Error([result.error?.message, result.stderr, result.stdout].filter(Boolean).join("\n\n"));

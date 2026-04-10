@@ -36,6 +36,21 @@ test("inferCheck produces contains checks for omission incidents", () => {
   });
 });
 
+test("inferCheck treats forgot-style omission incidents as deterministic contains checks", () => {
+  const incident = {
+    id: "incident_2b",
+    title: "The answer forgot the refund policy",
+    createdFrom: "paste",
+    importedAt: new Date().toISOString(),
+    summary: "The assistant left out the refund policy details in the reply.",
+  };
+
+  assert.deepEqual(inferCheck(incident), {
+    type: "contains",
+    config: { value: "refund policy" },
+  });
+});
+
 test("inferExpectedBehavior creates readable deterministic guidance", () => {
   const incident = {
     id: "incident_3",

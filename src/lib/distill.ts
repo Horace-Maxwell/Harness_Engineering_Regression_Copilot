@@ -4,6 +4,10 @@ function normalizeText(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
+function normalizeExtractedPhrase(text: string): string {
+  return normalizeText(text).replace(/^(?:the|a|an)\s+/i, "").trim();
+}
+
 export function inferTaskType(incident: IncidentRecord): CaseRecord["taskType"] {
   const text = `${incident.title} ${incident.summary}`.toLowerCase();
 
@@ -61,7 +65,7 @@ export function inferFailureReason(incident: IncidentRecord): string {
   if (/(hallucinat|invent|fabricat|made up)/.test(text)) {
     return "The response invented unsupported details.";
   }
-  if (text.includes("did not mention")) {
+  if (/(did not mention|didn't mention|forgot|forgot to mention|forgot to include|missing|omitted|left out|failed to include|failed to mention)/.test(text)) {
     return "The response omitted a required detail.";
   }
   if (text.includes("skipped") && text.includes("approval")) {
@@ -78,7 +82,7 @@ function matchPhrase(text: string, patterns: RegExp[]): string | null {
   for (const pattern of patterns) {
     const match = pattern.exec(text);
     if (match?.[1]) {
-      return normalizeText(match[1]);
+      return normalizeExtractedPhrase(match[1]);
     }
   }
 
@@ -89,8 +93,9 @@ export function inferCheck(incident: IncidentRecord): CaseRecord["check"] {
   const text = normalizeText(`${incident.title}. ${incident.summary}`);
 
   const mustContain = matchPhrase(text, [
-    /(?:did not mention|missing|must mention|should mention|must include|should include)\s+["“]?([^"”.,]+)["”]?/i,
+    /(?:did not mention|didn't mention|missing|forgot(?: to mention| to include)?|omitted|left out|failed to include|failed to mention|must mention|should mention|must include|should include)\s+["“]?([^"”.,]+)["”]?/i,
     /(?:answer should include|response should include)\s+["“]?([^"”.,]+)["”]?/i,
+    /(?:forgot|omitted|left out)\s+(?:the\s+)?["“]?([^"”.,]+)["”]?/i,
   ]);
   if (mustContain) {
     return {
@@ -123,8 +128,9 @@ export function inferExpectedBehavior(incident: IncidentRecord): CaseRecord["exp
   const text = rawText.toLowerCase();
 
   const mustContain = matchPhrase(rawText, [
-    /(?:did not mention|missing|must mention|should mention|must include|should include)\s+["“]?([^"”.,]+)["”]?/i,
+    /(?:did not mention|didn't mention|missing|forgot(?: to mention| to include)?|omitted|left out|failed to include|failed to mention|must mention|should mention|must include|should include)\s+["“]?([^"”.,]+)["”]?/i,
     /(?:answer should include|response should include)\s+["“]?([^"”.,]+)["”]?/i,
+    /(?:forgot|omitted|left out)\s+(?:the\s+)?["“]?([^"”.,]+)["”]?/i,
   ]);
   if (mustContain) {
     return {
