@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T02:23:43.891Z",
+  "measuredAt": "2026-04-10T03:21:39.673Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -14,14 +14,14 @@
       "executed_cases",
       "blocked_unreviewed_cases"
     ],
-    "note": "Role-based workflows were measured on local-first CLI paths that match AIRC's intended use."
+    "note": "Role-based workflows were measured on local-first CLI paths that match HERC's intended use."
   },
   "workflows": {
     "supportOpsBatchImport": {
       "iterations": 5,
       "incidentCount": 50,
-      "medianMs": 542.2,
-      "p90Ms": 552.4,
+      "medianMs": 537.7,
+      "p90Ms": 544.9,
       "createdCasesPerRun": [
         50,
         50,
@@ -33,22 +33,22 @@
     },
     "aiEngineerReproToGate": {
       "iterations": 10,
-      "medianMs": 457,
-      "p90Ms": 464,
+      "medianMs": 457.6,
+      "p90Ms": 458.4,
       "medianFailedCases": 1
     },
     "qaReviewerAcceptAndPass": {
       "iterations": 10,
-      "medianMs": 457.3,
-      "p90Ms": 464,
+      "medianMs": 453.4,
+      "p90Ms": 465.5,
       "medianPassedCases": 1
     },
     "ciOwnerChangedOnlyGate": {
       "iterations": 3,
       "fullSuiteCaseCount": 5000,
       "changedCaseCount": 3,
-      "fullMedianMs": 1134.7,
-      "changedMedianMs": 844.5,
+      "fullMedianMs": 1127.2,
+      "changedMedianMs": 838.4,
       "speedupX": 1.3,
       "timeReductionPct": 25.6,
       "executedCaseReductionPct": 99.9,

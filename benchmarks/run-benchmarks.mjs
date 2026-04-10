@@ -52,7 +52,7 @@ async function measureRawFailureFlow(iterations = 10) {
   const samples = [];
 
   for (let index = 0; index < iterations; index += 1) {
-    const workspace = await mkdtemp(path.join(tmpdir(), "airc-bench-raw-"));
+    const workspace = await mkdtemp(path.join(tmpdir(), "herc-bench-raw-"));
     const startedAt = performance.now();
     try {
       let result = runNode(["init"], { cwd: workspace });
@@ -100,7 +100,7 @@ async function measureManualCaseFlow(iterations = 10) {
   const samples = [];
 
   for (let index = 0; index < iterations; index += 1) {
-    const workspace = await mkdtemp(path.join(tmpdir(), "airc-bench-manual-"));
+    const workspace = await mkdtemp(path.join(tmpdir(), "herc-bench-manual-"));
     const startedAt = performance.now();
     try {
       let result = runNode(["init"], { cwd: workspace });
@@ -154,22 +154,22 @@ async function measureManualCaseFlow(iterations = 10) {
 }
 
 async function createLargeWorkspace(caseCount = 100) {
-  const workspace = await mkdtemp(path.join(tmpdir(), "airc-bench-run-"));
-  await mkdir(path.join(workspace, ".airc", "cases"), { recursive: true });
-  await mkdir(path.join(workspace, ".airc", "responses"), { recursive: true });
-  await mkdir(path.join(workspace, ".airc", "incidents"), { recursive: true });
-  await mkdir(path.join(workspace, ".airc", "reports"), { recursive: true });
+  const workspace = await mkdtemp(path.join(tmpdir(), "herc-bench-run-"));
+  await mkdir(path.join(workspace, ".herc", "cases"), { recursive: true });
+  await mkdir(path.join(workspace, ".herc", "responses"), { recursive: true });
+  await mkdir(path.join(workspace, ".herc", "incidents"), { recursive: true });
+  await mkdir(path.join(workspace, ".herc", "reports"), { recursive: true });
   await writeFile(
-    path.join(workspace, ".airc", "config.yaml"),
+    path.join(workspace, ".herc", "config.yaml"),
     [
       "version: 1",
       "schemaVersion: 1",
-      "projectName: airc-benchmark",
+      "projectName: herc-benchmark",
       "defaultProfile: standard",
-      "casesDir: .airc/cases",
-      "incidentsDir: .airc/incidents",
-      "reportsDir: .airc/reports",
-      "responsesDir: .airc/responses",
+      "casesDir: .herc/cases",
+      "incidentsDir: .herc/incidents",
+      "reportsDir: .herc/reports",
+      "responsesDir: .herc/responses",
       "",
     ].join("\n"),
     "utf8",
@@ -198,8 +198,8 @@ async function createLargeWorkspace(caseCount = 100) {
       "  reviewedBy: benchmark",
       "",
     ].join("\n");
-    await writeFile(path.join(workspace, ".airc", "cases", `${id}.yaml`), yaml, "utf8");
-    await writeFile(path.join(workspace, ".airc", "responses", `${id}.txt`), "refund policy", "utf8");
+    await writeFile(path.join(workspace, ".herc", "cases", `${id}.yaml`), yaml, "utf8");
+    await writeFile(path.join(workspace, ".herc", "responses", `${id}.txt`), "refund policy", "utf8");
   }
 
   return workspace;
@@ -276,7 +276,7 @@ async function packageFootprints() {
   const deepeval = await fetchJson("https://pypi.org/pypi/deepeval/json");
 
   return {
-    airc: {
+    herc: {
       version: localPack.version,
       packageSizeBytes: localPack.size,
       unpackedSizeBytes: localPack.unpackedSize,
@@ -305,7 +305,7 @@ const result = {
     arch: process.arch,
   },
   methodology: {
-    aircRawFailure: {
+    hercRawFailure: {
       commands: 4,
       manualFiles: 0,
       manualLoc: 0,

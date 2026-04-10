@@ -253,7 +253,7 @@ export async function runCases(
   projectRoot: string,
   options: RunCasesOptions = {},
 ): Promise<{ report: RunReport; markdown: string }> {
-  const responsesDir = options.responsesDir ?? path.join(projectRoot, ".airc", "responses");
+  const responsesDir = options.responsesDir ?? path.join(projectRoot, ".herc", "responses");
   const selectedCases = options.filterCaseId ? cases.filter((record) => record.id === options.filterCaseId) : cases;
   const candidateCases =
     options.changedCaseIds && !options.filterCaseId

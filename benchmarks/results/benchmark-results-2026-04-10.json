@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-04-10T02:15:14.789Z",
+  "measuredAt": "2026-04-10T03:21:26.137Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
     "arch": "arm64"
   },
   "methodology": {
-    "aircRawFailure": {
+    "hercRawFailure": {
       "commands": 4,
       "manualFiles": 0,
       "manualLoc": 0,
@@ -29,63 +29,63 @@
   "benchmarks": {
     "rawFailureToFirstFail": {
       "iterations": 10,
-      "medianMs": 459.1,
-      "p90Ms": 472.8,
-      "minMs": 436.3,
-      "maxMs": 515.7,
+      "medianMs": 456.1,
+      "p90Ms": 462.8,
+      "minMs": 452.2,
+      "maxMs": 463.2,
       "rawSamplesMs": [
-        462,
-        452.1,
-        459.5,
-        458.8,
-        466.1,
-        472.8,
-        456.6,
-        458.2,
-        436.3,
-        515.7
+        455,
+        452.2,
+        461.6,
+        455.1,
+        463.2,
+        462.8,
+        452.3,
+        453.2,
+        457.1,
+        457.1
       ]
     },
     "manualCaseToPass": {
       "iterations": 10,
-      "medianMs": 455.2,
-      "p90Ms": 471.6,
-      "minMs": 446,
-      "maxMs": 495.2,
+      "medianMs": 459,
+      "p90Ms": 470,
+      "minMs": 451.4,
+      "maxMs": 486.4,
       "rawSamplesMs": [
-        451.8,
-        454.6,
-        446,
-        465.8,
-        471.6,
-        451.7,
+        453.7,
+        451.4,
+        455.9,
+        457.1,
+        486.4,
+        460.9,
+        461.7,
+        470,
         456.9,
-        455.8,
-        495.2,
-        451.7
+        469.2
       ]
     },
     "runHundredDeterministicCases": {
       "caseCount": 100,
       "iterations": 5,
-      "medianMs": 142.9,
-      "p90Ms": 145.2,
-      "minMs": 140.8,
-      "maxMs": 145.2,
+      "medianMs": 152.6,
+      "p90Ms": 164.6,
+      "minMs": 145.5,
+      "maxMs": 164.6,
       "rawSamplesMs": [
-        142.9,
-        143.3,
-        140.8,
-        145.2,
-        142.7
+        164.6,
+        154.4,
+        152.6,
+        145.5,
+        145.7
       ]
     }
   },
   "packageFootprints": {
-    "airc": {
+    "herc": {
       "version": "0.1.0",
-      "packageSizeBytes": 43386,
-      "unpackedSizeBytes": 215595,
+      "packageSizeBytes": 47294,
+      "unpackedSizeBytes": 221709,
       "fileCount": 84
     },
     "promptfoo": {

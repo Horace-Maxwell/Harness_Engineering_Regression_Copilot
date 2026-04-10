@@ -6,7 +6,7 @@ import {
   createDefaultConfig,
   exists,
   findWorkspaceRoot,
-  getAircRoot,
+  getHercRoot,
   getCasesDir,
   getConfigPath,
   getResponsesDir,
@@ -29,14 +29,14 @@ export function createInitCommand(): Command {
       applyGlobalOptions(options);
       const existingWorkspaceRoot = await findWorkspaceRoot();
       const projectRoot = existingWorkspaceRoot ?? process.cwd();
-      const aircRoot = getAircRoot(projectRoot);
+      const hercRoot = getHercRoot(projectRoot);
       const configPath = getConfigPath(projectRoot);
       const alreadyInitialized = await exists(configPath);
 
       if (alreadyInitialized && existingWorkspaceRoot && existingWorkspaceRoot !== process.cwd() && !options.force) {
         throw new CliError("A workspace already exists above the current directory.", {
-          fix: "Run `airc init --force` here, or run commands from the existing workspace root instead.",
-          next: "airc doctor",
+          fix: "Run `herc init --force` here, or run commands from the existing workspace root instead.",
+          next: "herc doctor",
         });
       }
 
@@ -62,17 +62,17 @@ check:
   config:
     value: example
 notes:
-  generatedBy: airc_init
+  generatedBy: herc_init
   reviewStatus: reviewed
   confidence: high
-  reviewedBy: airc
+  reviewedBy: herc
   reviewNote: Sample case created during initialization.
 `;
       const sampleResponsePath = path.join(getResponsesDir(projectRoot, config), "sample_case.txt");
 
       const payload = {
         projectRoot,
-        workspace: aircRoot,
+        workspace: hercRoot,
         configPath,
         sampleCasePath,
         sampleResponsePath,
@@ -86,12 +86,12 @@ notes:
       if (options.dryRun) {
         section("Dry run");
         blank();
-        bullet(`Workspace: ${aircRoot}`);
+        bullet(`Workspace: ${hercRoot}`);
         bullet(`Config: ${configPath}`);
         bullet(`Sample case: ${sampleCasePath}`);
         bullet(`Sample response: ${sampleResponsePath}`);
         blank();
-        nextStep(options.force ? "airc init --force" : "airc init");
+        nextStep(options.force ? "herc init --force" : "herc init");
         return;
       }
 
@@ -112,11 +112,11 @@ notes:
           : "Initialized Harness_Engineering_Regression_Copilot.",
       );
       blank();
-      bullet(`Workspace: ${aircRoot}`);
+      bullet(`Workspace: ${hercRoot}`);
       bullet(`Config: ${configPath}`);
       bullet(`Sample case: ${sampleCasePath}`);
       bullet(`Sample response: ${sampleResponsePath}`);
       blank();
-      nextStep("airc run");
+      nextStep("herc run");
     });
 }

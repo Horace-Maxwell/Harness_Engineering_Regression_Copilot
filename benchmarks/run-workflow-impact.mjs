@@ -56,7 +56,7 @@ async function supportOpsImportFlow(iterations = 5, incidentCount = 50) {
   const samples = [];
 
   for (let iteration = 0; iteration < iterations; iteration += 1) {
-    await withWorkspace("airc-impact-import-", async (workspace) => {
+    await withWorkspace("herc-impact-import-", async (workspace) => {
       const rows = Array.from({ length: incidentCount }, (_, index) => ({
         message: `Customer asked for refund policy on order ${index + 1}, but the answer did not mention refund policy.`,
         tags: ["support", "refunds"],
@@ -105,7 +105,7 @@ async function engineerReproFlow(iterations = 10) {
   const samples = [];
 
   for (let iteration = 0; iteration < iterations; iteration += 1) {
-    await withWorkspace("airc-impact-repro-", async (workspace) => {
+    await withWorkspace("herc-impact-repro-", async (workspace) => {
       const startedAt = performance.now();
       let result = runNode(["init"], { cwd: workspace });
       if (result.status !== 0) {
@@ -149,7 +149,7 @@ async function qaReviewFlow(iterations = 10) {
   const samples = [];
 
   for (let iteration = 0; iteration < iterations; iteration += 1) {
-    await withWorkspace("airc-impact-review-", async (workspace) => {
+    await withWorkspace("herc-impact-review-", async (workspace) => {
       const startedAt = performance.now();
       let result = runNode(["init"], { cwd: workspace });
       if (result.status !== 0) {
@@ -199,22 +199,22 @@ async function qaReviewFlow(iterations = 10) {
 }
 
 async function createReviewedWorkspace(caseCount = 100) {
-  const workspace = await mkdtemp(path.join(tmpdir(), "airc-impact-ci-"));
-  await mkdir(path.join(workspace, ".airc", "cases"), { recursive: true });
-  await mkdir(path.join(workspace, ".airc", "responses"), { recursive: true });
-  await mkdir(path.join(workspace, ".airc", "incidents"), { recursive: true });
-  await mkdir(path.join(workspace, ".airc", "reports"), { recursive: true });
+  const workspace = await mkdtemp(path.join(tmpdir(), "herc-impact-ci-"));
+  await mkdir(path.join(workspace, ".herc", "cases"), { recursive: true });
+  await mkdir(path.join(workspace, ".herc", "responses"), { recursive: true });
+  await mkdir(path.join(workspace, ".herc", "incidents"), { recursive: true });
+  await mkdir(path.join(workspace, ".herc", "reports"), { recursive: true });
   await writeFile(
-    path.join(workspace, ".airc", "config.yaml"),
+    path.join(workspace, ".herc", "config.yaml"),
     [
       "version: 1",
       "schemaVersion: 1",
-      "projectName: airc-impact-ci",
+      "projectName: herc-impact-ci",
       "defaultProfile: standard",
-      "casesDir: .airc/cases",
-      "incidentsDir: .airc/incidents",
-      "reportsDir: .airc/reports",
-      "responsesDir: .airc/responses",
+      "casesDir: .herc/cases",
+      "incidentsDir: .herc/incidents",
+      "reportsDir: .herc/reports",
+      "responsesDir: .herc/responses",
       "",
     ].join("\n"),
     "utf8",
@@ -243,8 +243,8 @@ async function createReviewedWorkspace(caseCount = 100) {
       "  reviewedBy: benchmark",
       "",
     ].join("\n");
-    await writeFile(path.join(workspace, ".airc", "cases", `${id}.yaml`), yaml, "utf8");
-    await writeFile(path.join(workspace, ".airc", "responses", `${id}.txt`), "refund policy", "utf8");
+    await writeFile(path.join(workspace, ".herc", "cases", `${id}.yaml`), yaml, "utf8");
+    await writeFile(path.join(workspace, ".herc", "responses", `${id}.txt`), "refund policy", "utf8");
   }
 
   return workspace;
@@ -272,7 +272,7 @@ async function ciChangedOnlyFlow(iterations = 3, caseCount = 5000, changedCount 
 
       for (let index = 1; index <= changedCount; index += 1) {
         const id = `case_${String(index).padStart(3, "0")}`;
-        const filePath = path.join(workspace, ".airc", "cases", `${id}.yaml`);
+        const filePath = path.join(workspace, ".herc", "cases", `${id}.yaml`);
         const raw = await readFile(filePath, "utf8");
         await writeFile(filePath, raw.replace("Case", "Changed case"), "utf8");
       }
@@ -305,7 +305,7 @@ async function ciChangedOnlyFlow(iterations = 3, caseCount = 5000, changedCount 
 }
 
 async function releaseSafetyFlow(reviewedCount = 15, unreviewedCount = 5) {
-  return withWorkspace("airc-impact-release-", async (workspace) => {
+  return withWorkspace("herc-impact-release-", async (workspace) => {
     let result = runNode(["init"], { cwd: workspace });
     if (result.status !== 0) {
       throw new Error(result.stderr || result.stdout);
@@ -340,7 +340,7 @@ async function releaseSafetyFlow(reviewedCount = 15, unreviewedCount = 5) {
           response,
         ], { cwd: workspace });
       } else {
-        const responsePath = path.join(workspace, ".airc", "responses", `case_${String(index).padStart(3, "0")}.txt`);
+        const responsePath = path.join(workspace, ".herc", "responses", `case_${String(index).padStart(3, "0")}.txt`);
         await mkdir(path.dirname(responsePath), { recursive: true });
         await writeFile(responsePath, response, "utf8");
       }
@@ -382,7 +382,7 @@ const result = {
   },
   methodology: {
     metrics: ["task_success", "time_on_task_ms", "manual_files", "manual_loc", "executed_cases", "blocked_unreviewed_cases"],
-    note: "Role-based workflows were measured on local-first CLI paths that match AIRC's intended use.",
+    note: "Role-based workflows were measured on local-first CLI paths that match HERC's intended use.",
   },
   workflows: {
     supportOpsBatchImport: await supportOpsImportFlow(5, 50),

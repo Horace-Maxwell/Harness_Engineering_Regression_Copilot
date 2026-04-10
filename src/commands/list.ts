@@ -37,7 +37,7 @@ export function createListCommand(): Command {
       applyGlobalOptions(options);
       const projectRoot = await findWorkspaceRoot();
       if (!projectRoot) {
-        section("Workspace is not initialized yet. Run `airc init` first.");
+        section("Workspace is not initialized yet. Run `herc init` first.");
         return;
       }
 
@@ -47,7 +47,7 @@ export function createListCommand(): Command {
       records.forEach((record) => validateCaseRecord(record));
 
       if (records.length === 0) {
-        section("No cases found. Run `airc import` and `airc distill` first.");
+        section("No cases found. Run `herc import` and `herc distill` first.");
         return;
       }
 

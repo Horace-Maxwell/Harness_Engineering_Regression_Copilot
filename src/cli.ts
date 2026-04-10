@@ -20,7 +20,7 @@ import { isJsonOutput, outputJson } from "./lib/output.js";
 const program = new Command();
 
 program
-  .name("airc")
+  .name("herc")
   .description("Harness_Engineering_Regression_Copilot CLI")
   .version("0.1.0")
   .addCommand(createInitCommand())

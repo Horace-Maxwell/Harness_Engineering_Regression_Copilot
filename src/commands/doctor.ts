@@ -67,7 +67,7 @@ export function createDoctorCommand(): Command {
         checks.push({
           name: "workspace",
           status: "fail",
-          message: "No .airc/config.yaml workspace was found from the current directory upward.",
+          message: "No .herc/config.yaml workspace was found from the current directory upward.",
         });
       } else {
         checks.push({

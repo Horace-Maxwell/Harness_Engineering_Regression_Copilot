@@ -37,7 +37,7 @@ function draftCaseFromIncident(incident: IncidentRecord, index: number): CaseRec
     expectedBehavior: inferExpectedBehavior(incident),
     check,
     notes: {
-      generatedBy: "airc_distill_v2",
+      generatedBy: "herc_distill_v2",
       reviewStatus: inferReviewStatus(check),
       confidence: inferConfidence(check),
     },
@@ -80,8 +80,8 @@ export function createDistillCommand(): Command {
         const projectRoot = await findWorkspaceRoot();
         if (!projectRoot) {
           throw new CliError("Workspace is not initialized yet.", {
-            fix: "Run `airc init` first.",
-            next: "airc init",
+            fix: "Run `herc init` first.",
+            next: "herc init",
           });
         }
 
@@ -93,7 +93,7 @@ export function createDistillCommand(): Command {
         const candidateIncidents = options.incident ? incidents.filter((incident) => incident.id === options.incident) : incidents;
         if (options.incident && candidateIncidents.length === 0) {
           throw new CliError(`Incident '${options.incident}' was not found.`, {
-            fix: "Run `airc import` again or inspect `.airc/incidents` for available ids.",
+            fix: "Run `herc import` again or inspect `.herc/incidents` for available ids.",
           });
         }
 
@@ -165,7 +165,7 @@ export function createDistillCommand(): Command {
         bullet("Deterministic checks are only proposed when the heuristic looks high-confidence.");
         bullet("Deep profile will require reviewed, locally executable cases.");
         blank();
-        nextStep("airc list --long");
+        nextStep("herc list --long");
       },
     );
 }

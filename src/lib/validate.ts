@@ -1,4 +1,4 @@
-import type { AircConfig, CaseRecord, IncidentRecord, RunReport } from "../core/types.js";
+import type { HercConfig, CaseRecord, IncidentRecord, RunReport } from "../core/types.js";
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
@@ -12,12 +12,12 @@ function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-export function validateConfig(config: unknown): asserts config is AircConfig {
+export function validateConfig(config: unknown): asserts config is HercConfig {
   if (!config || typeof config !== "object") {
     throw new Error("Config is missing or invalid.");
   }
 
-  const candidate = config as Partial<AircConfig>;
+  const candidate = config as Partial<HercConfig>;
   if (candidate.version !== 1) {
     throw new Error("Config version must be 1.");
   }

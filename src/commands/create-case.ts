@@ -16,7 +16,7 @@ function resolveCheck(options: { checkType?: CaseRecord["check"]["type"]; value?
   if (["contains", "not_contains", "equals", "regex"].includes(checkType)) {
     if (!options.value) {
       throw new CliError(`Check type '${checkType}' requires --value.`, {
-        fix: "Pass a value, for example `airc create-case \"Title\" --check-type contains --value \"refund policy\"`.",
+        fix: "Pass a value, for example `herc create-case \"Title\" --check-type contains --value \"refund policy\"`.",
       });
     }
 
@@ -71,7 +71,7 @@ export function createCreateCaseCommand(): Command {
         const projectRoot = await findWorkspaceRoot();
         if (!projectRoot) {
           throw new CliError("Workspace is not initialized yet.", {
-            fix: "Run `airc init` first.",
+            fix: "Run `herc init` first.",
           });
         }
 
@@ -109,7 +109,7 @@ export function createCreateCaseCommand(): Command {
           },
           check: resolveCheck(options),
           notes: {
-            generatedBy: "airc_create_case_v1",
+            generatedBy: "herc_create_case_v1",
             reviewStatus: "needs_review",
             confidence: ["contains", "not_contains", "equals", "regex"].includes(options.checkType ?? "llm_judge") ? "medium" : "low",
           },
@@ -127,7 +127,7 @@ export function createCreateCaseCommand(): Command {
         bullet(`Case: ${caseId}`);
         bullet(`Path: ${casePath}`);
         blank();
-        nextStep(`airc inspect ${caseId}`);
+        nextStep(`herc inspect ${caseId}`);
       },
     );
 }

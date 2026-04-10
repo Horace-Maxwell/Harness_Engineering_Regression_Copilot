@@ -279,8 +279,8 @@ export function createImportCommand(): Command {
         const projectRoot = await findWorkspaceRoot();
         if (!projectRoot) {
           throw new CliError("Workspace is not initialized yet.", {
-            fix: "Run `airc init` first.",
-            next: "airc init",
+            fix: "Run `herc init` first.",
+            next: "herc init",
           });
         }
         const config = await readConfig(projectRoot);
@@ -381,7 +381,7 @@ export function createImportCommand(): Command {
         bullet(`Stored directory: ${incidentsDir}`);
         bullet(`First incident id: ${importedIds[0] ?? "none"}`);
         blank();
-        nextStep(options.dryRun ? "airc import <source>" : "airc distill");
+        nextStep(options.dryRun ? "herc import <source>" : "herc distill");
       },
     );
 }

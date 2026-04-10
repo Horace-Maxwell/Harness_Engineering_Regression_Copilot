@@ -4,14 +4,14 @@ import { cwd } from "node:process";
 import YAML from "yaml";
 
 import {
-  AIRCDirName,
+  HERCDirName,
   casesDirName,
   configFileName,
   incidentsDirName,
   reportsDirName,
   responsesDirName,
 } from "./constants.js";
-import type { AircConfig, CaseRecord, IncidentRecord, RunReport } from "../core/types.js";
+import type { HercConfig, CaseRecord, IncidentRecord, RunReport } from "../core/types.js";
 
 export function getProjectRoot(): string {
   return path.resolve(cwd());
@@ -21,7 +21,7 @@ export async function findWorkspaceRoot(startDir = getProjectRoot()): Promise<st
   let currentDir = path.resolve(startDir);
 
   while (true) {
-    const configPath = path.join(currentDir, AIRCDirName, configFileName);
+    const configPath = path.join(currentDir, HERCDirName, configFileName);
     if (await exists(configPath)) {
       return currentDir;
     }
@@ -39,12 +39,12 @@ export async function resolveProjectRoot(startDir = getProjectRoot()): Promise<s
   return (await findWorkspaceRoot(startDir)) ?? path.resolve(startDir);
 }
 
-export function getAircRoot(projectRoot = getProjectRoot()): string {
-  return path.join(projectRoot, AIRCDirName);
+export function getHercRoot(projectRoot = getProjectRoot()): string {
+  return path.join(projectRoot, HERCDirName);
 }
 
 export function getConfigPath(projectRoot = getProjectRoot()): string {
-  return path.join(getAircRoot(projectRoot), configFileName);
+  return path.join(getHercRoot(projectRoot), configFileName);
 }
 
 function resolveConfiguredPath(projectRoot: string, configuredPath: string | undefined, fallbackRelativePath: string): string {
@@ -52,20 +52,20 @@ function resolveConfiguredPath(projectRoot: string, configuredPath: string | und
   return path.isAbsolute(resolved) ? resolved : path.join(projectRoot, resolved);
 }
 
-export function getIncidentsDir(projectRoot = getProjectRoot(), config?: AircConfig): string {
-  return resolveConfiguredPath(projectRoot, config?.incidentsDir, path.join(AIRCDirName, incidentsDirName));
+export function getIncidentsDir(projectRoot = getProjectRoot(), config?: HercConfig): string {
+  return resolveConfiguredPath(projectRoot, config?.incidentsDir, path.join(HERCDirName, incidentsDirName));
 }
 
-export function getCasesDir(projectRoot = getProjectRoot(), config?: AircConfig): string {
-  return resolveConfiguredPath(projectRoot, config?.casesDir, path.join(AIRCDirName, casesDirName));
+export function getCasesDir(projectRoot = getProjectRoot(), config?: HercConfig): string {
+  return resolveConfiguredPath(projectRoot, config?.casesDir, path.join(HERCDirName, casesDirName));
 }
 
-export function getReportsDir(projectRoot = getProjectRoot(), config?: AircConfig): string {
-  return resolveConfiguredPath(projectRoot, config?.reportsDir, path.join(AIRCDirName, reportsDirName));
+export function getReportsDir(projectRoot = getProjectRoot(), config?: HercConfig): string {
+  return resolveConfiguredPath(projectRoot, config?.reportsDir, path.join(HERCDirName, reportsDirName));
 }
 
-export function getResponsesDir(projectRoot = getProjectRoot(), config?: AircConfig): string {
-  return resolveConfiguredPath(projectRoot, config?.responsesDir, path.join(AIRCDirName, responsesDirName));
+export function getResponsesDir(projectRoot = getProjectRoot(), config?: HercConfig): string {
+  return resolveConfiguredPath(projectRoot, config?.responsesDir, path.join(HERCDirName, responsesDirName));
 }
 
 export async function ensureDirectory(dirPath: string): Promise<void> {
@@ -81,35 +81,35 @@ export async function exists(targetPath: string): Promise<boolean> {
   }
 }
 
-export async function initializeWorkspace(projectRoot = getProjectRoot(), config?: AircConfig): Promise<void> {
-  await ensureDirectory(getAircRoot(projectRoot));
+export async function initializeWorkspace(projectRoot = getProjectRoot(), config?: HercConfig): Promise<void> {
+  await ensureDirectory(getHercRoot(projectRoot));
   await ensureDirectory(getIncidentsDir(projectRoot, config));
   await ensureDirectory(getCasesDir(projectRoot, config));
   await ensureDirectory(getReportsDir(projectRoot, config));
   await ensureDirectory(getResponsesDir(projectRoot, config));
 }
 
-export function createDefaultConfig(projectName: string): AircConfig {
+export function createDefaultConfig(projectName: string): HercConfig {
   return {
     version: 1,
     schemaVersion: 1,
     projectName,
     defaultProfile: "standard",
-    casesDir: ".airc/cases",
-    incidentsDir: ".airc/incidents",
-    reportsDir: ".airc/reports",
-    responsesDir: ".airc/responses",
+    casesDir: ".herc/cases",
+    incidentsDir: ".herc/incidents",
+    reportsDir: ".herc/reports",
+    responsesDir: ".herc/responses",
   };
 }
 
-export async function writeConfig(config: AircConfig, projectRoot = getProjectRoot()): Promise<void> {
+export async function writeConfig(config: HercConfig, projectRoot = getProjectRoot()): Promise<void> {
   const serialized = YAML.stringify(config);
   await writeFile(getConfigPath(projectRoot), serialized, "utf8");
 }
 
-export async function readConfig(projectRoot = getProjectRoot()): Promise<AircConfig> {
+export async function readConfig(projectRoot = getProjectRoot()): Promise<HercConfig> {
   const raw = await readFile(getConfigPath(projectRoot), "utf8");
-  const parsed = YAML.parse(raw) as Partial<AircConfig>;
+  const parsed = YAML.parse(raw) as Partial<HercConfig>;
   const defaults = createDefaultConfig(parsed.projectName ?? path.basename(projectRoot));
   return {
     ...defaults,
@@ -140,12 +140,12 @@ export async function writeYamlFile(targetPath: string, value: unknown): Promise
   await writeTextFile(targetPath, YAML.stringify(value));
 }
 
-export async function loadCaseRecords(projectRoot = getProjectRoot(), config?: AircConfig): Promise<CaseRecord[]> {
+export async function loadCaseRecords(projectRoot = getProjectRoot(), config?: HercConfig): Promise<CaseRecord[]> {
   const files = (await listFiles(getCasesDir(projectRoot, config))).filter((file) => file.endsWith(".yaml"));
   return Promise.all(files.map((file) => readYamlFile<CaseRecord>(file)));
 }
 
-export async function loadIncidentRecords(projectRoot = getProjectRoot(), config?: AircConfig): Promise<IncidentRecord[]> {
+export async function loadIncidentRecords(projectRoot = getProjectRoot(), config?: HercConfig): Promise<IncidentRecord[]> {
   const files = (await listFiles(getIncidentsDir(projectRoot, config))).filter((file) => file.endsWith(".yaml"));
   return Promise.all(files.map((file) => readYamlFile<IncidentRecord>(file)));
 }
@@ -154,7 +154,7 @@ export async function writeRunReport(
   report: RunReport,
   markdown: string,
   projectRoot = getProjectRoot(),
-  config?: AircConfig,
+  config?: HercConfig,
 ): Promise<{ jsonPath: string; markdownPath: string }> {
   const baseName = report.id;
   const jsonPath = path.join(getReportsDir(projectRoot, config), `${baseName}.json`);
@@ -164,6 +164,6 @@ export async function writeRunReport(
   return { jsonPath, markdownPath };
 }
 
-export async function listReportFiles(projectRoot = getProjectRoot(), config?: AircConfig): Promise<string[]> {
+export async function listReportFiles(projectRoot = getProjectRoot(), config?: HercConfig): Promise<string[]> {
   return listFiles(getReportsDir(projectRoot, config));
 }

@@ -7,14 +7,14 @@ import path from "node:path";
 import { runCases } from "../dist/lib/run.js";
 
 async function makeWorkspace() {
-  const root = await mkdir(path.join(os.tmpdir(), `airc-run-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`), { recursive: true });
-  await mkdir(path.join(root, ".airc", "responses"), { recursive: true });
+  const root = await mkdir(path.join(os.tmpdir(), `herc-run-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`), { recursive: true });
+  await mkdir(path.join(root, ".herc", "responses"), { recursive: true });
   return root;
 }
 
 test("runCases passes deterministic contains checks", async () => {
   const root = await makeWorkspace();
-  await writeFile(path.join(root, ".airc", "responses", "case_001.txt"), "refund policy", "utf8");
+  await writeFile(path.join(root, ".herc", "responses", "case_001.txt"), "refund policy", "utf8");
 
   const cases = [
     {
@@ -36,8 +36,8 @@ test("runCases passes deterministic contains checks", async () => {
 
 test("runCases supports equals and regex checks", async () => {
   const root = await makeWorkspace();
-  await writeFile(path.join(root, ".airc", "responses", "case_equals.txt"), "APPROVED", "utf8");
-  await writeFile(path.join(root, ".airc", "responses", "case_regex.txt"), "Order ID: 12345", "utf8");
+  await writeFile(path.join(root, ".herc", "responses", "case_equals.txt"), "APPROVED", "utf8");
+  await writeFile(path.join(root, ".herc", "responses", "case_regex.txt"), "Order ID: 12345", "utf8");
 
   const cases = [
     {
@@ -68,7 +68,7 @@ test("runCases supports equals and regex checks", async () => {
 
 test("quick profile skips llm_judge cases", async () => {
   const root = await makeWorkspace();
-  await writeFile(path.join(root, ".airc", "responses", "case_001.txt"), "some response", "utf8");
+  await writeFile(path.join(root, ".herc", "responses", "case_001.txt"), "some response", "utf8");
 
   const cases = [
     {
@@ -90,7 +90,7 @@ test("quick profile skips llm_judge cases", async () => {
 
 test("deep profile marks needs_review cases invalid", async () => {
   const root = await makeWorkspace();
-  await writeFile(path.join(root, ".airc", "responses", "case_002.txt"), "refund policy", "utf8");
+  await writeFile(path.join(root, ".herc", "responses", "case_002.txt"), "refund policy", "utf8");
 
   const cases = [
     {

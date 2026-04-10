@@ -18,7 +18,7 @@
     "README.md"
   ],
   "bin": {
-    "airc": "dist/cli.js"
+    "herc": "dist/cli.js"
   },
   "engines": {
     "node": ">=18"

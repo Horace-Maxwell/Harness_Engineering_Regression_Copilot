@@ -11,7 +11,7 @@ const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 
 async function makeWorkspace() {
-  return mkdir(path.join(os.tmpdir(), `airc-e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`), { recursive: true });
+  return mkdir(path.join(os.tmpdir(), `herc-e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`), { recursive: true });
 }
 
 const cliPath = path.join(testDir, "..", "dist", "cli.js");

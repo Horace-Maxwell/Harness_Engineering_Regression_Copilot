@@ -1,4 +1,4 @@
-export const AIRCDirName = ".airc";
+export const HERCDirName = ".herc";
 export const configFileName = "config.yaml";
 export const incidentsDirName = "incidents";
 export const casesDirName = "cases";

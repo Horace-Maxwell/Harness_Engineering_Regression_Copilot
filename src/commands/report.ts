@@ -49,7 +49,7 @@ export function createReportCommand(): Command {
       applyGlobalOptions(options);
       const projectRoot = await findWorkspaceRoot();
       if (!projectRoot) {
-        section("Workspace is not initialized yet. Run `airc init` first.");
+        section("Workspace is not initialized yet. Run `herc init` first.");
         return;
       }
 
@@ -64,7 +64,7 @@ export function createReportCommand(): Command {
         : filteredFiles.sort().reverse();
 
       if (targetFiles.length === 0) {
-        section("No report found. Run `airc run` first.");
+        section("No report found. Run `herc run` first.");
         return;
       }
 

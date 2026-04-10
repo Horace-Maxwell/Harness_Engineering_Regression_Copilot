@@ -21,7 +21,7 @@ export function createSetStatusCommand(): Command {
       const projectRoot = await findWorkspaceRoot();
       if (!projectRoot) {
         throw new CliError("Workspace is not initialized yet.", {
-          fix: "Run `airc init` first.",
+          fix: "Run `herc init` first.",
         });
       }
 

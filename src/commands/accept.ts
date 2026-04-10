@@ -50,7 +50,7 @@ export function createAcceptCommand(): Command {
         const projectRoot = await findWorkspaceRoot();
         if (!projectRoot) {
           throw new CliError("Workspace is not initialized yet.", {
-            fix: "Run `airc init` first.",
+            fix: "Run `herc init` first.",
           });
         }
 
@@ -105,7 +105,7 @@ export function createAcceptCommand(): Command {
           bullet(`Baseline response: ${responsePath}`);
         }
         blank();
-        nextStep(`airc run ${id}`);
+        nextStep(`herc run ${id}`);
       },
     );
 }

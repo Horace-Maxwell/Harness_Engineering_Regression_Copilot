@@ -71,8 +71,8 @@ export function createRunCommand(): Command {
         const projectRoot = await findWorkspaceRoot();
         if (!projectRoot) {
           throw new CliError("Workspace is not initialized yet.", {
-            fix: "Run `airc init` first.",
-            next: "airc init",
+            fix: "Run `herc init` first.",
+            next: "herc init",
           });
         }
 
@@ -84,7 +84,7 @@ export function createRunCommand(): Command {
         }
         if ((options.response || options.responseFile || options.stdinResponse) && !caseId) {
           throw new CliError("Direct response input options require a specific case id.", {
-            fix: "Pass a case id such as `airc run case_001 --response \"...\"`.",
+            fix: "Pass a case id such as `herc run case_001 --response \"...\"`.",
           });
         }
 
@@ -97,7 +97,7 @@ export function createRunCommand(): Command {
 
         if (caseId && !cases.some((record) => record.id === caseId)) {
           throw new CliError(`Case '${caseId}' was not found.`, {
-            fix: "Run `airc list` to see available case ids.",
+            fix: "Run `herc list` to see available case ids.",
           });
         }
 
@@ -170,7 +170,7 @@ export function createRunCommand(): Command {
             }
             blank();
           }
-          nextStep("airc report --format summary");
+          nextStep("herc report --format summary");
         }
 
         const shouldFail = failingResults.length > 0;

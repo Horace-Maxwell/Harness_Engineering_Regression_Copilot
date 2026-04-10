@@ -1,6 +1,6 @@
 export type RunProfile = "quick" | "standard" | "deep";
 
-export interface AircConfig {
+export interface HercConfig {
   version: number;
   schemaVersion?: number;
   projectName: string;
