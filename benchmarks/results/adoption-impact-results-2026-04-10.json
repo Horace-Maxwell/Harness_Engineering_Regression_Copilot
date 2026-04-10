@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T03:31:38.911Z",
+  "measuredAt": "2026-04-10T03:57:53.815Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -8,7 +8,14 @@
   "methodology": {
     "experimentType": "before_after_controlled_release_gate",
     "note": "The control ships the same candidate without a regression gate. The treatment runs HERC before merge, fixes only the failed protected cases, and re-runs the changed gate.",
-    "protectedInstructionType": "deterministic contains checks derived from historical instruction requirements"
+    "protectedInstructionType": "deterministic contains checks derived from historical instruction requirements",
+    "confidenceIntervalMethod": {
+      "levelPct": 95,
+      "bootstrapIterations": 4000,
+      "resamplingUnit": "protected instruction",
+      "pairing": "paired before/after resampling at the instruction level",
+      "seed": 20260410
+    }
   },
   "summary": {
     "totalScenarioCount": 5,
@@ -20,13 +27,604 @@
     "weightedFailureLeakageReductionPct": 100,
     "weightedChangedCaseSharePct": 10.3,
     "weightedExecutionReductionPctWithChangedOnly": 89.7,
-    "medianChangedGateMsAcrossScenarios": 158.8,
-    "medianFullGateMsAcrossScenarios": 143.5
+    "medianChangedGateMsAcrossScenarios": 158.3,
+    "medianFullGateMsAcrossScenarios": 143.2,
+    "confidenceIntervals95": {
+      "weightedRawCorrectInstructionPctWithoutHerc": {
+        "pointPct": 92.8,
+        "lowerPct": 91.2,
+        "upperPct": 94.5,
+        "confidenceLevelPct": 95,
+        "bootstrapIterations": 4000
+      },
+      "weightedCorrectInstructionPctWithHercAfterFix": {
+        "pointPct": 100,
+        "lowerPct": 100,
+        "upperPct": 100,
+        "confidenceLevelPct": 95,
+        "bootstrapIterations": 4000
+      },
+      "weightedCorrectnessLiftPctPoints": {
+        "pointPctPoints": 7.2,
+        "lowerPctPoints": 5.5,
+        "upperPctPoints": 8.8,
+        "confidenceLevelPct": 95,
+        "bootstrapIterations": 4000
+      }
+    }
+  },
+  "stratification": {
+    "byTaskType": [
+      {
+        "key": "release_ops",
+        "label": "Release ops",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "weekly-release-train"
+        ],
+        "totalProtectedInstructions": 500,
+        "weightedRawCorrectInstructionPctWithoutHerc": 95.2,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 4.8,
+        "weightedChangedCaseSharePct": 8,
+        "weightedExecutionReductionPctWithChangedOnly": 92,
+        "medianFullGateMs": 238.1,
+        "medianChangedGateMs": 261.7,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 95.2,
+            "lowerPct": 93.2,
+            "upperPct": 97,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 4.8,
+            "lowerPctPoints": 3,
+            "upperPctPoints": 6.8,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "rag_policy",
+        "label": "RAG policy",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "rag-policy-release"
+        ],
+        "totalProtectedInstructions": 250,
+        "weightedRawCorrectInstructionPctWithoutHerc": 92.8,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 7.2,
+        "weightedChangedCaseSharePct": 10,
+        "weightedExecutionReductionPctWithChangedOnly": 90,
+        "medianFullGateMs": 181.7,
+        "medianChangedGateMs": 191.6,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 92.8,
+            "lowerPct": 89.6,
+            "upperPct": 96,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 7.2,
+            "lowerPctPoints": 4,
+            "upperPctPoints": 10.4,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "agent_tooling",
+        "label": "Agent tooling",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "agent-tool-contract-update"
+        ],
+        "totalProtectedInstructions": 100,
+        "weightedRawCorrectInstructionPctWithoutHerc": 88,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 12,
+        "weightedChangedCaseSharePct": 16,
+        "weightedExecutionReductionPctWithChangedOnly": 84,
+        "medianFullGateMs": 143.2,
+        "medianChangedGateMs": 158.3,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 88,
+            "lowerPct": 82,
+            "upperPct": 94,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 12,
+            "lowerPctPoints": 6,
+            "upperPctPoints": 18,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "support_routing",
+        "label": "Support routing",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "support-routing-refresh"
+        ],
+        "totalProtectedInstructions": 50,
+        "weightedRawCorrectInstructionPctWithoutHerc": 84,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 16,
+        "weightedChangedCaseSharePct": 20,
+        "weightedExecutionReductionPctWithChangedOnly": 80,
+        "medianFullGateMs": 134.7,
+        "medianChangedGateMs": 147.4,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 84,
+            "lowerPct": 74,
+            "upperPct": 94,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 16,
+            "lowerPctPoints": 6,
+            "upperPctPoints": 26,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "policy_compliance",
+        "label": "Policy compliance",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "customer-policy-hotfix"
+        ],
+        "totalProtectedInstructions": 20,
+        "weightedRawCorrectInstructionPctWithoutHerc": 80,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 20,
+        "weightedChangedCaseSharePct": 20,
+        "weightedExecutionReductionPctWithChangedOnly": 80,
+        "medianFullGateMs": 132.8,
+        "medianChangedGateMs": 144.8,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 80,
+            "lowerPct": 60,
+            "upperPct": 95,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 20,
+            "lowerPctPoints": 5,
+            "upperPctPoints": 40,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      }
+    ],
+    "byTaskGroup": [
+      {
+        "key": "ops_and_release",
+        "label": "Ops and release",
+        "scenarioCount": 2,
+        "scenarioIds": [
+          "support-routing-refresh",
+          "weekly-release-train"
+        ],
+        "totalProtectedInstructions": 550,
+        "weightedRawCorrectInstructionPctWithoutHerc": 94.2,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 5.8,
+        "weightedChangedCaseSharePct": 9.1,
+        "weightedExecutionReductionPctWithChangedOnly": 90.9,
+        "medianFullGateMs": 186.4,
+        "medianChangedGateMs": 204.6,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 94.2,
+            "lowerPct": 92.2,
+            "upperPct": 96,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 5.8,
+            "lowerPctPoints": 4,
+            "upperPctPoints": 7.8,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "policy_and_knowledge",
+        "label": "Policy and knowledge",
+        "scenarioCount": 2,
+        "scenarioIds": [
+          "customer-policy-hotfix",
+          "rag-policy-release"
+        ],
+        "totalProtectedInstructions": 270,
+        "weightedRawCorrectInstructionPctWithoutHerc": 91.9,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 8.1,
+        "weightedChangedCaseSharePct": 10.7,
+        "weightedExecutionReductionPctWithChangedOnly": 89.3,
+        "medianFullGateMs": 157.3,
+        "medianChangedGateMs": 168.2,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 91.9,
+            "lowerPct": 88.5,
+            "upperPct": 94.8,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 8.1,
+            "lowerPctPoints": 5.2,
+            "upperPctPoints": 11.5,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "agent_and_platform",
+        "label": "Agent and platform",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "agent-tool-contract-update"
+        ],
+        "totalProtectedInstructions": 100,
+        "weightedRawCorrectInstructionPctWithoutHerc": 88,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 12,
+        "weightedChangedCaseSharePct": 16,
+        "weightedExecutionReductionPctWithChangedOnly": 84,
+        "medianFullGateMs": 143.2,
+        "medianChangedGateMs": 158.3,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 88,
+            "lowerPct": 82,
+            "upperPct": 94,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 12,
+            "lowerPctPoints": 6,
+            "upperPctPoints": 18,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      }
+    ],
+    "byScaleBucket": [
+      {
+        "key": "large",
+        "label": "Large suites (>250 protected instructions)",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "weekly-release-train"
+        ],
+        "totalProtectedInstructions": 500,
+        "weightedRawCorrectInstructionPctWithoutHerc": 95.2,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 4.8,
+        "weightedChangedCaseSharePct": 8,
+        "weightedExecutionReductionPctWithChangedOnly": 92,
+        "medianFullGateMs": 238.1,
+        "medianChangedGateMs": 261.7,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 95.2,
+            "lowerPct": 93.2,
+            "upperPct": 97,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 4.8,
+            "lowerPctPoints": 3,
+            "upperPctPoints": 6.8,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "medium",
+        "label": "Medium suites (51-250 protected instructions)",
+        "scenarioCount": 2,
+        "scenarioIds": [
+          "agent-tool-contract-update",
+          "rag-policy-release"
+        ],
+        "totalProtectedInstructions": 350,
+        "weightedRawCorrectInstructionPctWithoutHerc": 91.4,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 8.6,
+        "weightedChangedCaseSharePct": 11.7,
+        "weightedExecutionReductionPctWithChangedOnly": 88.3,
+        "medianFullGateMs": 162.4,
+        "medianChangedGateMs": 174.9,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 91.4,
+            "lowerPct": 88.3,
+            "upperPct": 94.3,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 8.6,
+            "lowerPctPoints": 5.7,
+            "upperPctPoints": 11.7,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "small",
+        "label": "Small suites (<=50 protected instructions)",
+        "scenarioCount": 2,
+        "scenarioIds": [
+          "customer-policy-hotfix",
+          "support-routing-refresh"
+        ],
+        "totalProtectedInstructions": 70,
+        "weightedRawCorrectInstructionPctWithoutHerc": 82.9,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 17.1,
+        "weightedChangedCaseSharePct": 20,
+        "weightedExecutionReductionPctWithChangedOnly": 80,
+        "medianFullGateMs": 133.8,
+        "medianChangedGateMs": 146.1,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 82.9,
+            "lowerPct": 74.3,
+            "upperPct": 91.4,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 17.1,
+            "lowerPctPoints": 8.6,
+            "upperPctPoints": 25.7,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      }
+    ],
+    "byAudienceSurface": [
+      {
+        "key": "internal_ops",
+        "label": "Internal ops surfaces",
+        "scenarioCount": 2,
+        "scenarioIds": [
+          "support-routing-refresh",
+          "weekly-release-train"
+        ],
+        "totalProtectedInstructions": 550,
+        "weightedRawCorrectInstructionPctWithoutHerc": 94.2,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 5.8,
+        "weightedChangedCaseSharePct": 9.1,
+        "weightedExecutionReductionPctWithChangedOnly": 90.9,
+        "medianFullGateMs": 186.4,
+        "medianChangedGateMs": 204.6,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 94.2,
+            "lowerPct": 92.2,
+            "upperPct": 96,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 5.8,
+            "lowerPctPoints": 4,
+            "upperPctPoints": 7.8,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "customer_facing",
+        "label": "Customer-facing surfaces",
+        "scenarioCount": 2,
+        "scenarioIds": [
+          "customer-policy-hotfix",
+          "rag-policy-release"
+        ],
+        "totalProtectedInstructions": 270,
+        "weightedRawCorrectInstructionPctWithoutHerc": 91.9,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 8.1,
+        "weightedChangedCaseSharePct": 10.7,
+        "weightedExecutionReductionPctWithChangedOnly": 89.3,
+        "medianFullGateMs": 157.3,
+        "medianChangedGateMs": 168.2,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 91.9,
+            "lowerPct": 88.5,
+            "upperPct": 94.8,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 8.1,
+            "lowerPctPoints": 5.2,
+            "upperPctPoints": 11.5,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      },
+      {
+        "key": "platform_surface",
+        "label": "Platform surfaces",
+        "scenarioCount": 1,
+        "scenarioIds": [
+          "agent-tool-contract-update"
+        ],
+        "totalProtectedInstructions": 100,
+        "weightedRawCorrectInstructionPctWithoutHerc": 88,
+        "weightedCorrectInstructionPctWithHercAfterFix": 100,
+        "weightedCorrectnessLiftPctPoints": 12,
+        "weightedChangedCaseSharePct": 16,
+        "weightedExecutionReductionPctWithChangedOnly": 84,
+        "medianFullGateMs": 143.2,
+        "medianChangedGateMs": 158.3,
+        "confidenceIntervals95": {
+          "controlCorrectnessPct": {
+            "pointPct": 88,
+            "lowerPct": 82,
+            "upperPct": 94,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "treatmentCorrectnessPct": {
+            "pointPct": 100,
+            "lowerPct": 100,
+            "upperPct": 100,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          },
+          "upliftPctPoints": {
+            "pointPctPoints": 12,
+            "lowerPctPoints": 6,
+            "upperPctPoints": 18,
+            "confidenceLevelPct": 95,
+            "bootstrapIterations": 4000
+          }
+        }
+      }
+    ]
   },
   "scenarios": [
     {
       "id": "customer-policy-hotfix",
       "label": "Customer policy hotfix",
+      "classification": {
+        "taskType": "policy_compliance",
+        "taskGroup": "policy_and_knowledge",
+        "audienceSurface": "customer_facing",
+        "scaleBucket": "small"
+      },
       "totalCases": 20,
       "changedCases": 4,
       "brokenCases": 4,
@@ -43,14 +641,37 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 4,
         "changedExecutionReductionPct": 80,
-        "fullGateMedianMs": 126.5,
-        "changedGateMedianMs": 135.8,
-        "changedGateP90Ms": 144.1,
-        "postFixChangedGateMedianMs": 136.4,
+        "fullGateMedianMs": 132.8,
+        "changedGateMedianMs": 144.8,
+        "changedGateP90Ms": 153.6,
+        "postFixChangedGateMedianMs": 143.2,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 20,
         "failureLeakageReductionPct": 100
+      },
+      "confidenceIntervals95": {
+        "controlCorrectnessPct": {
+          "pointPct": 80,
+          "lowerPct": 60,
+          "upperPct": 95,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "treatmentCorrectnessPct": {
+          "pointPct": 100,
+          "lowerPct": 100,
+          "upperPct": 100,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "upliftPctPoints": {
+          "pointPctPoints": 20,
+          "lowerPctPoints": 5,
+          "upperPctPoints": 40,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        }
       },
       "rawSamples": {
         "rawCorrectPct": [
@@ -61,31 +682,37 @@
           80
         ],
         "fullRunMs": [
-          127,
-          128.5,
-          126.5,
-          125.6,
-          125.7
+          164,
+          143.3,
+          132.79,
+          125.47,
+          131.952
         ],
         "changedRunMs": [
-          142.3,
-          135,
-          135.8,
-          134.2,
-          144.1
+          154,
+          151.2,
+          144.85,
+          140.211,
+          144.7222
         ],
         "postFixChangedRunMs": [
-          137.8,
-          136.4,
-          135.7,
-          136.2,
-          143.5
+          147,
+          153.1,
+          141.61,
+          143.229,
+          140.8588
         ]
       }
     },
     {
       "id": "support-routing-refresh",
       "label": "Support routing refresh",
+      "classification": {
+        "taskType": "support_routing",
+        "taskGroup": "ops_and_release",
+        "audienceSurface": "internal_ops",
+        "scaleBucket": "small"
+      },
       "totalCases": 50,
       "changedCases": 10,
       "brokenCases": 8,
@@ -102,14 +729,37 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 10,
         "changedExecutionReductionPct": 80,
-        "fullGateMedianMs": 134.6,
-        "changedGateMedianMs": 145,
-        "changedGateP90Ms": 150.4,
-        "postFixChangedGateMedianMs": 144.9,
+        "fullGateMedianMs": 134.7,
+        "changedGateMedianMs": 147.4,
+        "changedGateP90Ms": 148.3,
+        "postFixChangedGateMedianMs": 148.3,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 16,
         "failureLeakageReductionPct": 100
+      },
+      "confidenceIntervals95": {
+        "controlCorrectnessPct": {
+          "pointPct": 84,
+          "lowerPct": 74,
+          "upperPct": 94,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "treatmentCorrectnessPct": {
+          "pointPct": 100,
+          "lowerPct": 100,
+          "upperPct": 100,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "upliftPctPoints": {
+          "pointPctPoints": 16,
+          "lowerPctPoints": 6,
+          "upperPctPoints": 26,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        }
       },
       "rawSamples": {
         "rawCorrectPct": [
@@ -120,31 +770,37 @@
           84
         ],
         "fullRunMs": [
-          132.1,
-          134.6,
-          137.8,
-          131.2,
-          163.2
+          136,
+          131.8,
+          135.76,
+          134.62,
+          134.7462
         ],
         "changedRunMs": [
-          144.1,
-          141.4,
-          145,
-          147.3,
-          150.4
+          148,
+          147.9,
+          147.37,
+          147.439,
+          144.6197
         ],
         "postFixChangedRunMs": [
-          146.9,
-          143.8,
-          145.4,
-          144.4,
-          144.9
+          158,
+          148.3,
+          151.23,
+          140.636,
+          145.3089
         ]
       }
     },
     {
       "id": "agent-tool-contract-update",
       "label": "Agent tool contract update",
+      "classification": {
+        "taskType": "agent_tooling",
+        "taskGroup": "agent_and_platform",
+        "audienceSurface": "platform_surface",
+        "scaleBucket": "medium"
+      },
       "totalCases": 100,
       "changedCases": 16,
       "brokenCases": 12,
@@ -161,14 +817,37 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 16,
         "changedExecutionReductionPct": 84,
-        "fullGateMedianMs": 143.5,
-        "changedGateMedianMs": 158.8,
-        "changedGateP90Ms": 160.9,
-        "postFixChangedGateMedianMs": 154.1,
+        "fullGateMedianMs": 143.2,
+        "changedGateMedianMs": 158.3,
+        "changedGateP90Ms": 160.1,
+        "postFixChangedGateMedianMs": 156.7,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 12,
         "failureLeakageReductionPct": 100
+      },
+      "confidenceIntervals95": {
+        "controlCorrectnessPct": {
+          "pointPct": 88,
+          "lowerPct": 82,
+          "upperPct": 94,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "treatmentCorrectnessPct": {
+          "pointPct": 100,
+          "lowerPct": 100,
+          "upperPct": 100,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "upliftPctPoints": {
+          "pointPctPoints": 12,
+          "lowerPctPoints": 6,
+          "upperPctPoints": 18,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        }
       },
       "rawSamples": {
         "rawCorrectPct": [
@@ -179,31 +858,37 @@
           88
         ],
         "fullRunMs": [
-          142.7,
-          146.3,
-          148.7,
-          142.2,
-          143.5
+          141,
+          147.4,
+          141.93,
+          143.232,
+          146.5402
         ],
         "changedRunMs": [
-          159.6,
-          160.9,
-          158.8,
-          157.3,
-          152.2
+          160,
+          157.6,
+          155.56,
+          158.609,
+          158.3069
         ],
         "postFixChangedRunMs": [
-          164.8,
-          153.9,
-          169.3,
-          154.1,
-          154
+          155,
+          157.9,
+          156.69,
+          152.24,
+          158.1352
         ]
       }
     },
     {
       "id": "rag-policy-release",
       "label": "RAG policy release",
+      "classification": {
+        "taskType": "rag_policy",
+        "taskGroup": "policy_and_knowledge",
+        "audienceSurface": "customer_facing",
+        "scaleBucket": "medium"
+      },
       "totalCases": 250,
       "changedCases": 25,
       "brokenCases": 18,
@@ -220,14 +905,37 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 25,
         "changedExecutionReductionPct": 90,
-        "fullGateMedianMs": 192.2,
-        "changedGateMedianMs": 194.8,
-        "changedGateP90Ms": 256.4,
-        "postFixChangedGateMedianMs": 182.3,
+        "fullGateMedianMs": 181.7,
+        "changedGateMedianMs": 191.6,
+        "changedGateP90Ms": 196.1,
+        "postFixChangedGateMedianMs": 192.5,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 7.2,
         "failureLeakageReductionPct": 100
+      },
+      "confidenceIntervals95": {
+        "controlCorrectnessPct": {
+          "pointPct": 92.8,
+          "lowerPct": 89.6,
+          "upperPct": 96,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "treatmentCorrectnessPct": {
+          "pointPct": 100,
+          "lowerPct": 100,
+          "upperPct": 100,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "upliftPctPoints": {
+          "pointPctPoints": 7.2,
+          "lowerPctPoints": 4,
+          "upperPctPoints": 10.4,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        }
       },
       "rawSamples": {
         "rawCorrectPct": [
@@ -236,25 +944,31 @@
           92.8
         ],
         "fullRunMs": [
-          192.2,
-          182.7,
-          199.5
+          182,
+          184.4,
+          180.35
         ],
         "changedRunMs": [
-          188.6,
-          256.4,
-          194.8
+          196,
+          191.6,
+          191.18
         ],
         "postFixChangedRunMs": [
-          179,
-          190.9,
-          182.3
+          189,
+          198,
+          192.54
         ]
       }
     },
     {
       "id": "weekly-release-train",
       "label": "Weekly release train",
+      "classification": {
+        "taskType": "release_ops",
+        "taskGroup": "ops_and_release",
+        "audienceSurface": "internal_ops",
+        "scaleBucket": "large"
+      },
       "totalCases": 500,
       "changedCases": 40,
       "brokenCases": 24,
@@ -271,14 +985,37 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 40,
         "changedExecutionReductionPct": 92,
-        "fullGateMedianMs": 246.2,
-        "changedGateMedianMs": 228.2,
-        "changedGateP90Ms": 236,
-        "postFixChangedGateMedianMs": 234.2,
+        "fullGateMedianMs": 238.1,
+        "changedGateMedianMs": 261.7,
+        "changedGateP90Ms": 262.6,
+        "postFixChangedGateMedianMs": 227.9,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 4.8,
         "failureLeakageReductionPct": 100
+      },
+      "confidenceIntervals95": {
+        "controlCorrectnessPct": {
+          "pointPct": 95.2,
+          "lowerPct": 93.2,
+          "upperPct": 97,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "treatmentCorrectnessPct": {
+          "pointPct": 100,
+          "lowerPct": 100,
+          "upperPct": 100,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        },
+        "upliftPctPoints": {
+          "pointPctPoints": 4.8,
+          "lowerPctPoints": 3,
+          "upperPctPoints": 6.8,
+          "confidenceLevelPct": 95,
+          "bootstrapIterations": 4000
+        }
       },
       "rawSamples": {
         "rawCorrectPct": [
@@ -287,19 +1024,19 @@
           95.2
         ],
         "fullRunMs": [
-          246.2,
-          235.4,
-          265.4
+          238,
+          255.9,
+          235.66
         ],
         "changedRunMs": [
-          228.2,
-          236,
-          219.5
+          263,
+          241.6,
+          261.67
         ],
         "postFixChangedRunMs": [
-          226.7,
-          234.2,
-          248.2
+          228,
+          249.3,
+          222.7
         ]
       }
     }

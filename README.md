@@ -8,6 +8,7 @@
     <a href="#install">Install / 安装</a> ·
     <a href="#quick-start">Quick Start / 快速开始</a> ·
     <a href="#benchmarks">Benchmarks / 基准</a> ·
+    <a href="EVALUATION_WHITEPAPER.md">Whitepaper / 白皮书</a> ·
     <a href="#launch-kit">Launch Kit / 启动模板</a> ·
     <a href="#contributing">Contributing / 贡献</a>
   </p>
@@ -170,7 +171,7 @@ herc report --format summary
 
 | 中文 | English |
 | --- | --- |
-| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) 和 [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), and [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json). |
+| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) 和 [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json)。如果你想看更接近论文/白皮书的完整分析，现在也可以直接看 [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), and [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json). For a more paper-like analysis, you can now read [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md). |
 
 ### Benchmark Scorecard / 基准总览
 
@@ -197,8 +198,18 @@ herc report --format summary
 | Scenario / 场景 | 中文 | English |
 | --- | --- | --- |
 | Global result / 总体结果 | 在 `5` 个候选发布场景和 `920` 条历史受保护指令上，不使用 HERC 时加权正确执行率是 `92.8%`，使用 HERC 并修复失败项后达到 `100%`。 | Across `5` candidate release scenarios and `920` protected historical instructions, weighted correctness is `92.8%` without HERC and reaches `100%` after using HERC and fixing the failed cases. |
+| Confidence interval / 置信区间 | 这组总体正确率 uplift 是 `+7.2 pp`，95% bootstrap 置信区间是 `+5.5` 到 `+8.8 pp`。 | The overall correctness uplift is `+7.2 pp`, with a 95% bootstrap confidence interval from `+5.5` to `+8.8 pp`. |
 | Leakage reduction / 泄漏抑制 | 历史失败泄漏下降 `100%`，changed-only 路径把平均执行面缩小 `89.7%`。 | Historical failure leakage drops by `100%`, while changed-only execution reduces the average execution surface by `89.7%`. |
 | Scenario detail / 场景细节 | `customer-policy-hotfix`：`80.0% -> 100.0%`；`support-routing-refresh`：`84.0% -> 100.0%`；`agent-tool-contract-update`：`88.0% -> 100.0%`；`rag-policy-release`：`92.8% -> 100.0%`；`weekly-release-train`：`95.2% -> 100.0%`。 | `customer-policy-hotfix`: `80.0% -> 100.0%`; `support-routing-refresh`: `84.0% -> 100.0%`; `agent-tool-contract-update`: `88.0% -> 100.0%`; `rag-policy-release`: `92.8% -> 100.0%`; `weekly-release-train`: `95.2% -> 100.0%`. |
+
+### Stratified Uplift / 分层 Uplift
+
+| Slice / 分层 | Result / 结果 | Why it matters / 意义 |
+| --- | --- | --- |
+| Task group: Policy and knowledge / 任务组：政策与知识 | `91.9% -> 100.0%`, uplift `+8.1 pp` | 面向用户的政策和知识面回归，提升依然明显 / Policy-heavy customer-facing surfaces still show material uplift |
+| Task group: Ops and release / 任务组：运维与发布 | `94.2% -> 100.0%`, uplift `+5.8 pp` | 发布列车和路由类问题也能被同一套机制稳定拦截 / The same workflow still blocks routing and release-train failures |
+| Scale bucket: Small suites / 规模：小套件 | `82.9% -> 100.0%`, uplift `+17.1 pp` | 早期或高风险小套件提升最显著 / Small, focused suites see the sharpest uplift |
+| Scale bucket: Large suites / 规模：大套件 | `95.2% -> 100.0%`, uplift `+4.8 pp` | 大套件虽然基础更稳，但仍能持续压低已知失败泄漏 / Large suites start from a higher baseline but still reduce known-failure leakage |
 
 ### Workflow Impact / 工作流收益
 
@@ -272,6 +283,7 @@ npm run repo-kit:scaffold -- --meta github-repo-launch-kit/project.meta.example.
 | [src](src) | TypeScript CLI 源码 | TypeScript CLI source |
 | [test](test) | 单元测试和端到端测试 | Unit tests and end-to-end tests |
 | [benchmarks](benchmarks) | benchmark runner、fixtures 和结果文件 | Benchmark runners, fixtures, and result files |
+| [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md) | 公开的评估白皮书，包含分层 uplift、95% 置信区间和方法说明 | Public evaluation whitepaper with stratified uplift, 95% confidence intervals, and methodology notes |
 | [github-repo-launch-kit](github-repo-launch-kit) | 内置仓库启动模板包 | Built-in repository launch kit |
 | [.github](.github) | CI、issue templates 和 PR 模板 | CI, issue templates, and PR templates |
 | [.local-dev-docs](.local-dev-docs) | 本地开发文档目录，默认不上传 GitHub | Local development docs folder, ignored from GitHub by default |

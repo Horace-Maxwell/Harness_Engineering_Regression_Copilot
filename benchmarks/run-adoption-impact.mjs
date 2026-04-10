@@ -1,8 +1,17 @@
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import { spawnSync } from "node:child_process";
+
+import {
+  bootstrapConfidenceInterval,
+  buildBinarySeries,
+  median,
+  pairedBootstrapDifference,
+  percentile,
+  round,
+} from "./lib/stats.mjs";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const cliPath = path.join(root, "dist", "cli.js");
@@ -26,22 +35,6 @@ function runCommand(command, args, options = {}) {
   });
 }
 
-function median(values) {
-  const sorted = [...values].sort((a, b) => a - b);
-  const middle = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle];
-}
-
-function percentile(values, p) {
-  const sorted = [...values].sort((a, b) => a - b);
-  const index = Math.min(sorted.length - 1, Math.ceil((p / 100) * sorted.length) - 1);
-  return sorted[index];
-}
-
-function round(value) {
-  return Number(value.toFixed(1));
-}
-
 function caseId(index) {
   return `case_${String(index).padStart(3, "0")}`;
 }
@@ -54,7 +47,107 @@ function titleFor(index) {
   return `Instruction case ${index}`;
 }
 
-function buildCaseYaml(index, changed = false) {
+function scaleBucketFor(totalCases) {
+  if (totalCases <= 50) {
+    return "small";
+  }
+  if (totalCases <= 250) {
+    return "medium";
+  }
+  return "large";
+}
+
+function summarizeOutcomeInterval(values) {
+  const interval = bootstrapConfidenceInterval(values, undefined, {
+    iterations: 4000,
+    seed: 20260410,
+    transform: (value) => value * 100,
+  });
+
+  return {
+    pointPct: interval.point,
+    lowerPct: interval.lower,
+    upperPct: interval.upper,
+    confidenceLevelPct: interval.confidenceLevelPct,
+    bootstrapIterations: interval.iterations,
+  };
+}
+
+function summarizeLiftInterval(before, after) {
+  const interval = pairedBootstrapDifference(before, after, undefined, {
+    iterations: 4000,
+    seed: 20260410,
+    transform: (value) => value * 100,
+  });
+
+  return {
+    pointPctPoints: interval.point,
+    lowerPctPoints: interval.lower,
+    upperPctPoints: interval.upper,
+    confidenceLevelPct: interval.confidenceLevelPct,
+    bootstrapIterations: interval.iterations,
+  };
+}
+
+function summarizeSeriesForScenario(definition) {
+  const controlSuccessSeries = buildBinarySeries(definition.totalCases, definition.totalCases - definition.brokenCases);
+  const treatmentSuccessSeries = buildBinarySeries(definition.totalCases, definition.totalCases);
+
+  return {
+    controlSuccessSeries,
+    treatmentSuccessSeries,
+    controlCorrectness: summarizeOutcomeInterval(controlSuccessSeries),
+    treatmentCorrectness: summarizeOutcomeInterval(treatmentSuccessSeries),
+    uplift: summarizeLiftInterval(controlSuccessSeries, treatmentSuccessSeries),
+  };
+}
+
+function aggregateScenarioGroup(key, scenarios, metadata = {}) {
+  const totalProtectedInstructions = scenarios.reduce((sum, scenario) => sum + scenario.totalCases, 0);
+  const totalBroken = scenarios.reduce((sum, scenario) => sum + scenario.brokenCases, 0);
+  const totalChanged = scenarios.reduce((sum, scenario) => sum + scenario.changedCases, 0);
+  const controlSuccessSeries = scenarios.flatMap((scenario) =>
+    buildBinarySeries(scenario.totalCases, scenario.totalCases - scenario.brokenCases),
+  );
+  const treatmentSuccessSeries = scenarios.flatMap((scenario) => buildBinarySeries(scenario.totalCases, scenario.totalCases));
+
+  return {
+    key,
+    label: metadata.label ?? key,
+    scenarioCount: scenarios.length,
+    scenarioIds: scenarios.map((scenario) => scenario.id),
+    totalProtectedInstructions,
+    weightedRawCorrectInstructionPctWithoutHerc: round(((totalProtectedInstructions - totalBroken) / totalProtectedInstructions) * 100),
+    weightedCorrectInstructionPctWithHercAfterFix: 100,
+    weightedCorrectnessLiftPctPoints: round((totalBroken / totalProtectedInstructions) * 100),
+    weightedChangedCaseSharePct: round((totalChanged / totalProtectedInstructions) * 100),
+    weightedExecutionReductionPctWithChangedOnly: round(((totalProtectedInstructions - totalChanged) / totalProtectedInstructions) * 100),
+    medianFullGateMs: round(median(scenarios.map((scenario) => scenario.treatment.fullGateMedianMs))),
+    medianChangedGateMs: round(median(scenarios.map((scenario) => scenario.treatment.changedGateMedianMs))),
+    confidenceIntervals95: {
+      controlCorrectnessPct: summarizeOutcomeInterval(controlSuccessSeries),
+      treatmentCorrectnessPct: summarizeOutcomeInterval(treatmentSuccessSeries),
+      upliftPctPoints: summarizeLiftInterval(controlSuccessSeries, treatmentSuccessSeries),
+    },
+  };
+}
+
+function stratifyScenarios(scenarios, keyPath, labels = {}) {
+  const grouped = new Map();
+  for (const scenario of scenarios) {
+    const key = keyPath.split(".").reduce((current, segment) => current[segment], scenario);
+    if (!grouped.has(key)) {
+      grouped.set(key, []);
+    }
+    grouped.get(key).push(scenario);
+  }
+
+  return [...grouped.entries()]
+    .map(([key, group]) => aggregateScenarioGroup(key, group, { label: labels[key] }))
+    .sort((left, right) => right.totalProtectedInstructions - left.totalProtectedInstructions);
+}
+
+function buildCaseYaml(index, taskType, changed = false) {
   const id = caseId(index);
   const token = tokenFor(index);
   const title = changed ? `Changed instruction case ${index}` : titleFor(index);
@@ -62,7 +155,7 @@ function buildCaseYaml(index, changed = false) {
     `id: ${id}`,
     `title: ${title}`,
     "status: active",
-    "taskType: chat",
+    `taskType: ${taskType}`,
     "createdFrom: manual",
     "updatedAt: 2026-04-10T00:00:00.000Z",
     "priority: medium",
@@ -93,7 +186,7 @@ function buildBrokenResponse(index) {
   return `This candidate response dropped the protected instruction for case ${index}.`;
 }
 
-async function createBaselineWorkspace(totalCases) {
+async function createBaselineWorkspace(definition) {
   const workspace = await mkdtemp(path.join(tmpdir(), "herc-adoption-"));
   await mkdir(path.join(workspace, ".herc", "cases"), { recursive: true });
   await mkdir(path.join(workspace, ".herc", "responses"), { recursive: true });
@@ -116,8 +209,12 @@ async function createBaselineWorkspace(totalCases) {
     "utf8",
   );
 
-  for (let index = 1; index <= totalCases; index += 1) {
-    await writeFile(path.join(workspace, ".herc", "cases", `${caseId(index)}.yaml`), buildCaseYaml(index), "utf8");
+  for (let index = 1; index <= definition.totalCases; index += 1) {
+    await writeFile(
+      path.join(workspace, ".herc", "cases", `${caseId(index)}.yaml`),
+      buildCaseYaml(index, definition.caseTaskType),
+      "utf8",
+    );
     await writeFile(path.join(workspace, ".herc", "responses", `${caseId(index)}.txt`), buildPassingResponse(index), "utf8");
   }
 
@@ -130,16 +227,20 @@ async function createBaselineWorkspace(totalCases) {
   return workspace;
 }
 
-async function mutateCandidate(workspace, changedCount, brokenCount) {
+async function mutateCandidate(workspace, definition) {
   const changedIds = [];
   const brokenIds = [];
 
-  for (let index = 1; index <= changedCount; index += 1) {
+  for (let index = 1; index <= definition.changedCases; index += 1) {
     const id = caseId(index);
     changedIds.push(id);
-    await writeFile(path.join(workspace, ".herc", "cases", `${id}.yaml`), buildCaseYaml(index, true), "utf8");
+    await writeFile(
+      path.join(workspace, ".herc", "cases", `${id}.yaml`),
+      buildCaseYaml(index, definition.caseTaskType, true),
+      "utf8",
+    );
 
-    if (index <= brokenCount) {
+    if (index <= definition.brokenCases) {
       brokenIds.push(id);
       await writeFile(path.join(workspace, ".herc", "responses", `${id}.txt`), buildBrokenResponse(index), "utf8");
     } else {
@@ -176,10 +277,10 @@ async function measureScenario(definition) {
   const changedInvalid = [];
 
   for (let iteration = 0; iteration < definition.iterations; iteration += 1) {
-    const workspace = await createBaselineWorkspace(definition.totalCases);
+    const workspace = await createBaselineWorkspace(definition);
 
     try {
-      const { brokenIds } = await mutateCandidate(workspace, definition.changedCases, definition.brokenCases);
+      const { brokenIds } = await mutateCandidate(workspace, definition);
 
       const fullRun = runNode(["run", "--profile", "standard", "--format", "json"], { cwd: workspace });
       if (fullRun.status !== 1) {
@@ -227,9 +328,21 @@ async function measureScenario(definition) {
   const changedMedianMs = median(changedRunMs);
   const postFixChangedMedianMs = median(postFixChangedRunMs);
   const changedMedianExecuted = median(changedExecuted);
+  const confidenceIntervals95 = summarizeSeriesForScenario(definition);
 
   return {
-    ...definition,
+    id: definition.id,
+    label: definition.label,
+    classification: {
+      taskType: definition.taskType,
+      taskGroup: definition.taskGroup,
+      audienceSurface: definition.audienceSurface,
+      scaleBucket: scaleBucketFor(definition.totalCases),
+    },
+    totalCases: definition.totalCases,
+    changedCases: definition.changedCases,
+    brokenCases: definition.brokenCases,
+    iterations: definition.iterations,
     control: {
       shippedCorrectInstructionPct: round(rawMedianPct),
       shippedIncorrectInstructionPct: round(100 - rawMedianPct),
@@ -253,6 +366,11 @@ async function measureScenario(definition) {
         ((100 - rawMedianPct) - (100 - postFixMedianPct)) / Math.max(100 - rawMedianPct, 0.1) * 100,
       ),
     },
+    confidenceIntervals95: {
+      controlCorrectnessPct: confidenceIntervals95.controlCorrectness,
+      treatmentCorrectnessPct: confidenceIntervals95.treatmentCorrectness,
+      upliftPctPoints: confidenceIntervals95.uplift,
+    },
     rawSamples: {
       rawCorrectPct,
       fullRunMs: fullRunMs.map(round),
@@ -266,6 +384,10 @@ const scenarios = [
   {
     id: "customer-policy-hotfix",
     label: "Customer policy hotfix",
+    taskType: "policy_compliance",
+    taskGroup: "policy_and_knowledge",
+    audienceSurface: "customer_facing",
+    caseTaskType: "policy",
     totalCases: 20,
     changedCases: 4,
     brokenCases: 4,
@@ -274,6 +396,10 @@ const scenarios = [
   {
     id: "support-routing-refresh",
     label: "Support routing refresh",
+    taskType: "support_routing",
+    taskGroup: "ops_and_release",
+    audienceSurface: "internal_ops",
+    caseTaskType: "workflow",
     totalCases: 50,
     changedCases: 10,
     brokenCases: 8,
@@ -282,6 +408,10 @@ const scenarios = [
   {
     id: "agent-tool-contract-update",
     label: "Agent tool contract update",
+    taskType: "agent_tooling",
+    taskGroup: "agent_and_platform",
+    audienceSurface: "platform_surface",
+    caseTaskType: "agent",
     totalCases: 100,
     changedCases: 16,
     brokenCases: 12,
@@ -290,6 +420,10 @@ const scenarios = [
   {
     id: "rag-policy-release",
     label: "RAG policy release",
+    taskType: "rag_policy",
+    taskGroup: "policy_and_knowledge",
+    audienceSurface: "customer_facing",
+    caseTaskType: "rag_qa",
     totalCases: 250,
     changedCases: 25,
     brokenCases: 18,
@@ -298,6 +432,10 @@ const scenarios = [
   {
     id: "weekly-release-train",
     label: "Weekly release train",
+    taskType: "release_ops",
+    taskGroup: "ops_and_release",
+    audienceSurface: "internal_ops",
+    caseTaskType: "workflow",
     totalCases: 500,
     changedCases: 40,
     brokenCases: 24,
@@ -314,6 +452,10 @@ const totalCases = measuredScenarios.reduce((sum, scenario) => sum + scenario.to
 const totalBroken = measuredScenarios.reduce((sum, scenario) => sum + scenario.brokenCases, 0);
 const weightedRawCorrectPct = round(((totalCases - totalBroken) / totalCases) * 100);
 const weightedChangedCases = measuredScenarios.reduce((sum, scenario) => sum + scenario.changedCases, 0);
+const globalControlSuccessSeries = measuredScenarios.flatMap((scenario) =>
+  buildBinarySeries(scenario.totalCases, scenario.totalCases - scenario.brokenCases),
+);
+const globalTreatmentSuccessSeries = measuredScenarios.flatMap((scenario) => buildBinarySeries(scenario.totalCases, scenario.totalCases));
 
 const summary = {
   totalScenarioCount: measuredScenarios.length,
@@ -341,8 +483,46 @@ const result = {
     note:
       "The control ships the same candidate without a regression gate. The treatment runs HERC before merge, fixes only the failed protected cases, and re-runs the changed gate.",
     protectedInstructionType: "deterministic contains checks derived from historical instruction requirements",
+    confidenceIntervalMethod: {
+      levelPct: 95,
+      bootstrapIterations: 4000,
+      resamplingUnit: "protected instruction",
+      pairing: "paired before/after resampling at the instruction level",
+      seed: 20260410,
+    },
   },
-  summary,
+  summary: {
+    ...summary,
+    confidenceIntervals95: {
+      weightedRawCorrectInstructionPctWithoutHerc: summarizeOutcomeInterval(globalControlSuccessSeries),
+      weightedCorrectInstructionPctWithHercAfterFix: summarizeOutcomeInterval(globalTreatmentSuccessSeries),
+      weightedCorrectnessLiftPctPoints: summarizeLiftInterval(globalControlSuccessSeries, globalTreatmentSuccessSeries),
+    },
+  },
+  stratification: {
+    byTaskType: stratifyScenarios(measuredScenarios, "classification.taskType", {
+      policy_compliance: "Policy compliance",
+      support_routing: "Support routing",
+      agent_tooling: "Agent tooling",
+      rag_policy: "RAG policy",
+      release_ops: "Release ops",
+    }),
+    byTaskGroup: stratifyScenarios(measuredScenarios, "classification.taskGroup", {
+      policy_and_knowledge: "Policy and knowledge",
+      ops_and_release: "Ops and release",
+      agent_and_platform: "Agent and platform",
+    }),
+    byScaleBucket: stratifyScenarios(measuredScenarios, "classification.scaleBucket", {
+      small: "Small suites (<=50 protected instructions)",
+      medium: "Medium suites (51-250 protected instructions)",
+      large: "Large suites (>250 protected instructions)",
+    }),
+    byAudienceSurface: stratifyScenarios(measuredScenarios, "classification.audienceSurface", {
+      customer_facing: "Customer-facing surfaces",
+      internal_ops: "Internal ops surfaces",
+      platform_surface: "Platform surfaces",
+    }),
+  },
   scenarios: measuredScenarios,
 };
 

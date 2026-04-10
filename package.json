@@ -33,6 +33,7 @@
     "benchmark:workflows": "node benchmarks/run-workflow-impact.mjs",
     "benchmark:adoption": "node benchmarks/run-adoption-impact.mjs",
     "benchmark:workflow-upgrade": "node benchmarks/run-workflow-upgrade-impact.mjs",
+    "benchmark:whitepaper": "node benchmarks/generate-whitepaper.mjs",
     "pack:check": "npm pack --dry-run --loglevel=error",
     "test": "npm run build && node --test",
     "check": "npm run typecheck && npm run test && npm run pack:check"
