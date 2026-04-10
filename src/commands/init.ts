@@ -21,7 +21,7 @@ import { blank, bullet, nextStep, section } from "../lib/output.js";
 
 export function createInitCommand(): Command {
   return withGlobalOptions(new Command("init"))
-    .description("Initialize AI Regression Copilot in the current repository.")
+    .description("Initialize Harness_Engineering_Regression_Copilot in the current repository.")
     .option("--project-name <name>", "Override the default project name")
     .option("--force", "Rewrite config and sample assets even if the workspace already exists")
     .option("--dry-run", "Show what would be created without writing files")
@@ -106,7 +106,11 @@ notes:
         await writeTextFile(sampleResponsePath, "example");
       }
 
-      section(alreadyInitialized ? "Initialized AI Regression Copilot workspace without overwriting existing assets." : "Initialized AI Regression Copilot.");
+      section(
+        alreadyInitialized
+          ? "Initialized Harness_Engineering_Regression_Copilot workspace without overwriting existing assets."
+          : "Initialized Harness_Engineering_Regression_Copilot.",
+      );
       blank();
       bullet(`Workspace: ${aircRoot}`);
       bullet(`Config: ${configPath}`);

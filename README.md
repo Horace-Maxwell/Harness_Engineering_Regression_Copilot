@@ -1,6 +1,6 @@
-# AI Regression Copilot
+# Harness_Engineering_Regression_Copilot
 
-[![CI](https://img.shields.io/github/actions/workflow/status/Horace-Maxwell/ai-regression-copilot/ci.yml?branch=main&label=CI)](https://github.com/Horace-Maxwell/ai-regression-copilot/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/Horace-Maxwell/Harness_Engineering_Regression_Copilot/ci.yml?branch=main&label=CI)](https://github.com/Horace-Maxwell/Harness_Engineering_Regression_Copilot/actions)
 ![Node >=18](https://img.shields.io/badge/node-%3E%3D18-339933?logo=node.js&logoColor=white)
 ![Failure-first](https://img.shields.io/badge/workflow-failure--first-0f766e)
 ![Local-first](https://img.shields.io/badge/runtime-local--first-1d4ed8)
@@ -10,10 +10,10 @@
 ![Changed run 99.9% fewer cases](https://img.shields.io/badge/changed%20run-99.9%25%20fewer%20cases-f97316)
 
 中文：
-AI Regression Copilot 是一个面向 AI 应用、RAG、agent 和 Copilot 场景的回归测试 CLI。它把生产失败、坏对话、错误 trace 和支持工单直接转成可维护的回归资产，再把这些资产接进本地开发循环和 GitHub PR gate。
+Harness_Engineering_Regression_Copilot，简称 `AIRC`，是一个面向 AI 应用、RAG、agent 和 Copilot 场景的回归测试 CLI。它把生产失败、坏对话、错误 trace 和支持工单直接转成可维护的回归资产，再把这些资产接进本地开发循环和 GitHub PR gate。
 
 English:
-AI Regression Copilot is a regression testing CLI for AI apps, RAG systems, agents, and copilots. It turns production failures, bad conversations, broken traces, and support tickets into maintainable regression assets, then plugs those assets into local development loops and GitHub PR gates.
+Harness_Engineering_Regression_Copilot, abbreviated as `AIRC`, is a regression testing CLI for AI apps, RAG systems, agents, and copilots. It turns production failures, bad conversations, broken traces, and support tickets into maintainable regression assets, then plugs those assets into local development loops and GitHub PR gates.
 
 中文：
 这个项目关注的是一条很具体的路径：让团队更快地把“这里出过错”变成“这里以后会被拦住”。默认路径保持本地优先、跨平台、轻依赖，适合从单人项目一路长到团队工作流。

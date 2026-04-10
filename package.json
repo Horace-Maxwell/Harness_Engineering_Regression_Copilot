@@ -1,5 +1,5 @@
 {
-  "name": "ai-regression-copilot",
+  "name": "harness_engineering_regression_copilot",
   "version": "0.1.0",
   "description": "Failure-first AI regression testing CLI.",
   "author": "Horace Dong",
@@ -7,11 +7,11 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Horace-Maxwell/ai-regression-copilot.git"
+    "url": "git+https://github.com/Horace-Maxwell/Harness_Engineering_Regression_Copilot.git"
   },
-  "homepage": "https://github.com/Horace-Maxwell/ai-regression-copilot#readme",
+  "homepage": "https://github.com/Horace-Maxwell/Harness_Engineering_Regression_Copilot#readme",
   "bugs": {
-    "url": "https://github.com/Horace-Maxwell/ai-regression-copilot/issues"
+    "url": "https://github.com/Horace-Maxwell/Harness_Engineering_Regression_Copilot/issues"
   },
   "files": [
     "dist",

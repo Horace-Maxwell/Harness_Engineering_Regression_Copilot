@@ -6,7 +6,7 @@ export function renderMarkdownReport(report: RunReport): string {
   const skipped = report.results.filter((result) => result.status === "skipped");
   const needsReview = report.results.filter((result) => result.reviewStatus === "needs_review");
   const lines: string[] = [];
-  lines.push("# AI Regression Copilot Report");
+  lines.push("# Harness_Engineering_Regression_Copilot Report");
   lines.push("");
   lines.push(`- Report ID: ${report.id}`);
   lines.push(`- Created At: ${report.createdAt}`);

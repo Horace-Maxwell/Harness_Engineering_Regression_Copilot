@@ -21,7 +21,7 @@ const program = new Command();
 
 program
   .name("airc")
-  .description("AI Regression Copilot CLI")
+  .description("Harness_Engineering_Regression_Copilot CLI")
   .version("0.1.0")
   .addCommand(createInitCommand())
   .addCommand(createDoctorCommand())

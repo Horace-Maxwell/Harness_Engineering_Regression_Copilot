@@ -1,5 +1,5 @@
 name: Bug report / Bug 报告
-description: Report a reproducible issue in AI Regression Copilot / 报告可复现问题
+description: Report a reproducible issue in Harness_Engineering_Regression_Copilot / 报告可复现问题
 title: "[bug] "
 labels:
   - bug
