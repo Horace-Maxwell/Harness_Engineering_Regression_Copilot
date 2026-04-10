@@ -83,7 +83,8 @@ export function createDoctorCommand(): Command {
   return withGlobalOptions(new Command("doctor"))
     .description("Check workspace health, schema validity, and local execution readiness.")
     .option("--strict", "Exit non-zero on warnings as well as failures")
-    .action(async (options: { strict?: boolean; json?: boolean; quiet?: boolean; noColor?: boolean }) => {
+    .option("--quick", "Skip full case and incident validation for a faster preflight check")
+    .action(async (options: { strict?: boolean; quick?: boolean; json?: boolean; quiet?: boolean; noColor?: boolean }) => {
       applyGlobalOptions(options);
       const checks: DoctorCheck[] = [];
       const majorVersion = Number.parseInt(process.version.replace(/^v/, "").split(".")[0], 10);
@@ -147,15 +148,23 @@ export function createDoctorCommand(): Command {
             checks.push(await directoryCheck(dirPath));
           }
 
-          const cases = await loadCaseRecords(projectRoot, config);
-          const incidents = await loadIncidentRecords(projectRoot, config);
-          cases.forEach((record) => validateCaseRecord(record));
-          incidents.forEach((record) => validateIncidentRecord(record));
-          checks.push({
-            name: "schema",
-            status: "pass",
-            message: `Validated ${cases.length} case(s) and ${incidents.length} incident(s).`,
-          });
+          if (options.quick) {
+            checks.push({
+              name: "schema",
+              status: "pass",
+              message: "Quick mode skipped full case and incident validation.",
+            });
+          } else {
+            const cases = await loadCaseRecords(projectRoot, config);
+            const incidents = await loadIncidentRecords(projectRoot, config);
+            cases.forEach((record) => validateCaseRecord(record));
+            incidents.forEach((record) => validateIncidentRecord(record));
+            checks.push({
+              name: "schema",
+              status: "pass",
+              message: `Validated ${cases.length} case(s) and ${incidents.length} incident(s).`,
+            });
+          }
         } catch (error) {
           checks.push({
             name: "config",

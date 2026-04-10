@@ -151,7 +151,7 @@ herc report --format summary
 
 | 中文 | English |
 | --- | --- |
-| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json) 和 [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), and [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json). |
+| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) 和 [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), and [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json). |
 
 ### Performance Snapshot / 性能快照
 
@@ -172,6 +172,8 @@ herc report --format summary
 | QA / Reviewer | Accept one case and validate baseline / 接受一个 case 并验证 baseline | `453.4 ms` median |
 | CI / Platform | Run only changed cases in a `5000` case suite / 在 `5000` 个 case 的套件里只跑 changed cases | `5000 -> 3` executed cases, `99.9%` fewer cases, `25.6%` less time |
 | Release owner | Enforce review quality in `deep` profile / 在 `deep` 档严格执行审核门禁 | Blocked `5/5` unreviewed cases |
+| Regression triage | Compare latest run against the previous run / 对比最新 run 与上一次 run | `280.3 ms -> 112.7 ms`, `66.7%` fewer commands |
+| CI preflight | Detect non-git changed-only fallback before wasting a run / 在误跑前发现非 Git changed-only fallback | Avoided `1000` executed cases, `65.3%` less time with `doctor --quick` |
 
 | 中文 | English |
 | --- | --- |
@@ -182,7 +184,7 @@ herc report --format summary
 | Command / 命令 | 中文 | English |
 | --- | --- | --- |
 | `init` | 初始化 repo-local 工作区 | Initialize the repo-local workspace |
-| `doctor` | 检查工作区、schema 和环境状态 | Validate workspace, schema, and environment health |
+| `doctor` | 检查工作区、schema 和环境状态，支持 `--quick` 预检 | Validate workspace, schema, and environment health, with `--quick` for fast preflight checks |
 | `import` | 从文件、stdin 和结构化格式导入失败 | Import failures from files, stdin, and structured formats |
 | `distill` | 从 incident 生成 draft cases | Generate draft cases from incidents |
 | `create-case` | 不经 import 直接手工建 case | Create a case manually without import first |

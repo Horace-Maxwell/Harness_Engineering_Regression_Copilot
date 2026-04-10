@@ -1,0 +1,128 @@
+{
+  "measuredAt": "2026-04-10T03:46:01.240Z",
+  "environment": {
+    "node": "v25.6.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "methodology": {
+    "experimentType": "workflow_upgrade_before_after",
+    "note": "Each benchmark compares the older manual workflow against the current upgraded HERC workflow on the same task shape.",
+    "references": {
+      "openaiEvalBestPractices": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "langfuseExperiments": "https://langfuse.com/docs/evaluation/experiments/overview"
+    }
+  },
+  "qualityCarryOver": {
+    "weightedCorrectInstructionPctWithoutHerc": 92.8,
+    "weightedCorrectInstructionPctWithUpdatedHercWorkflow": 100,
+    "weightedCorrectnessLiftPctPoints": 7.2,
+    "weightedFailureLeakageReductionPct": 100
+  },
+  "workflowUpgradeImpact": {
+    "reportComparison": {
+      "iterations": 5,
+      "before": {
+        "commands": 3,
+        "manualFiles": 0,
+        "manualLoc": 9,
+        "medianMs": 280.3,
+        "rawSamplesMs": [
+          280.1,
+          278.2,
+          280.3,
+          284.3,
+          287.1
+        ]
+      },
+      "after": {
+        "commands": 1,
+        "manualFiles": 0,
+        "manualLoc": 0,
+        "medianMs": 112.7,
+        "rawSamplesMs": [
+          112.7,
+          113.6,
+          109.6,
+          114.5,
+          108.9
+        ]
+      },
+      "improvements": {
+        "commandReductionPct": 66.7,
+        "manualLocReductionPct": 100,
+        "medianTimeReductionPct": 59.8
+      }
+    },
+    "changedPreflight": {
+      "iterations": 3,
+      "suiteCaseCount": 1000,
+      "before": {
+        "commands": 1,
+        "executedCases": 1000,
+        "medianMs": 351.2,
+        "rawSamplesMs": [
+          351.2,
+          350.9,
+          369.3
+        ]
+      },
+      "after": {
+        "commands": 1,
+        "executedCases": 0,
+        "medianMs": 121.8,
+        "rawSamplesMs": [
+          121.7,
+          122.9,
+          121.8
+        ]
+      },
+      "improvements": {
+        "avoidedExecutedCases": 1000,
+        "executedCaseReductionPct": 100,
+        "medianTimeReductionPct": 65.3
+      }
+    },
+    "gitignoreAutomation": {
+      "iterations": 5,
+      "before": {
+        "commands": 1,
+        "manualFiles": 1,
+        "manualLoc": 3,
+        "medianMs": 112.5,
+        "rawSamplesMs": [
+          112.5,
+          111,
+          110.8,
+          112.6,
+          112.8
+        ]
+      },
+      "after": {
+        "commands": 1,
+        "manualFiles": 0,
+        "manualLoc": 0,
+        "medianMs": 110.3,
+        "rawSamplesMs": [
+          108.2,
+          112.3,
+          110.8,
+          110.3,
+          110.2
+        ]
+      },
+      "improvements": {
+        "manualFileReductionPct": 100,
+        "manualLocReductionPct": 100,
+        "medianTimeReductionPct": 2
+      }
+    }
+  },
+  "existingWorkflowReference": {
+    "supportOpsBatchImportMedianMs": 537.7,
+    "aiEngineerReproToGateMedianMs": 457.6,
+    "qaReviewerAcceptAndPassMedianMs": 453.4,
+    "largeSuiteChangedOnlyTimeReductionPct": 25.6,
+    "largeSuiteChangedOnlyExecutedCaseReductionPct": 99.9
+  }
+}

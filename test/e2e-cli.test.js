@@ -70,6 +70,13 @@ test("CLI doctor reports a healthy initialized workspace", async () => {
   assert.match(result.stdout, /\[warn\] git-repo/);
 });
 
+test("CLI doctor quick mode skips full schema validation", async () => {
+  const root = await makeWorkspace();
+  await execFileAsync("node", [cliPath, "init"], { cwd: root });
+  const result = await execFileAsync("node", [cliPath, "doctor", "--quick"], { cwd: root });
+  assert.match(result.stdout, /Quick mode skipped full case and incident validation/);
+});
+
 test("CLI init can skip gitignore sync when requested", async () => {
   const root = await makeWorkspace();
   await execFileAsync("node", [cliPath, "init", "--no-sync-gitignore"], { cwd: root });
