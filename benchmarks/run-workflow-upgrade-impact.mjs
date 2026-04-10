@@ -32,6 +32,16 @@ function median(values) {
   return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle];
 }
 
+function compareReportResults(previousReportJson, currentReportJson) {
+  const previous = JSON.parse(previousReportJson);
+  const current = JSON.parse(currentReportJson);
+  const previousById = new Map(previous.results.map((item) => [item.caseId, item.status]));
+
+  return current.results
+    .filter((item) => previousById.get(item.caseId) && previousById.get(item.caseId) !== item.status)
+    .map((item) => `${item.caseId}: ${previousById.get(item.caseId)} -> ${item.status}`);
+}
+
 async function listJsonReports(workspace) {
   const reportsDir = path.join(workspace, ".herc", "reports");
   const files = (await readdir(reportsDir))
@@ -101,23 +111,13 @@ async function measureComparisonWorkflow(iterations = 5) {
       const baselineStartedAt = performance.now();
       const previous = runNode(["report", "--id", previousId, "--format", "json"], { cwd: workspace });
       const current = runNode(["report", "--id", currentId, "--format", "json"], { cwd: workspace });
-      const manualDiff = spawnSync("node", [
-        "-e",
-        `
-          const previous = JSON.parse(process.argv[1]);
-          const current = JSON.parse(process.argv[2]);
-          const previousById = new Map(previous.results.map((item) => [item.caseId, item.status]));
-          const regressions = current.results
-            .filter((item) => previousById.get(item.caseId) && previousById.get(item.caseId) !== item.status)
-            .map((item) => \`\${item.caseId}: \${previousById.get(item.caseId)} -> \${item.status}\`);
-          console.log(regressions.join("\\n"));
-        `,
-        previous.stdout,
-        current.stdout,
-      ], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+      if (previous.status !== 0 || current.status !== 0) {
+        throw new Error("Baseline comparison workflow could not read previous/current reports.");
+      }
+      const manualDiff = compareReportResults(previous.stdout, current.stdout);
       const baselineElapsedMs = performance.now() - baselineStartedAt;
 
-      if (!manualDiff.stdout.includes("case_001: passed -> failed")) {
+      if (!manualDiff.includes("case_001: passed -> failed")) {
         throw new Error("Baseline comparison workflow did not detect the expected regression.");
       }
 

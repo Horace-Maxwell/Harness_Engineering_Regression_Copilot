@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T05:44:57.760Z",
+  "measuredAt": "2026-04-10T06:07:28.337Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -29,55 +29,55 @@
   "benchmarks": {
     "rawFailureToFirstFail": {
       "iterations": 10,
-      "medianMs": 499.2,
-      "p90Ms": 524.2,
-      "minMs": 468.5,
-      "maxMs": 547.2,
+      "medianMs": 501.1,
+      "p90Ms": 581.6,
+      "minMs": 475.7,
+      "maxMs": 601.6,
       "rawSamplesMs": [
-        524.2,
-        515.4,
-        547.2,
-        485.4,
-        510.8,
+        508.3,
+        601.6,
+        581.6,
+        502.4,
+        488.4,
+        476.5,
+        495.7,
+        506.1,
         475.7,
-        514.4,
-        487.7,
-        471,
-        468.5
+        499.8
       ]
     },
     "manualCaseToPass": {
       "iterations": 10,
-      "medianMs": 463.8,
-      "p90Ms": 467.9,
-      "minMs": 449.8,
-      "maxMs": 529.6,
+      "medianMs": 465.1,
+      "p90Ms": 467.6,
+      "minMs": 458.9,
+      "maxMs": 478.4,
       "rawSamplesMs": [
-        467.9,
-        466.3,
-        529.6,
+        478.4,
+        458.9,
         463.8,
-        464.5,
-        457.9,
-        459.2,
-        449.8,
-        463.9,
-        453.1
+        465.6,
+        465.3,
+        462.4,
+        465.3,
+        467.6,
+        465,
+        464.6
       ]
     },
     "runHundredDeterministicCases": {
       "caseCount": 100,
       "iterations": 5,
-      "medianMs": 143.6,
-      "p90Ms": 144.7,
-      "minMs": 142.7,
-      "maxMs": 144.7,
+      "medianMs": 146.3,
+      "p90Ms": 150.5,
+      "minMs": 142.5,
+      "maxMs": 150.5,
       "rawSamplesMs": [
-        143.6,
-        144.7,
-        143.1,
-        142.7,
-        143.8
+        146.3,
+        144.9,
+        148.3,
+        150.5,
+        142.5
       ]
     }
   },
