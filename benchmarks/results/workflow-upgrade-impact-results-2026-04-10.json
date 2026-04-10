@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T03:46:01.240Z",
+  "measuredAt": "2026-04-10T04:07:38.217Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -26,32 +26,32 @@
         "commands": 3,
         "manualFiles": 0,
         "manualLoc": 9,
-        "medianMs": 280.3,
+        "medianMs": 286.3,
         "rawSamplesMs": [
-          280.1,
-          278.2,
-          280.3,
-          284.3,
-          287.1
+          284.7,
+          286,
+          286.3,
+          297.5,
+          292.2
         ]
       },
       "after": {
         "commands": 1,
         "manualFiles": 0,
         "manualLoc": 0,
-        "medianMs": 112.7,
+        "medianMs": 112.5,
         "rawSamplesMs": [
-          112.7,
-          113.6,
-          109.6,
-          114.5,
-          108.9
+          111.2,
+          109.8,
+          112.5,
+          117.1,
+          113.1
         ]
       },
       "improvements": {
         "commandReductionPct": 66.7,
         "manualLocReductionPct": 100,
-        "medianTimeReductionPct": 59.8
+        "medianTimeReductionPct": 60.7
       }
     },
     "changedPreflight": {
@@ -60,27 +60,27 @@
       "before": {
         "commands": 1,
         "executedCases": 1000,
-        "medianMs": 351.2,
+        "medianMs": 367.1,
         "rawSamplesMs": [
-          351.2,
-          350.9,
-          369.3
+          428.4,
+          367.1,
+          361.8
         ]
       },
       "after": {
         "commands": 1,
         "executedCases": 0,
-        "medianMs": 121.8,
+        "medianMs": 131.3,
         "rawSamplesMs": [
-          121.7,
-          122.9,
-          121.8
+          129.5,
+          131.3,
+          132.9
         ]
       },
       "improvements": {
         "avoidedExecutedCases": 1000,
         "executedCaseReductionPct": 100,
-        "medianTimeReductionPct": 65.3
+        "medianTimeReductionPct": 64.2
       }
     },
     "gitignoreAutomation": {
@@ -89,40 +89,40 @@
         "commands": 1,
         "manualFiles": 1,
         "manualLoc": 3,
-        "medianMs": 112.5,
+        "medianMs": 114.3,
         "rawSamplesMs": [
-          112.5,
-          111,
-          110.8,
-          112.6,
-          112.8
+          113.7,
+          111.1,
+          115,
+          115.5,
+          114.3
         ]
       },
       "after": {
         "commands": 1,
         "manualFiles": 0,
         "manualLoc": 0,
-        "medianMs": 110.3,
+        "medianMs": 113.7,
         "rawSamplesMs": [
-          108.2,
-          112.3,
-          110.8,
-          110.3,
-          110.2
+          113.7,
+          114.5,
+          109.1,
+          117.5,
+          112.2
         ]
       },
       "improvements": {
         "manualFileReductionPct": 100,
         "manualLocReductionPct": 100,
-        "medianTimeReductionPct": 2
+        "medianTimeReductionPct": 0.5
       }
     }
   },
   "existingWorkflowReference": {
-    "supportOpsBatchImportMedianMs": 537.7,
-    "aiEngineerReproToGateMedianMs": 457.6,
-    "qaReviewerAcceptAndPassMedianMs": 453.4,
-    "largeSuiteChangedOnlyTimeReductionPct": 25.6,
+    "supportOpsBatchImportMedianMs": 536.3,
+    "aiEngineerReproToGateMedianMs": 463.1,
+    "qaReviewerAcceptAndPassMedianMs": 470.2,
+    "largeSuiteChangedOnlyTimeReductionPct": 26.8,
     "largeSuiteChangedOnlyExecutedCaseReductionPct": 99.9
   }
 }

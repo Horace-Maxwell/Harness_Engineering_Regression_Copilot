@@ -237,9 +237,7 @@ ${table(
 
 \`\`\`bash
 npm install
-npm run build
-npm run benchmark:adoption > benchmarks/results/adoption-impact-results-2026-04-10.json
-npm run benchmark:whitepaper
+npm run benchmark:reproduce
 \`\`\`
 
 ## Limitations / 局限性
