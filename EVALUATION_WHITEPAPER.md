@@ -14,7 +14,7 @@
 | Failure leakage / 历史失败泄漏 | 100.0% | Known historical failures stop leaking into the shipped candidate in this controlled release-gate setup. |
 | Changed-only execution reduction / changed-only 执行面缩减 | 89.7% | Most protected instructions stay out of the critical-path run when only a narrow slice changed. |
 | Regression triage improvement / 回归排查提升 | 60.8% median time reduction; 66.7% fewer commands | Comparing the latest run against the previous run becomes a single-command workflow and stays materially faster across reruns. |
-| Deployment footprint / 部署体量 | 55.4 KB packed; 84 files | The package remains lightweight enough for repo-local rollout and fast onboarding. |
+| Deployment footprint / 部署体量 | 58.0 KB packed; 84 files | The package remains lightweight enough for repo-local rollout and fast onboarding. |
 
 ## Primary Findings / 核心发现
 
@@ -81,7 +81,7 @@
 
 | Item / 项目 | 中文 | English |
 | --- | --- | --- |
-| Package size / 包体积 | 当前 npm 打包体积为 55.4 KB，解包后 255.8 KB。 | The current npm package is 55.4 KB packed and 255.8 KB unpacked. |
+| Package size / 包体积 | 当前 npm 打包体积为 58.0 KB，解包后 264.0 KB。 | The current npm package is 58.0 KB packed and 264.0 KB unpacked. |
 | Dependency surface / 依赖面 | 运行时依赖是 2 个，便于本地接入、审计和长期维护。 | The runtime dependency surface is 2 packages, which keeps local rollout, auditing, and long-term maintenance straightforward. |
 | Cross-platform matrix / 跨平台矩阵 | CI 当前覆盖 macOS、Linux、Windows，以及 Node 18 和 Node 20。 | CI currently covers macOS, Linux, and Windows, plus Node 18 and Node 20. |
 

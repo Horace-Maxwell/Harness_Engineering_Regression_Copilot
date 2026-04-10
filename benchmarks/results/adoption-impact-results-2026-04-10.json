@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-04-10T04:17:40.096Z",
+  "measuredAt": "2026-04-10T05:41:27.664Z",
   "environment": {
     "node": "v25.6.1",
     "platform": "darwin",
@@ -28,7 +28,7 @@
     "weightedChangedCaseSharePct": 10.3,
     "weightedExecutionReductionPctWithChangedOnly": 89.7,
     "medianChangedGateMsAcrossScenarios": 159.6,
-    "medianFullGateMsAcrossScenarios": 144.4,
+    "medianFullGateMsAcrossScenarios": 146.4,
     "confidenceIntervals95": {
       "weightedRawCorrectInstructionPctWithoutHerc": {
         "pointPct": 92.8,
@@ -68,8 +68,8 @@
         "weightedCorrectnessLiftPctPoints": 4.8,
         "weightedChangedCaseSharePct": 8,
         "weightedExecutionReductionPctWithChangedOnly": 92,
-        "medianFullGateMs": 235.9,
-        "medianChangedGateMs": 244.6,
+        "medianFullGateMs": 234.4,
+        "medianChangedGateMs": 235.6,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 95.2,
@@ -107,8 +107,8 @@
         "weightedCorrectnessLiftPctPoints": 7.2,
         "weightedChangedCaseSharePct": 10,
         "weightedExecutionReductionPctWithChangedOnly": 90,
-        "medianFullGateMs": 202.6,
-        "medianChangedGateMs": 191.8,
+        "medianFullGateMs": 183.4,
+        "medianChangedGateMs": 205.2,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 92.8,
@@ -146,7 +146,7 @@
         "weightedCorrectnessLiftPctPoints": 12,
         "weightedChangedCaseSharePct": 16,
         "weightedExecutionReductionPctWithChangedOnly": 84,
-        "medianFullGateMs": 144.4,
+        "medianFullGateMs": 146.4,
         "medianChangedGateMs": 159.6,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
@@ -185,8 +185,8 @@
         "weightedCorrectnessLiftPctPoints": 16,
         "weightedChangedCaseSharePct": 20,
         "weightedExecutionReductionPctWithChangedOnly": 80,
-        "medianFullGateMs": 133.8,
-        "medianChangedGateMs": 149.2,
+        "medianFullGateMs": 131.6,
+        "medianChangedGateMs": 146.8,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 84,
@@ -224,8 +224,8 @@
         "weightedCorrectnessLiftPctPoints": 20,
         "weightedChangedCaseSharePct": 20,
         "weightedExecutionReductionPctWithChangedOnly": 80,
-        "medianFullGateMs": 124.8,
-        "medianChangedGateMs": 140.5,
+        "medianFullGateMs": 126.3,
+        "medianChangedGateMs": 145,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 80,
@@ -266,8 +266,8 @@
         "weightedCorrectnessLiftPctPoints": 5.8,
         "weightedChangedCaseSharePct": 9.1,
         "weightedExecutionReductionPctWithChangedOnly": 90.9,
-        "medianFullGateMs": 184.9,
-        "medianChangedGateMs": 196.9,
+        "medianFullGateMs": 183,
+        "medianChangedGateMs": 191.2,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 94.2,
@@ -306,8 +306,8 @@
         "weightedCorrectnessLiftPctPoints": 8.1,
         "weightedChangedCaseSharePct": 10.7,
         "weightedExecutionReductionPctWithChangedOnly": 89.3,
-        "medianFullGateMs": 163.7,
-        "medianChangedGateMs": 166.2,
+        "medianFullGateMs": 154.8,
+        "medianChangedGateMs": 175.1,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 91.9,
@@ -345,7 +345,7 @@
         "weightedCorrectnessLiftPctPoints": 12,
         "weightedChangedCaseSharePct": 16,
         "weightedExecutionReductionPctWithChangedOnly": 84,
-        "medianFullGateMs": 144.4,
+        "medianFullGateMs": 146.4,
         "medianChangedGateMs": 159.6,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
@@ -386,8 +386,8 @@
         "weightedCorrectnessLiftPctPoints": 4.8,
         "weightedChangedCaseSharePct": 8,
         "weightedExecutionReductionPctWithChangedOnly": 92,
-        "medianFullGateMs": 235.9,
-        "medianChangedGateMs": 244.6,
+        "medianFullGateMs": 234.4,
+        "medianChangedGateMs": 235.6,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 95.2,
@@ -426,8 +426,8 @@
         "weightedCorrectnessLiftPctPoints": 8.6,
         "weightedChangedCaseSharePct": 11.7,
         "weightedExecutionReductionPctWithChangedOnly": 88.3,
-        "medianFullGateMs": 173.5,
-        "medianChangedGateMs": 175.7,
+        "medianFullGateMs": 164.9,
+        "medianChangedGateMs": 182.4,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 91.4,
@@ -466,8 +466,8 @@
         "weightedCorrectnessLiftPctPoints": 17.1,
         "weightedChangedCaseSharePct": 20,
         "weightedExecutionReductionPctWithChangedOnly": 80,
-        "medianFullGateMs": 129.3,
-        "medianChangedGateMs": 144.8,
+        "medianFullGateMs": 128.9,
+        "medianChangedGateMs": 145.9,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 82.9,
@@ -508,8 +508,8 @@
         "weightedCorrectnessLiftPctPoints": 5.8,
         "weightedChangedCaseSharePct": 9.1,
         "weightedExecutionReductionPctWithChangedOnly": 90.9,
-        "medianFullGateMs": 184.9,
-        "medianChangedGateMs": 196.9,
+        "medianFullGateMs": 183,
+        "medianChangedGateMs": 191.2,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 94.2,
@@ -548,8 +548,8 @@
         "weightedCorrectnessLiftPctPoints": 8.1,
         "weightedChangedCaseSharePct": 10.7,
         "weightedExecutionReductionPctWithChangedOnly": 89.3,
-        "medianFullGateMs": 163.7,
-        "medianChangedGateMs": 166.2,
+        "medianFullGateMs": 154.8,
+        "medianChangedGateMs": 175.1,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
             "pointPct": 91.9,
@@ -587,7 +587,7 @@
         "weightedCorrectnessLiftPctPoints": 12,
         "weightedChangedCaseSharePct": 16,
         "weightedExecutionReductionPctWithChangedOnly": 84,
-        "medianFullGateMs": 144.4,
+        "medianFullGateMs": 146.4,
         "medianChangedGateMs": 159.6,
         "confidenceIntervals95": {
           "controlCorrectnessPct": {
@@ -641,10 +641,10 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 4,
         "changedExecutionReductionPct": 80,
-        "fullGateMedianMs": 124.8,
-        "changedGateMedianMs": 140.5,
-        "changedGateP90Ms": 142.2,
-        "postFixChangedGateMedianMs": 139.3,
+        "fullGateMedianMs": 126.3,
+        "changedGateMedianMs": 145,
+        "changedGateP90Ms": 196.7,
+        "postFixChangedGateMedianMs": 138.8,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 20,
@@ -682,25 +682,25 @@
           80
         ],
         "fullRunMs": [
-          129,
-          123.5,
-          124.78,
-          140.586,
-          123.3078
+          122,
+          133.7,
+          128.58,
+          126.318,
+          122.7473
         ],
         "changedRunMs": [
           140,
-          142.2,
-          140.57,
-          140.484,
-          137.104
+          145,
+          196.66,
+          147.858,
+          135.3809
         ],
         "postFixChangedRunMs": [
-          139,
-          141.1,
-          139.35,
-          139.553,
-          137.4675
+          144,
+          138.8,
+          138.09,
+          137.129,
+          140.672
         ]
       }
     },
@@ -729,10 +729,10 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 10,
         "changedExecutionReductionPct": 80,
-        "fullGateMedianMs": 133.8,
-        "changedGateMedianMs": 149.2,
-        "changedGateP90Ms": 152.4,
-        "postFixChangedGateMedianMs": 146.6,
+        "fullGateMedianMs": 131.6,
+        "changedGateMedianMs": 146.8,
+        "changedGateP90Ms": 152.6,
+        "postFixChangedGateMedianMs": 166.9,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 16,
@@ -770,25 +770,25 @@
           84
         ],
         "fullRunMs": [
-          131,
-          131.8,
-          133.84,
-          133.967,
-          134.5323
+          134,
+          131.6,
+          131.39,
+          142.895,
+          131.3804
         ],
         "changedRunMs": [
-          149,
-          149.8,
-          145.14,
-          145.787,
-          152.4063
+          153,
+          146.8,
+          140.53,
+          150.77,
+          145.1947
         ],
         "postFixChangedRunMs": [
-          145,
-          146.6,
-          150.14,
-          146.61,
-          148.9771
+          147,
+          218.4,
+          166.87,
+          169.872,
+          149.3227
         ]
       }
     },
@@ -817,10 +817,10 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 16,
         "changedExecutionReductionPct": 84,
-        "fullGateMedianMs": 144.4,
+        "fullGateMedianMs": 146.4,
         "changedGateMedianMs": 159.6,
-        "changedGateP90Ms": 161.2,
-        "postFixChangedGateMedianMs": 156.8,
+        "changedGateP90Ms": 171.9,
+        "postFixChangedGateMedianMs": 161.2,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 12,
@@ -858,25 +858,25 @@
           88
         ],
         "fullRunMs": [
-          143,
-          143.1,
-          145.31,
-          144.368,
-          148.6216
+          153,
+          145.5,
+          146.35,
+          146.339,
+          149.4296
         ],
         "changedRunMs": [
-          160,
-          161.1,
-          161.2,
-          158.499,
-          155.4229
+          163,
+          159.4,
+          158.33,
+          171.853,
+          159.5562
         ],
         "postFixChangedRunMs": [
-          156,
-          158.7,
-          161.64,
-          156.83,
-          154.2847
+          161,
+          173.5,
+          150.7,
+          159.92,
+          174.3696
         ]
       }
     },
@@ -905,10 +905,10 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 25,
         "changedExecutionReductionPct": 90,
-        "fullGateMedianMs": 202.6,
-        "changedGateMedianMs": 191.8,
-        "changedGateP90Ms": 192.9,
-        "postFixChangedGateMedianMs": 179,
+        "fullGateMedianMs": 183.4,
+        "changedGateMedianMs": 205.2,
+        "changedGateP90Ms": 207.1,
+        "postFixChangedGateMedianMs": 236.9,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 7.2,
@@ -944,19 +944,19 @@
           92.8
         ],
         "fullRunMs": [
-          203,
-          192.6,
-          205.87
+          183,
+          180.2,
+          190.99
         ],
         "changedRunMs": [
-          190,
-          191.8,
-          192.89
+          177,
+          205.2,
+          207.1
         ],
         "postFixChangedRunMs": [
-          184,
-          179,
-          178.17
+          237,
+          289.6,
+          187.35
         ]
       }
     },
@@ -985,10 +985,10 @@
         "falsePositiveCount": 0,
         "changedCasesExecuted": 40,
         "changedExecutionReductionPct": 92,
-        "fullGateMedianMs": 235.9,
-        "changedGateMedianMs": 244.6,
-        "changedGateP90Ms": 245.8,
-        "postFixChangedGateMedianMs": 244.1,
+        "fullGateMedianMs": 234.4,
+        "changedGateMedianMs": 235.6,
+        "changedGateP90Ms": 242.3,
+        "postFixChangedGateMedianMs": 220,
         "shippedCorrectInstructionPctAfterFix": 100,
         "shippedIncorrectInstructionPctAfterFix": 0,
         "correctnessLiftPctPoints": 4.8,
@@ -1024,19 +1024,19 @@
           95.2
         ],
         "fullRunMs": [
-          255,
-          234.5,
-          235.91
+          265,
+          234.4,
+          230.5
         ],
         "changedRunMs": [
-          227,
-          244.6,
-          245.76
+          236,
+          224.6,
+          242.29
         ],
         "postFixChangedRunMs": [
-          244,
-          244.5,
-          242.85
+          220,
+          224.3,
+          219.64
         ]
       }
     }

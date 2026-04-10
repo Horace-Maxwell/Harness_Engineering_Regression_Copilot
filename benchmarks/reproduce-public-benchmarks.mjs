@@ -12,12 +12,14 @@ function run(command, args, options = {}) {
     cwd: options.cwd ?? root,
     encoding: "utf8",
     maxBuffer: 64 * 1024 * 1024,
+    shell: process.platform === "win32" && command.toLowerCase().endsWith(".cmd"),
   });
 
-  if (result.status !== 0) {
+  if (result.error || result.status !== 0) {
     throw new Error(
       [
         `Command failed: ${command} ${args.join(" ")}`,
+        result.error?.message,
         result.stdout?.trim(),
         result.stderr?.trim(),
       ]
