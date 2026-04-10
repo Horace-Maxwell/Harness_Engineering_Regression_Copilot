@@ -8,7 +8,7 @@
 
 | 中文 | English |
 | --- | --- |
-| 这套标准覆盖 HERC 当前公开的四类 benchmark：基础性能、角色工作流、采用前后对照，以及工作流升级前后对照。 | This standard covers HERC's four public benchmark families: baseline performance, role-based workflows, adoption before/after comparisons, and workflow-upgrade before/after comparisons. |
+| 这套标准覆盖 HERC 当前公开的五类 benchmark：基础性能、角色工作流、采用前后对照、工作流升级前后对照，以及稳定性复测。 | This standard covers HERC's five public benchmark families: baseline performance, role-based workflows, adoption before/after comparisons, workflow-upgrade before/after comparisons, and the stability study. |
 
 ## Required Protocol / 必要执行规范
 
@@ -21,6 +21,7 @@
 | Aggregation / 聚合方法 | 默认公开 `median`、`min`、`max`、`p90`、`stddev` 和 `CV`。 | Publish `median`, `min`, `max`, `p90`, `stddev`, and `CV` by default. |
 | Correctness metrics / 正确率指标 | 质量 uplift 继续用 deterministic protected instructions 计算，同时保留 `95%` bootstrap 置信区间。 | Continue to compute quality uplift on deterministic protected instructions and retain the `95%` bootstrap confidence interval. |
 | Reproducibility / 可复现性 | 公开结果必须能通过 `npm run benchmark:reproduce` 或 `npm run benchmark:stability` 在同一仓库中重新生成。 | Public results must be reproducible inside the same repository via `npm run benchmark:reproduce` or `npm run benchmark:stability`. |
+| Method audit trail / 方法审计链 | 公开结果必须同时能被 [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md) 中的流程、算法和解释口径追溯。 | Public results must also remain traceable through the workflow, algorithms, and interpretation rules documented in [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md). |
 
 ## Stability Interpretation / 稳定性解释口径
 
@@ -44,3 +45,4 @@ npm run benchmark:stability
 | 中文 | English |
 | --- | --- |
 | HERC 当前公开 benchmark 主要衡量 deterministic gate 和历史问题回归拦截能力，不等同于对所有开放式生成质量的完整评价。 | HERC's current public benchmarks primarily measure deterministic gates and historical-failure regression blocking, not every dimension of open-ended generation quality. |
+| 更详细的过程、算法和结果文件关系见 [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md)。 | For more detailed process, algorithms, and artifact relationships, see [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md). |

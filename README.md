@@ -9,6 +9,7 @@
     <a href="#quick-start">Quick Start / 快速开始</a> ·
     <a href="#benchmarks">Benchmarks / 基准</a> ·
     <a href="EVALUATION_WHITEPAPER.md">Whitepaper / 白皮书</a> ·
+    <a href="BENCHMARK_METHODS.md">Methods / 方法</a> ·
     <a href="BENCHMARK_STABILITY_REPORT.md">Stability / 稳定性</a> ·
     <a href="#launch-kit">Launch Kit / 启动模板</a> ·
     <a href="#contributing">Contributing / 贡献</a>
@@ -27,13 +28,13 @@
   <p>
     <img src="https://img.shields.io/badge/protected%20correctness-92.8%25%E2%86%92100%25-0f766e?style=for-the-badge" alt="Protected correctness 92.8% to 100%" />
     <img src="https://img.shields.io/badge/failure%20leakage-100%25%20reduced-15803d?style=for-the-badge" alt="Failure leakage reduced 100%" />
-    <img src="https://img.shields.io/badge/report%20comparison-66.7%25%20fewer%20commands-1d4ed8?style=for-the-badge" alt="Report comparison 66.7% fewer commands" />
-    <img src="https://img.shields.io/badge/preflight-65.1%25%20faster-f97316?style=for-the-badge" alt="Preflight 65.1% faster" />
+    <img src="https://img.shields.io/badge/report%20comparison-60.8%25%20faster-1d4ed8?style=for-the-badge" alt="Report comparison 60.8% faster" />
+    <img src="https://img.shields.io/badge/preflight-66.3%25%20faster-f97316?style=for-the-badge" alt="Preflight 66.3% faster" />
   </p>
   <p>
-    <img src="https://img.shields.io/badge/first%20failing%20gate-472.5ms-0f766e?style=for-the-badge" alt="First failing gate 472.5ms" />
-    <img src="https://img.shields.io/badge/100%20cases-145.1ms-1d4ed8?style=for-the-badge" alt="100 cases 145.1ms" />
-    <img src="https://img.shields.io/badge/throughput-689.2%20cases%2Fs-15803d?style=for-the-badge" alt="Throughput 689.2 cases per second" />
+    <img src="https://img.shields.io/badge/first%20failing%20gate-464.6ms-0f766e?style=for-the-badge" alt="First failing gate 464.6ms" />
+    <img src="https://img.shields.io/badge/100%20cases-144.7ms-1d4ed8?style=for-the-badge" alt="100 cases 144.7ms" />
+    <img src="https://img.shields.io/badge/throughput-691.1%20cases%2Fs-15803d?style=for-the-badge" alt="Throughput 691.1 cases per second" />
     <img src="https://img.shields.io/badge/changed--only-5000%E2%86%923%20cases-f97316?style=for-the-badge" alt="Changed-only 5000 to 3 cases" />
     <img src="https://img.shields.io/badge/package-55.4%20KB-7c3aed?style=for-the-badge" alt="Package size 55.4 KB" />
   </p>
@@ -54,9 +55,9 @@
 | --- | --- | --- | --- |
 | Protected instruction correctness / 历史受保护指令正确率 | 在 `920` 条历史受保护指令上，发布前不使用 HERC 的加权正确率是 `92.8%`，接入 HERC 后提升到 `100%`，净提升 `+7.2` 个百分点。 | Across `920` protected historical instructions, shipped correctness rises from `92.8%` without HERC to `100%` with HERC, a net lift of `+7.2` percentage points. | [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) |
 | Failure leakage reduction / 历史失败泄漏下降 | 这组对照实验里，历史失败泄漏下降 `100%`，也就是已知失败不会再直接混进发布版本。 | In the controlled adoption benchmark, historical failure leakage drops by `100%`, meaning known failures stop slipping into the shipped build. | [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json) |
-| CI execution reduction / CI 执行面缩减 | 在 `5000` 个 case 的套件里，`--changed` 把执行面从 `5000` 个 case 缩到 `3` 个，执行量下降 `99.9%`，总时间下降 `25.9%`。 | In a `5000`-case suite, `--changed` reduces execution from `5000` cases to `3`, cutting executed cases by `99.9%` and total time by `25.9%`. | [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json) |
-| Faster regression triage / 更快的回归排查 | `herc report --compare-previous` 把报告对比从 `3` 条命令和 `9` 行临时逻辑压到 `1` 条命令，耗时中位数从 `287.8 ms` 降到 `112.5 ms`，时间下降 `60.9%`。 | `herc report --compare-previous` compresses report comparison from `3` commands and `9` lines of ad hoc logic into `1` command, cutting median time from `287.8 ms` to `112.5 ms`, a `60.9%` reduction. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
-| Faster preflight / 更快的预检 | `herc doctor --quick` 能在误跑前直接识别非 Git 工作区，让一次本来会白跑的 `1000` case 执行变成 `0` case；中位耗时从 `354.1 ms` 降到 `123.5 ms`，时间下降 `65.1%`。 | `herc doctor --quick` catches non-Git changed-only fallbacks before a wasted run, turning a would-be `1000`-case execution into `0` executed cases; median time drops from `354.1 ms` to `123.5 ms`, a `65.1%` reduction. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| CI execution reduction / CI 执行面缩减 | 在 `5000` 个 case 的套件里，`--changed` 把执行面从 `5000` 个 case 缩到 `3` 个；在多轮复测里，执行量下降稳定保持 `99.9%`，总时间下降中位数是 `27.2%`。 | In a `5000`-case suite, `--changed` reduces execution from `5000` cases to `3`; across repeated reruns, executed-case reduction stays at `99.9%` and the median total time reduction is `27.2%`. | [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json) |
+| Faster regression triage / 更快的回归排查 | 在 `1` 轮 warm-up 和 `5` 轮正式复测后，`herc report --compare-previous` 仍然把报告对比时间中位数稳定压低 `60.8%`，同时把流程压成 `1` 条命令。 | After `1` warm-up plus `5` measured rounds, `herc report --compare-previous` still delivers a stable `60.8%` median time reduction while compressing the flow to `1` command. | [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json), [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| Faster preflight / 更快的预检 | 在多轮复测里，`herc doctor --quick` 把误跑前预检时间稳定压低 `66.3%`，并继续避免 `1000` 个无意义执行 case。 | In the repeated stability study, `herc doctor --quick` keeps preflight time `66.3%` lower while still avoiding `1000` meaningless executed cases. | [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json), [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
 | Lightweight deployment / 轻量部署 | 包体积只有 `55.4 KB` packed、`255.8 KB` unpacked，运行时依赖是 `2` 个，CI 已覆盖 `macOS`、`Linux`、`Windows` 以及 `Node 18/20`。 | The package stays at `55.4 KB` packed and `255.8 KB` unpacked, ships with `2` runtime dependencies, and already runs in CI across `macOS`, `Linux`, `Windows`, plus `Node 18/20`. | [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [.github/workflows/ci.yml](.github/workflows/ci.yml) |
 
 ## Why Teams Like It / 团队为什么会喜欢它
@@ -186,27 +187,57 @@ herc report --format summary
 
 | 中文 | English |
 | --- | --- |
-| 下面的数字来自仓库内公开的 benchmark 结果文件，方便别人直接复核。当前数据文件见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json)、[workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) 和 [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json)。如果你想在另一台机器上完整复现这组公开结果，现在只需要运行 `npm run benchmark:reproduce`；如果你想按更严格的标准验证稳定性，可以运行 `npm run benchmark:stability`，并查看 [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) 和 [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md)。如果你想看更接近论文/白皮书的完整分析，也可以直接看 [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md)。 | The numbers below come from the public benchmark result files in this repository so that others can verify them directly. The current data files are [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json), and [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json). If you want to fully reproduce this public benchmark pack on another machine, you now only need to run `npm run benchmark:reproduce`; if you want a stricter stability validation pass, run `npm run benchmark:stability` and read [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) plus [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md). For a more paper-like analysis, you can also read [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md). |
+| 下面的数字已经全部切换到“最新稳定口径”：耗时和工作流 uplift 优先引用 [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json) 里的多轮中位数，结构型指标和质量 uplift 则引用当前最新公开结果文件。完整原始输入见 [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json)、[workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json)、[adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json)、[workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) 和 [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json)。检查标准见 [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md)，完整流程和算法见 [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md)，稳定性结论见 [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md)，论文式分析见 [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md)。 | The numbers below now use a single latest-and-stable policy: latency and workflow uplifts prefer the multi-round medians from [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json), while structural metrics and quality uplift cite the latest current result files. The complete raw inputs remain available in [benchmark-results-2026-04-10.json](benchmarks/results/benchmark-results-2026-04-10.json), [workflow-impact-results-2026-04-10.json](benchmarks/results/workflow-impact-results-2026-04-10.json), [adoption-impact-results-2026-04-10.json](benchmarks/results/adoption-impact-results-2026-04-10.json), [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json), and [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json). The execution standard lives in [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md), the full process and algorithms in [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md), the stability conclusions in [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md), and the paper-style analysis in [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md). |
+
+### Validation Process / 检查过程
+
+| Step / 步骤 | 中文 | English |
+| --- | --- | --- |
+| 1 | 先执行 `npm ci` 和 `npm run build`，锁定依赖并生成最新 CLI。 | Start with `npm ci` and `npm run build` to lock dependencies and build the latest CLI. |
+| 2 | 运行 `npm run benchmark:reproduce`，生成四组原始公开 benchmark 结果和白皮书。 | Run `npm run benchmark:reproduce` to generate the four raw public benchmark packs and the whitepaper. |
+| 3 | 运行 `npm run benchmark:stability`，按 `1` 轮 warm-up 加 `5` 轮正式测量重新执行前面四组 benchmark。 | Run `npm run benchmark:stability` to rerun the prior benchmark families under `1` warm-up plus `5` measured rounds. |
+| 4 | README 里的最新耗时数字引用稳定性复测中位数，质量 uplift 继续引用 adoption 对照实验。 | The latest latency figures in the README cite the stability-study medians, while quality uplift continues to cite the adoption experiment. |
+| 5 | 公开引用时，如果某个 workflow 指标 `CV` 超过 `10%`，就把它标成方向性收益，而不是硬性的绝对性能承诺。 | When a workflow metric has a `CV` above `10%`, public summaries label it as directional uplift rather than a hard absolute performance promise. |
+
+### Benchmark Method / 基准方法
+
+| Topic / 主题 | 中文 | English |
+| --- | --- | --- |
+| Baseline performance / 基础性能 | 测量原始失败到第一次红灯、手工 case 到首次通过、100 个确定性 case 执行，以及当前包体积。 | Measures raw-failure-to-first-fail, manual-case-to-first-pass, 100 deterministic cases, and the current package footprint. |
+| Workflow impact / 工作流收益 | 测量 Support 批量 incident 导入、AI engineer 从投诉到 gate、QA 接受 case、CI changed-only 和 deep profile 审核门禁。 | Measures support batch import, AI engineer complaint-to-gate, QA accept flow, CI changed-only execution, and deep-profile review enforcement. |
+| Adoption impact / 接入前后质量对照 | 在同一候选版本上做对照组与实验组比较：对照组直接发布，实验组先跑 HERC、修复失败项、再发布。 | Compares a control and treatment on the same release candidate: the control ships directly, while the treatment runs HERC, fixes failures, and then ships. |
+| Workflow upgrade impact / 工作流升级对照 | 专门评估新功能是否减少命令数、手工逻辑和误跑成本。 | Isolates whether recent product improvements reduce commands, ad hoc logic, and wasted runs. |
+| Stability study / 稳定性复测 | 对前面四组 benchmark 做 `1 + 5` 多轮复测，输出 `median`、`min`、`max`、`p90`、`stddev` 和 `CV`。 | Repeats the prior benchmark families under a `1 + 5` protocol and publishes `median`, `min`, `max`, `p90`, `stddev`, and `CV`. |
+
+### Statistical Method / 统计方法
+
+| Metric / 指标 | 中文 | English |
+| --- | --- | --- |
+| Central latency / 中心耗时 | 默认用 `median`，因为它比单次结果或均值更抗噪。 | The default latency summary is `median` because it is more noise-resistant than a single run or a mean-only headline. |
+| Tail latency / 尾部耗时 | 公开给出 `p90`，避免只看中位数而忽略尾部波动。 | `p90` is published to avoid hiding tail variance behind a single median. |
+| Variability / 波动 | `stddev` 和 `CV = stddev / mean * 100` 用来判断结果是稳定、可接受还是方向性收益。 | `stddev` and `CV = stddev / mean * 100` are used to classify a result as stable, acceptable, or directional. |
+| Quality uncertainty / 质量不确定性 | 95% 置信区间采用受保护指令级别的 bootstrap；before/after uplift 使用同一指令位置上的配对重采样。 | The 95% confidence intervals use bootstrap resampling at the protected-instruction level; before/after uplift uses paired resampling on the same instruction positions. |
+| Reduction metrics / 下降类指标 | 时间下降和执行量下降统一按 `(before - after) / before * 100` 计算。 | Time and execution reductions both use `(before - after) / before * 100`. |
 
 ### Benchmark Scorecard / 基准总览
 
 | Dimension / 维度 | 中文 | English |
 | --- | --- | --- |
-| Baseline runner performance / 基础执行性能 | 从一条原始失败到第一次红灯，HERC 的中位耗时是 `472.5 ms`；100 个确定性 case 的执行中位耗时是 `145.1 ms`。 | HERC reaches the first failing gate from one raw failure in `472.5 ms` median, and executes `100` deterministic cases in `145.1 ms` median. |
-| Real workflow throughput / 真实工作流吞吐 | Support 批量导入 `50` 条 incident 并提炼成 case 的中位耗时是 `534.7 ms`，AI engineer 从投诉到红灯 gate 的中位耗时是 `458.9 ms`。 | A support batch import of `50` incidents to draft cases finishes in `534.7 ms` median, and an AI engineer can turn one complaint into a failing gate in `458.9 ms` median. |
+| Baseline runner performance / 基础执行性能 | 在稳定性复测里，从一条原始失败到第一次红灯的中位耗时是 `464.6 ms`；`100` 个确定性 case 的执行中位耗时是 `144.7 ms`。 | In the stability study, HERC reaches the first failing gate from one raw failure in `464.6 ms` median, and executes `100` deterministic cases in `144.7 ms` median. |
+| Real workflow throughput / 真实工作流吞吐 | Support 批量导入 `50` 条 incident 并提炼成 case 的中位耗时是 `542.2 ms`，AI engineer 从投诉到红灯 gate 的中位耗时是 `461.8 ms`。 | A support batch import of `50` incidents to draft cases finishes in `542.2 ms` median, and an AI engineer can turn one complaint into a failing gate in `461.8 ms` median. |
 | Shipped quality lift / 发布质量提升 | 在 `5` 个发布场景、`920` 条历史受保护指令上，采用 HERC 后的加权发布正确率从 `92.8%` 提升到 `100%`。 | Across `5` release scenarios and `920` protected historical instructions, adopting HERC raises weighted shipped correctness from `92.8%` to `100%`. |
-| Workflow upgrade gains / 工作流升级收益 | 报告对比命令数下降 `66.7%`，非 Git 误跑预检时间下降 `65.1%`，并避免了 `1000` 个无意义执行 case。 | Workflow upgrades reduce report comparison commands by `66.7%`, cut non-Git preflight time by `65.1%`, and avoid `1000` wasted case executions. |
+| Workflow upgrade gains / 工作流升级收益 | 多轮复测后，报告对比时间下降 `60.8%`，非 Git 误跑预检时间下降 `66.3%`，并避免了 `1000` 个无意义执行 case。 | After repeated reruns, report comparison time stays `60.8%` lower, non-Git preflight time stays `66.3%` lower, and `1000` wasted case executions are still avoided. |
 | Cross-platform deployability / 跨平台部署性 | 当前包体积 `55.4 KB`，运行时依赖 `2` 个，并已在 `3` 个操作系统和 `2` 个 Node 版本矩阵里验证。 | The current package is `55.4 KB`, uses `2` runtime dependencies, and is validated across a `3`-OS by `2`-Node-version matrix. |
-| Multi-round stability / 多轮稳定性 | 在 `1` 轮 warm-up 加 `5` 轮正式复测里，核心 latency 指标 `CV` 基本都低于 `1%`，报告对比时间缩减 `CV` 仅 `0.5%`。 | In `1` warm-up plus `5` measured rerun rounds, the core latency metrics stay mostly below `1%` coefficient of variation, and the report-comparison time reduction has a `CV` of only `0.5%`. |
+| Multi-round stability / 多轮稳定性 | 在 `1` 轮 warm-up 加 `5` 轮正式复测里，核心 latency 指标 `CV` 基本都低于 `1%`；changed-only 总时间缩减 `CV` 是 `11.7%`，因此在 README 里被表达为方向性收益。 | In `1` warm-up plus `5` measured rerun rounds, the core latency metrics stay mostly below `1%` coefficient of variation; changed-only total time reduction lands at `11.7%` CV, so the README frames it as directional uplift. |
 
 ### Baseline Performance / 基础性能
 
 | Scenario / 场景 | Result / 结果 | Why it matters / 意义 |
 | --- | --- | --- |
-| Raw failure to first failing gate / 原始失败到第一次红灯 | `472.5 ms` median | 适合本地调试、快速复现和修复回路 / Fast enough for local repro and fix loops |
-| Manual case to first passing gate / 手工建 case 到首次通过 | `457.7 ms` median | case 审核和 baseline 循环很短 / Keeps review and baseline loops short |
-| 100 deterministic cases / 100 个确定性 case | `145.1 ms` median | 单次执行足够轻，适合高频本地运行 / Light enough for frequent local runs |
-| Approximate throughput / 近似吞吐 | `~689.2 cases/sec` | 说明 deterministic runner 的执行面很轻 / Shows the deterministic runner stays lightweight |
+| Raw failure to first failing gate / 原始失败到第一次红灯 | `464.6 ms` median | 适合本地调试、快速复现和修复回路 / Fast enough for local repro and fix loops |
+| Manual case to first passing gate / 手工建 case 到首次通过 | `460.7 ms` median | case 审核和 baseline 循环很短 / Keeps review and baseline loops short |
+| 100 deterministic cases / 100 个确定性 case | `144.7 ms` median | 单次执行足够轻，适合高频本地运行 / Light enough for frequent local runs |
+| Approximate throughput / 近似吞吐 | `~691.1 cases/sec` | 说明 deterministic runner 的执行面很轻 / Shows the deterministic runner stays lightweight |
 | Packed package size / 打包体积 | `55.4 KB` | 适合小仓库、脚本化接入和本地工具链 / Friendly to small repos, scripts, and local toolchains |
 
 ### Stability Check / 稳定性复测
@@ -241,20 +272,20 @@ herc report --format summary
 
 | Role / 角色 | Workflow / 工作流 | Result / 结果 |
 | --- | --- | --- |
-| Support / Ops / PM | Import `50` incidents and distill draft cases / 导入 `50` 条 incident 并提炼 case | `50 -> 50` draft cases, `534.7 ms` median |
-| AI engineer | Turn one complaint into a failing gate / 把一条投诉变成红灯 gate | `458.9 ms` median |
-| QA / Reviewer | Accept one case and validate baseline / 接受一个 case 并验证 baseline | `459.1 ms` median |
-| CI / Platform | Run only changed cases in a `5000` case suite / 在 `5000` 个 case 的套件里只跑 changed cases | `5000 -> 3` executed cases, `99.9%` fewer cases, `25.9%` less time |
+| Support / Ops / PM | Import `50` incidents and distill draft cases / 导入 `50` 条 incident 并提炼 case | `50 -> 50` draft cases, `542.2 ms` median |
+| AI engineer | Turn one complaint into a failing gate / 把一条投诉变成红灯 gate | `461.8 ms` median |
+| QA / Reviewer | Accept one case and validate baseline / 接受一个 case 并验证 baseline | `463.4 ms` median |
+| CI / Platform | Run only changed cases in a `5000` case suite / 在 `5000` 个 case 的套件里只跑 changed cases | `5000 -> 3` executed cases, `99.9%` fewer cases, `27.2%` median less time across reruns |
 | Release owner | Enforce review quality in `deep` profile / 在 `deep` 档严格执行审核门禁 | Blocked `5/5` unreviewed cases |
-| Regression triage | Compare latest run against the previous run / 对比最新 run 与上一次 run | `287.8 ms -> 112.5 ms`, `66.7%` fewer commands |
-| CI preflight | Detect non-git changed-only fallback before wasting a run / 在误跑前发现非 Git changed-only fallback | Avoided `1000` executed cases, `65.1%` less time with `doctor --quick` |
+| Regression triage | Compare latest run against the previous run / 对比最新 run 与上一次 run | `60.8%` median less time across reruns, still `66.7%` fewer commands |
+| CI preflight | Detect non-git changed-only fallback before wasting a run / 在误跑前发现非 Git changed-only fallback | Avoided `1000` executed cases, `66.3%` median less time with `doctor --quick` |
 
 ### Workflow Upgrade Details / 工作流升级细节
 
 | Upgrade / 升级点 | 中文 | English | Source / 来源 |
 | --- | --- | --- | --- |
-| `report --compare-previous` | 把历史上需要 `3` 条命令和 `9` 行临时逻辑的对比操作压缩成 `1` 条命令，时间中位数下降 `60.9%`。 | Compresses a comparison workflow that previously needed `3` commands and `9` lines of ad hoc logic into `1` command, reducing median time by `60.9%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
-| `doctor --quick` | 在非 Git 工作区能提前阻止 `--changed` 误跑，避免 `1000` 个无意义 case 执行，时间下降 `65.1%`。 | Stops `--changed` from misfiring in a non-Git workspace, avoiding `1000` meaningless case executions while cutting time by `65.1%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
+| `report --compare-previous` | 把历史上需要 `3` 条命令和 `9` 行临时逻辑的对比操作压缩成 `1` 条命令；多轮复测后的时间下降中位数为 `60.8%`，`CV` 仅 `0.5%`。 | Compresses a comparison workflow that previously needed `3` commands and `9` lines of ad hoc logic into `1` command; the repeated-rerun median time reduction is `60.8%` with only `0.5%` CV. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json), [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json) |
+| `doctor --quick` | 在非 Git 工作区能提前阻止 `--changed` 误跑，避免 `1000` 个无意义 case 执行；多轮复测后的时间下降中位数为 `66.3%`。 | Stops `--changed` from misfiring in a non-Git workspace, avoiding `1000` meaningless case executions; the repeated-rerun median time reduction is `66.3%`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json), [stability-study-results-2026-04-10.json](benchmarks/results/stability-study-results-2026-04-10.json) |
 | automatic `.gitignore` sync | `herc init` 默认自动写入 `.herc/incidents`、`.herc/reports`、`.herc/responses`，把手工修改文件数从 `1` 降到 `0`。 | `herc init` now writes `.herc/incidents`, `.herc/reports`, and `.herc/responses` into `.gitignore` by default, reducing manual file edits from `1` to `0`. | [workflow-upgrade-impact-results-2026-04-10.json](benchmarks/results/workflow-upgrade-impact-results-2026-04-10.json) |
 
 | 中文 | English |
@@ -310,6 +341,9 @@ npm run repo-kit:scaffold -- --meta github-repo-launch-kit/project.meta.example.
 | [test](test) | 单元测试和端到端测试 | Unit tests and end-to-end tests |
 | [benchmarks](benchmarks) | benchmark runner、fixtures 和结果文件 | Benchmark runners, fixtures, and result files |
 | [EVALUATION_WHITEPAPER.md](EVALUATION_WHITEPAPER.md) | 公开的评估白皮书，包含分层 uplift、95% 置信区间和方法说明 | Public evaluation whitepaper with stratified uplift, 95% confidence intervals, and methodology notes |
+| [BENCHMARK_STANDARD.md](BENCHMARK_STANDARD.md) | 公开 benchmark 的执行标准和稳定性解释口径 | Public execution standard and stability interpretation rules for benchmarks |
+| [BENCHMARK_METHODS.md](BENCHMARK_METHODS.md) | benchmark 的完整流程、对照设计、算法和结果文件地图 | Full benchmark workflow, control design, algorithms, and artifact map |
+| [BENCHMARK_STABILITY_REPORT.md](BENCHMARK_STABILITY_REPORT.md) | 多轮复测结果，包含 `1 + 5` 协议下的 CV 与稳定性结论 | Multi-round rerun results with CV and stability conclusions under the `1 + 5` protocol |
 | [github-repo-launch-kit](github-repo-launch-kit) | 内置仓库启动模板包 | Built-in repository launch kit |
 | [.github](.github) | CI、issue templates 和 PR 模板 | CI, issue templates, and PR templates |
 | [.local-dev-docs](.local-dev-docs) | 本地开发文档目录，默认不上传 GitHub | Local development docs folder, ignored from GitHub by default |
